@@ -51,6 +51,11 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    
+    @IBAction func givePublicationBDD(_ sender: Any) {
+        shared.getPublicationOnBDD()
+    }
+    
     @IBAction func didPressAddPictureButton(_ sender: Any) {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
