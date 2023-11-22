@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "3678ED65-6665-418D-B769-154DE0E1C878"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "53CDFD20-3A90-4AC3-85C5-A43771B0342F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "testFBGG/Controller/MainPageViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "53CDFD20-3A90-4AC3-85C5-A43771B0342F - c34f705a7f021aa3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; () in testFBGG.MainPageViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "testFBGG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/florianpeyrony/Desktop/P9_Projet_Libre/1Bet/testFBGG/testFBGG/Controller/MainPageViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1473">
+               </Location>
+               <Location
+                  uuid = "53CDFD20-3A90-4AC3-85C5-A43771B0342F - c34f705a7f021aa3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; () in testFBGG.MainPageViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "testFBGG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/florianpeyrony/Desktop/P9_Projet_Libre/1Bet/testFBGG/testFBGG/Controller/MainPageViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1781">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
