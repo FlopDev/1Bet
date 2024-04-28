@@ -112,8 +112,14 @@ class FirebaseService {
     func facebookButton() {
         checkBDDInfo() { result in
             if result {
-                // gestion des erreurs si il clique sur facebook puis s'en va sinon ca crash
-                let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+                // Vérifier si AccessToken.current est nul
+                guard let tokenString = AccessToken.current?.tokenString else {
+                    print("AccessToken is nil")
+                    // Gérer l'erreur ici, par exemple, en affichant un message à l'utilisateur ou en lançant une notification
+                    return
+                }
+                // Utiliser en toute sécurité le tokenString récupéré
+                let credential = FacebookAuthProvider.credential(withAccessToken: tokenString)
                 
                 Auth.auth().signIn(with: credential) { authResult, error in
                     if let error = error {
@@ -130,7 +136,14 @@ class FirebaseService {
                     NotificationCenter.default.post(notification)
                 }
             } else {
-                let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+                // Vérifier si AccessToken.current est nul
+                guard let tokenString = AccessToken.current?.tokenString else {
+                    print("AccessToken is nil")
+                    // Gérer l'erreur ici, par exemple, en affichant un message à l'utilisateur ou en lançant une notification
+                    return
+                }
+                // Utiliser en toute sécurité le tokenString récupéré
+                let credential = FacebookAuthProvider.credential(withAccessToken: tokenString)
                 
                 Auth.auth().signIn(with: credential) { authResult, error in
                     if let error = error {

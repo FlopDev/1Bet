@@ -49,6 +49,36 @@
                   endingLineNumber = "77"
                   offsetFromSymbolStart = "1781">
                </Location>
+               <Location
+                  uuid = "53CDFD20-3A90-4AC3-85C5-A43771B0342F - 38978a0f98799db7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; () in testFBGG.MainPageViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "testFBGG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/florianpeyrony/Desktop/OneBet/1Bet/1Bet/testFBGG/testFBGG/Controller/MainPageViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1389">
+               </Location>
+               <Location
+                  uuid = "53CDFD20-3A90-4AC3-85C5-A43771B0342F - 38978a0f98799db7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; () in testFBGG.MainPageViewController.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "testFBGG"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/florianpeyrony/Desktop/OneBet/1Bet/1Bet/testFBGG/testFBGG/Controller/MainPageViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "1751">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
