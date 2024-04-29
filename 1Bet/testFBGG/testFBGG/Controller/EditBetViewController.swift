@@ -42,13 +42,19 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func publishPronosticButton(_ sender: UIButton) {
         if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" {
-            presentAlert(title: "Missing Text Entry", message: "Put some text in all the text entry after press publish button")
+            presentAlert(title: "Missing Text Entry", message: "Put some text in all the text entry before pressing publish button")
         } else {
             numberOfPublish += 1
             shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: numberOfPublish, trustOnTen: trustOnTenTextField.text!)
-            
-            
+            presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")
         }
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        pronosticTextField.resignFirstResponder()
+        trustOnTenTextField.resignFirstResponder()
+        dateOfTheBet.resignFirstResponder()
+        percentOfBkTextField.resignFirstResponder()
     }
     
     @IBAction func didPressAddPictureButton(_ sender: Any) {
@@ -56,19 +62,19 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         present(imagePicker, animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                imageViewOfTheBet.isHidden = false
-                imageViewOfTheBet.image = image
-            }
-            
-            dismiss(animated: true, completion: nil)
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imageViewOfTheBet.isHidden = false
+            imageViewOfTheBet.image = image
         }
         
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
+    }
     
-   
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     // MARK: - Alerts
     func presentAlert(title: String, message: String) {
@@ -80,10 +86,32 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(alert, animated: true, completion: nil)
     }
     
+    func presentAlertAndAddAction(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        // add an action (button)
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            // MARK: VINCENT - ca ne veut pas retour en arrière, Pourquoi ?
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(okAction)
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    }
+}
+
+
+extension EditBetViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dy0-T5-zzv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dy0-T5-zzv">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -237,6 +237,7 @@
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball" translatesAutoresizingMaskIntoConstraints="NO" id="WBp-nz-koj">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQ5-of-ycS">
                                 <rect key="frame" x="164.66666666666666" y="709.66666666666663" width="61" height="34.333333333333371"/>
@@ -335,6 +336,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wgZ-Na-5tb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Wd7-dv-fwo" firstAttribute="top" secondItem="wgZ-Na-5tb" secondAttribute="top" constant="20" id="2N5-Oh-DU1"/>
                             <constraint firstItem="gIQ-sy-CsM" firstAttribute="trailing" secondItem="mWF-in-ekH" secondAttribute="trailing" id="5wc-9p-SxY"/>
@@ -574,6 +576,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AEw-PC-zRc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="b4O-sh-4CH" firstAttribute="height" secondItem="8Cq-sd-M9Q" secondAttribute="height" multiplier="0.343202" id="4Gv-I3-t2W"/>
                             <constraint firstAttribute="bottom" secondItem="8Cq-sd-M9Q" secondAttribute="bottom" id="5PX-Mr-AiS"/>
@@ -601,6 +604,9 @@
                             <constraint firstItem="8Cq-sd-M9Q" firstAttribute="leading" secondItem="AEw-PC-zRc" secondAttribute="leading" id="s62-8X-1k0"/>
                             <constraint firstItem="ZNR-v5-2AC" firstAttribute="trailing" secondItem="89j-nH-iaf" secondAttribute="trailing" id="vd9-Xb-FTM"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="wHx-uT-fKe" appends="YES" id="cD1-SS-2PP"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="5dH-j3-iaA"/>
                     <connections>
@@ -614,6 +620,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAo-uF-GDN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="wHx-uT-fKe">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="gO4-XM-zeX" id="cv0-cf-G9R"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1600" y="564"/>
         </scene>
@@ -626,7 +637,7 @@
         <image name="door.left.hand.open" catalog="system" width="108" height="128"/>
         <image name="lebron_dunk" width="2500" height="1667"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="rectangle.and.pencil.and.ellipsis" catalog="system" width="128" height="80"/>
+        <image name="rectangle.and.pencil.and.ellipsis" catalog="system" width="128" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
