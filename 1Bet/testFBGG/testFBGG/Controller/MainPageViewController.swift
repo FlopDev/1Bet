@@ -9,13 +9,14 @@ import UIKit
 import FirebaseFirestore
 import Firebase
 
+
+// MARK: - TODO : Envoyer, et récuperer la photo depuis Firebase
+
 class MainPageViewController: UIViewController {
     
     // MARK: - Properties
     var userInfo: User?
     var database = Firestore.firestore()
-    
-    
     
     // MARK: - Outlets
     
@@ -28,9 +29,7 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var percentOfBkTipsterTextField: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
-    
     @IBOutlet weak var disconnectButton: UIButton!
-    
     @IBOutlet weak var basketBallImage: UIImageView!
     
     
@@ -43,7 +42,6 @@ class MainPageViewController: UIViewController {
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
         
-        
         // margin of bet pronostic
         pronosticOfTipsterTextField.setMargins()
         pronosticOfTipsterTextField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -51,10 +49,6 @@ class MainPageViewController: UIViewController {
         commentButton.layer.borderWidth = 1
         likeButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        
-        
-        
-        
     }
     
     // MARK: - Functions
@@ -71,6 +65,7 @@ class MainPageViewController: UIViewController {
                 if let data = data {
                     // Utilisez les données dans votre ViewController
                     if let colonne1 = data["date"] as? String {
+                        print(colonne1)
                         self.dateOfPronostic.text = "Pronostic of : \(colonne1)"
                     }
                     
@@ -81,10 +76,12 @@ class MainPageViewController: UIViewController {
                     }
                     
                     if let colonne3 = data["percentOfBankroll"] as? String {
+                        print(colonne3)
                         self.percentOfBkTipsterTextField.text = "% of Bankroll : \(colonne3)"
                     }
                     
                     if let colonne4 = data["trustOnTen"] as? String {
+                        print(colonne4)
                         self.trustOnTenOfTipsterTextField.text = "Trust : \(colonne4)"
                     }
                 } else {

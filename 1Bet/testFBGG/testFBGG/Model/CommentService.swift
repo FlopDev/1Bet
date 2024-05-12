@@ -27,7 +27,7 @@ class CommentService {
     
     // MARK: - Functions
     func publishAComment(uid: String?, comment:String, nameOfWriter: String, publicationID: Int) {
-        let docRef = database.document("comments/\(uid)")
+        let docRef = database.document("comments/\(String(describing: uid))")
         docRef.setData(["nameOfWriter": nameOfWriter, "likes": 0, "comment": comment, "publicationID": publicationID])
         //comments["nameOfWriter"] = nameOfWriter
         //comments["comment"] = comment as String
