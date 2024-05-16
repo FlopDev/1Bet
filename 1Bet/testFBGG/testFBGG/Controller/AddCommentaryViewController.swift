@@ -29,19 +29,19 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         
         tableView.dataSource = self
         tableView.delegate = self
-            
+        
         
         //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CommentCell")
-
+        
         
         commentService.getComments(forPublicationID: 1) { [weak self] comments in
-                    DispatchQueue.main.async {
-                        self?.comments = comments
-                        self?.tableView.reloadData()
-                    }
-                }
-            // Utilisez les données ici
-            
+            DispatchQueue.main.async {
+                self?.comments = comments
+                self?.tableView.reloadData()
+            }
+        }
+        // Utilisez les données ici
+        
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -54,11 +54,11 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
             CommentService.shared.publishAComment(uid: Auth.auth().currentUser?.uid, comment: commentTextField.text!, nameOfWriter: (Auth.auth().currentUser?.displayName)!, publicationID: 1)
             
             commentService.getComments(forPublicationID: 1) { [weak self] comments in
-                        DispatchQueue.main.async {
-                            self?.comments = comments
-                            self?.tableView.reloadData()
-                        }
-                    }
+                DispatchQueue.main.async {
+                    self?.comments = comments
+                    self?.tableView.reloadData()
+                }
+            }
         } else {
             presentAlert(title: "ERROR", message: "Please, add a comment before press the publish button")
         }
@@ -81,7 +81,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     
 }
 
-    // MARK: - Extensions
+// MARK: - Extensions
 
 extension AddCommentaryViewController: UITableViewDataSource {
     
@@ -91,7 +91,7 @@ extension AddCommentaryViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // le nombre de commentaires sur Firebase et non dans le commentary Service
+        // le nombre de commentaires sur Firebase et non dans le commentary Service
         return comments.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,10 +102,10 @@ extension AddCommentaryViewController: UITableViewDataSource {
         cell.textLabel?.text = comment.nameOfWriter
         cell.detailTextLabel?.text = comment.commentText
         print(comment.commentText)
-
+        
         
         return cell
-
+        
     }
-
+    
 }

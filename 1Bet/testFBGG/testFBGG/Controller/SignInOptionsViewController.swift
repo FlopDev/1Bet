@@ -6,32 +6,27 @@
 //
 
 import UIKit
-import FirebaseCore// there
+import FirebaseCore
 import FirebaseAuth
-import GoogleSignIn// to there
-
+import GoogleSignIn
 import FacebookLogin
-
-import FacebookCore //there
+import FacebookCore
 import FirebaseDatabase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Firebase //to there
- 
+import Firebase
 
 class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     
     // MARK: - Properties
     var userInfo: User?
     var service = FirebaseService()
-   
-    // MARK: - Textfields
+    
+    // MARK: - Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var basketBallImage: UIImageView!
-    
-    // MARK: - Buttons
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var signInWithGoogleButton: UIButton!
     @IBOutlet weak var signInWithFacebookButton: UIButton!
@@ -39,7 +34,7 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         setUpButtonsSkin()
     }
@@ -52,9 +47,7 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     }
     
     @objc func failLogin() {
-        print("Error : Missing Username, password or adress")
-        
-        self.presentAlert(title: "ERROR", message: "Connection rejected")
+        UIAlert.presentAlert(from: self, title: "ERROR", message: "Connection rejected")
     }
     
     func loginButton(_ loginButton: FBSDKLoginKit.FBLoginButton, didCompleteWith result: FBSDKLoginKit.LoginManagerLoginResult?, error: Error?) {
@@ -65,7 +58,7 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(successLogin), name: success, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(failLogin), name: fail, object: nil)
     }
-        
+    
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
         print("We want now fb disconnect account")
@@ -77,21 +70,21 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         if usernameTextField.text != "" && password.text != "" && emailTextField.text != "" {
             print("Inscription de \(usernameTextField.text ?? "no name")")
             service.doesEmailExist(email: emailTextField.text!) { [self] (exists) in
-                    if exists {
-                        // Si l'e-mail existe déjà, affichez un message d'erreur à l'utilisateur.
-                        print("Cette adresse email est déjà utilisée.")
-                        self.presentAlert(title: "ERROR", message: "This email address is already in use.")
-                    } else {
-                        service.signInEmailButton(email: self.emailTextField.text!, username: self.usernameTextField.text!, password: self.password.text!)
-                        self.performSegue(withIdentifier: "segueToMain", sender: userInfo)
-                    }
+                if exists {
+                    // Si l'e-mail existe déjà, affichez un message d'erreur à l'utilisateur.
+                    print("Cette adresse email est déjà utilisée")
+                    UIAlert.presentAlert(from: self, title: "ERROR", message: "This email address is already in use")
+                } else {
+                    service.signInEmailButton(email: self.emailTextField.text!, username: self.usernameTextField.text!, password: self.password.text!)
+                    self.performSegue(withIdentifier: "segueToMain", sender: userInfo)
                 }
+            }
         } else {
             print("Error : Missing Username, password or adress")
-            self.presentAlert(title: "ERROR", message: "Add a valid e-mail or password")
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Add a valid e-mail or password")
         }
     }
-        
+    
     @IBAction func didPressGoogle(_ sender: Any) {
         service.signInByGmail(viewController: self)
         let success = Notification.Name(rawValue: "FBAnswerSuccess")
@@ -123,9 +116,16 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         let loginButton = FBLoginButton()
         loginButton.delegate = self
         loginButton.frame = CGRect(x: createAccountButton.frame.origin.x, y: createAccountButton.frame.origin.y + createAccountButton.frame.size.height, width: createAccountButton.bounds.width ,height: createAccountButton.bounds.height)
+        loginButton.center = view.center
         loginButton.layer.cornerRadius = 20
         loginButton.titleLabel?.text = "Log in with Facebook"
+        
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loginButton)
+        NSLayoutConstraint.activate([
+            loginButton.centerXAnchor.constraint(equalTo: signInWithGoogleButton.centerXAnchor),
+            loginButton.bottomAnchor.constraint(equalTo: signInWithGoogleButton.topAnchor, constant: -20)
+        ])
         
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
     }
@@ -138,17 +138,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
             let userInfo = sender as? User
             successVC?.userInfo = userInfo
         }
-    }
-    
-    // MARK: - Alerts
-    
-    func presentAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
     }
     
 }

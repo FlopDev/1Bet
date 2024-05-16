@@ -41,13 +41,20 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     // MARK: - Functions
     
     @IBAction func publishPronosticButton(_ sender: UIButton) {
-        if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" {
-            presentAlert(title: "Missing Text Entry", message: "Put some text in all the text entry before pressing publish button")
+        if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Put some text in all the text entry before pressing publish button")
         } else {
             numberOfPublish += 1
             shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: numberOfPublish, trustOnTen: trustOnTenTextField.text!)
-            presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")
+            FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!) { error in
+                guard let error = error else {
+                    print("Erreur lors du téléchargement de l'image : \(error?.localizedDescription)")
+                    UIAlert.presentAlert(from: self, title: "ERROR", message: "We cannot send the image on our Databse, check your connexion internet or contact the admin")
+                    return
+                }
+            }
         }
+        presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")
     }
     
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
@@ -77,21 +84,13 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     
     // MARK: - Alerts
-    func presentAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-    }
     
     func presentAlertAndAddAction(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         // add an action (button)
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            // MARK: VINCENT - ca ne veut pas retour en arrière, Pourquoi ?
+            // go back to the previous VC
             self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(okAction)

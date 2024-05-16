@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Firebase
 
 
-// MARK: - TODO : Envoyer, et récuperer la photo depuis Firebase
+// MARK: - TODO : Faire les alertes : UIAlert.presentAlert(from: self, title: "ERROR", message: <#T##String#>)
 
 class MainPageViewController: UIViewController {
     
@@ -49,6 +49,36 @@ class MainPageViewController: UIViewController {
         commentButton.layer.borderWidth = 1
         likeButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // Vérification si lastItem est disponible
+        FirebaseStorageService.shared.getImagesFromFirebaseStorage { lastItem in
+            // Vérification si lastItem est disponible
+            if let lastItem = lastItem {
+                // Téléchargement de l'image correspondant à lastItem
+                lastItem.getData(maxSize: 10 * 1024 * 1024) { data, error in
+                    if let error = error {
+                        print("Erreur lors du téléchargement de l'image: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    // Vérification si des données d'image ont été téléchargées
+                    guard let imageData = data else {
+                        print("Aucune donnée d'image téléchargée.")
+                        return
+                    }
+                    
+                    // Création d'une UIImage à partir des données téléchargées
+                    if let image = UIImage(data: imageData) {
+                        // Mise à jour de l'UIImageView avec l'image téléchargée
+                        DispatchQueue.main.async {
+                            self.imageOfPronostic.image = image
+                        }
+                    }
+                }
+            } else {
+                print("Aucun élément n'a été téléchargé.")
+            }
+        }
     }
     
     // MARK: - Functions
@@ -107,6 +137,8 @@ class MainPageViewController: UIViewController {
                 print("Document does not exist")
             }
         }
+        // doownload the image of the last bet
+        
     }
     
     @IBAction func pressLikeButton(_ sender: Any) {
@@ -117,30 +149,19 @@ class MainPageViewController: UIViewController {
     @IBAction func didPressDisconnect(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
-          try firebaseAuth.signOut()
+            try firebaseAuth.signOut()
             // segue To signIn
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
-          print("Error signing out: %@", signOutError)
+            print("Error signing out: %@", signOutError)
         }
     }
     
-        // MARK: - Navigation
-
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       // Get the new view controller using segue.destination.
-       // Pass the selected object to the new view controller.
-   }
+    // MARK: - Navigation
     
-        // MARK: - Alerts
-        
-        func presentAlert(title: String, message: String) {
-            
-            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-        }
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
 }

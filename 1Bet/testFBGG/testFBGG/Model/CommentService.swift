@@ -33,19 +33,19 @@ class CommentService {
         //comments["comment"] = comment as String
     }
     func getComments(forPublicationID publicationID: Int, completion: @escaping ([Comment]) -> Void) {
-           database.collection("comments").whereField("publicationID", isEqualTo: publicationID).getDocuments { querySnapshot, error in
-               if let error = error {
-                   print("Error getting documents: \(error)")
-                   completion([])
-               } else {
-                   var comments: [Comment] = []
-                   for document in querySnapshot!.documents {
-                       let data = document.data()
-                       let comment = Comment(data: data)
-                       comments.append(comment)
-                   }
-                   completion(comments)
-               }
-           }
-       }
+        database.collection("comments").whereField("publicationID", isEqualTo: publicationID).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion([])
+            } else {
+                var comments: [Comment] = []
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    let comment = Comment(data: data)
+                    comments.append(comment)
+                }
+                completion(comments)
+            }
+        }
+    }
 }

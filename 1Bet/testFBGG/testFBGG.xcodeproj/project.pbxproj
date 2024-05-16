@@ -44,7 +44,6 @@
 		A694CF9529C05F860097E9FD /* EditBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694CF9429C05F860097E9FD /* EditBetViewController.swift */; };
 		A694CF9729C08BB80097E9FD /* AddCommentaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694CF9629C08BB80097E9FD /* AddCommentaryViewController.swift */; };
 		A694CF9929C097260097E9FD /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694CF9829C097260097E9FD /* Comment.swift */; };
-		A6B355B429EDDFF30040A1BC /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B355B329EDDFF30040A1BC /* CustomIntensityVisualEffectView.swift */; };
 		A6B355B629EE4DD40040A1BC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355B529EE4DD30040A1BC /* Roboto-Regular.ttf */; };
 		A6B355C929EE4FAA0040A1BC /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355B729EE4FA50040A1BC /* Roboto-BlackItalic.ttf */; };
 		A6B355CA29EE4FAA0040A1BC /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355B829EE4FA60040A1BC /* Roboto-ThinItalic.ttf */; };
@@ -85,6 +84,9 @@
 		A6FBC2C32A00650C0038FD07 /* testFBGGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FBC2C22A00650C0038FD07 /* testFBGGUITests.swift */; };
 		A6FBC2C52A00650C0038FD07 /* testFBGGUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FBC2C42A00650C0038FD07 /* testFBGGUITestsLaunchTests.swift */; };
 		A6FC497429CE1F5D0022FB5D /* PublicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FC497329CE1F5C0022FB5D /* PublicationService.swift */; };
+		CB033F252BF0E23D00D5B7AF /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */; };
+		CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F272BF27FC400D5B7AF /* UIAlert.swift */; };
+		CB033F2A2BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,7 +117,6 @@
 		A694CF9429C05F860097E9FD /* EditBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBetViewController.swift; sourceTree = "<group>"; };
 		A694CF9629C08BB80097E9FD /* AddCommentaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentaryViewController.swift; sourceTree = "<group>"; };
 		A694CF9829C097260097E9FD /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
-		A6B355B329EDDFF30040A1BC /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
 		A6B355B529EE4DD30040A1BC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		A6B355B729EE4FA50040A1BC /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		A6B355B829EE4FA60040A1BC /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
@@ -152,6 +153,9 @@
 		A6FBC2C22A00650C0038FD07 /* testFBGGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testFBGGUITests.swift; sourceTree = "<group>"; };
 		A6FBC2C42A00650C0038FD07 /* testFBGGUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testFBGGUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A6FC497329CE1F5C0022FB5D /* PublicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationService.swift; sourceTree = "<group>"; };
+		CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
+		CB033F272BF27FC400D5B7AF /* UIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlert.swift; sourceTree = "<group>"; };
+		CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomIntensityVisualEffectView.swift; path = ../../../../../../1Bet/testFBGG/testFBGG/Model/CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,8 +227,7 @@
 				A687378C2976485E00A12CB6 /* CommentService.swift */,
 				A6FC497329CE1F5C0022FB5D /* PublicationService.swift */,
 				A619619C297F701B009D6DE7 /* FirebaseService.swift */,
-				A6B355B329EDDFF30040A1BC /* CustomIntensityVisualEffectView.swift */,
-				A663B06F29F6982A00574DE6 /* LabelMargin.swift */,
+				CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 		A6D667E9293D3DE200C98493 /* testFBGG */ = {
 			isa = PBXGroup;
 			children = (
+				CB033F262BF27F8700D5B7AF /* Helper */,
 				A671E93E2967B03C0043F8AF /* Model */,
 				A6D6683E293D629100C98493 /* View */,
 				A6D66840293D630C00C98493 /* Controller */,
@@ -346,6 +350,16 @@
 				A6FBC2C42A00650C0038FD07 /* testFBGGUITestsLaunchTests.swift */,
 			);
 			path = testFBGGUITests;
+			sourceTree = "<group>";
+		};
+		CB033F262BF27F8700D5B7AF /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				A663B06F29F6982A00574DE6 /* LabelMargin.swift */,
+				CB033F272BF27FC400D5B7AF /* UIAlert.swift */,
+				CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -547,15 +561,17 @@
 				A6D667EB293D3DE200C98493 /* AppDelegate.swift in Sources */,
 				A6D66842293D67D600C98493 /* SignInOptionsViewController.swift in Sources */,
 				A694CF9929C097260097E9FD /* Comment.swift in Sources */,
+				CB033F2A2BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift in Sources */,
 				A687378D2976485E00A12CB6 /* CommentService.swift in Sources */,
 				A694CF9729C08BB80097E9FD /* AddCommentaryViewController.swift in Sources */,
 				A6FC497429CE1F5D0022FB5D /* PublicationService.swift in Sources */,
 				A6D667ED293D3DE200C98493 /* SceneDelegate.swift in Sources */,
-				A6B355B429EDDFF30040A1BC /* CustomIntensityVisualEffectView.swift in Sources */,
 				A656D6BD2A1C6D63000F7040 /* User.swift in Sources */,
+				CB033F252BF0E23D00D5B7AF /* FirebaseStorageService.swift in Sources */,
 				A694CF9529C05F860097E9FD /* EditBetViewController.swift in Sources */,
 				A663B07029F6982A00574DE6 /* LabelMargin.swift in Sources */,
 				A6D66839293D624A00C98493 /* LogInViewController.swift in Sources */,
+				CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */,
 				A619619D297F701B009D6DE7 /* FirebaseService.swift in Sources */,
 				A6D6683D293D628700C98493 /* MainPageViewController.swift in Sources */,
 				A6D667F5293D3DE200C98493 /* testFBGG.xcdatamodeld in Sources */,

@@ -26,28 +26,28 @@ class PublicationService {
     }
     
     func getLastPublication(completion: @escaping ([String: Any]?) -> Void) {
-            let collectionRef = database.collection("publication")
-
-            // Tri des documents par date de publication
-            let query = collectionRef.order(by: "date", descending: true).limit(to: 1)
-
-            // Exécution de la requête
-            query.getDocuments { (snapshot, error) in
-                if let error = error {
-                    print("Erreur lors de la récupération des données : \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-
-                // Traitement des données ici avec snapshot
-                if let document = snapshot?.documents.first {
-                    // Vous avez maintenant le dernier document dans la variable 'document'
-                    let data = document.data()
-                    completion(data)
-                } else {
-                    print("Aucune publication trouvée.")
-                    completion(nil)
-                }
+        let collectionRef = database.collection("publication")
+        
+        // Tri des documents par date de publication
+        let query = collectionRef.order(by: "date", descending: true).limit(to: 1)
+        
+        // Exécution de la requête
+        query.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Erreur lors de la récupération des données : \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            // Traitement des données ici avec snapshot
+            if let document = snapshot?.documents.first {
+                // Vous avez maintenant le dernier document dans la variable 'document'
+                let data = document.data()
+                completion(data)
+            } else {
+                print("Aucune publication trouvée.")
+                completion(nil)
             }
         }
+    }
 }

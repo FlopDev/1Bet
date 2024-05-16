@@ -44,10 +44,10 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         service.viewController = self
         // Do any additional setup after loading the view.
     }
-
+    
     
     // MARK: - Buttons
-   
+    
     @objc(loginButton:didCompleteWithResult:error:) func loginButton(_ loginButton: FBSDKLoginKit.FBLoginButton, didCompleteWith result: FBSDKLoginKit.LoginManagerLoginResult?, error: Error?) {
         
         service.facebookButton()
@@ -78,31 +78,29 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     
     @objc func failFBLogin() {
         print("Error : Missing Username, password or adress")
-        
-        self.presentAlert(title: "ERROR", message: "Connection from Facebook rejected")
+        UIAlert.presentAlert(from: self, title: "ERROR", message: "Connection from Facebook rejected")
     }
-     
-     @IBAction func logInButton(_ sender: Any) {
-         if emailTextField.text != "" && passwordTextField.text != nil {
-             print("Connexion de \(emailTextField.text ?? "no adress")")
+    
+    @IBAction func logInButton(_ sender: Any) {
+        if emailTextField.text != "" && passwordTextField.text != nil {
+            print("Connexion de \(emailTextField.text ?? "no adress")")
             
-             
-             service.logInEmailButton(email: emailTextField.text!, password: passwordTextField.text!) { (success) in
-                 DispatchQueue.main.async {
-                     if success {
-                         // Effectuer la redirection ici
-                         self.performSegue(withIdentifier: "segueToMain", sender: self.userInfo)
-                     } else {
-                         self.presentAlert(title: "ERROR", message: "Invalid password or Email")
-                     }
-                 }
-             }
-
-         } else {
-             presentAlert(title: "ERROR", message: "Missing Email or password")
-             print("Error : Missing Email or password")
-         }
-     }
+            
+            service.logInEmailButton(email: emailTextField.text!, password: passwordTextField.text!) { (success) in
+                DispatchQueue.main.async {
+                    if success {
+                        // Effectuer la redirection ici
+                        self.performSegue(withIdentifier: "segueToMain", sender: self.userInfo)
+                    } else {
+                        UIAlert.presentAlert(from: self, title: "ERROR", message: "Invalid password or Email")
+                    }
+                }
+            }
+            
+        } else {
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Missing Email or password")
+        }
+    }
     
     func setUpButtonsSkin() {
         createAnAccountButton.layer.borderWidth = 1
@@ -122,29 +120,18 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         let loginButton = FBLoginButton()
         loginButton.delegate = self
         loginButton.frame = CGRect(x: logInButton.frame.origin.x, y: logInButton.frame.origin.y + logInButton.frame.size.height, width: logInButton.bounds.width ,height: logInButton.bounds.height)
-        //loginButton.center = view.center
+        loginButton.center = view.center
         //loginButton.bounds = createAnAccountButton.bounds
         loginButton.layer.cornerRadius = 20
         loginButton.titleLabel?.text = "Log in with Facebook"
         view.addSubview(loginButton)
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
     }
-     // MARK: - Navigation
-
+    // MARK: - Navigation
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    // MARK: - Alerts
-    
-    func presentAlert(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-    }
-
 }
