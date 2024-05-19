@@ -18,21 +18,14 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     let commentService = CommentService()
     
     // MARK: - Outlets
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var commentTextField: UITextField!
-    
     @IBOutlet weak var basketBallImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.dataSource = self
         tableView.delegate = self
-        
-        
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CommentCell")
-        
         
         commentService.getComments(forPublicationID: 1) { [weak self] comments in
             DispatchQueue.main.async {
@@ -40,7 +33,6 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
                 self?.tableView.reloadData()
             }
         }
-        // Utilisez les données ici
         
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
@@ -65,9 +57,6 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         
     }
     
-    
-    
-    
     // MARK: - Alerts
     func presentAlert(title: String, message: String) {
         
@@ -84,9 +73,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
 // MARK: - Extensions
 
 extension AddCommentaryViewController: UITableViewDataSource {
-    
-    
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -103,9 +90,7 @@ extension AddCommentaryViewController: UITableViewDataSource {
         cell.detailTextLabel?.text = comment.commentText
         print(comment.commentText)
         
-        
         return cell
         
     }
-    
 }

@@ -30,10 +30,8 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
-    
     @IBOutlet weak var createAnAccountButton: UIButton!
     @IBOutlet weak var basketBallImage: UIImageView!
-    
     @IBOutlet weak var signInWithGoogleButton: UIButton!
     
     

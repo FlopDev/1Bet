@@ -34,7 +34,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         setUpButtonsSkin()
     }
@@ -58,7 +57,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(successLogin), name: success, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(failLogin), name: fail, object: nil)
     }
-    
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
         print("We want now fb disconnect account")
@@ -139,5 +137,4 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
             successVC?.userInfo = userInfo
         }
     }
-    
 }

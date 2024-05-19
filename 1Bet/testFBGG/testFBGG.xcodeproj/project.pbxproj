@@ -86,7 +86,7 @@
 		A6FC497429CE1F5D0022FB5D /* PublicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FC497329CE1F5C0022FB5D /* PublicationService.swift */; };
 		CB033F252BF0E23D00D5B7AF /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */; };
 		CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F272BF27FC400D5B7AF /* UIAlert.swift */; };
-		CB033F2A2BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */; };
+		CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,7 +155,7 @@
 		A6FC497329CE1F5C0022FB5D /* PublicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationService.swift; sourceTree = "<group>"; };
 		CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		CB033F272BF27FC400D5B7AF /* UIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlert.swift; sourceTree = "<group>"; };
-		CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomIntensityVisualEffectView.swift; path = ../../../../../../1Bet/testFBGG/testFBGG/Model/CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
+		CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,7 +357,7 @@
 			children = (
 				A663B06F29F6982A00574DE6 /* LabelMargin.swift */,
 				CB033F272BF27FC400D5B7AF /* UIAlert.swift */,
-				CB033F292BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift */,
+				CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -467,7 +467,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					A6D667E6293D3DE200C98493 = {
 						CreatedOnToolsVersion = 14.0.1;
@@ -561,7 +561,7 @@
 				A6D667EB293D3DE200C98493 /* AppDelegate.swift in Sources */,
 				A6D66842293D67D600C98493 /* SignInOptionsViewController.swift in Sources */,
 				A694CF9929C097260097E9FD /* Comment.swift in Sources */,
-				CB033F2A2BF6A21400D5B7AF /* CustomIntensityVisualEffectView.swift in Sources */,
+				CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */,
 				A687378D2976485E00A12CB6 /* CommentService.swift in Sources */,
 				A694CF9729C08BB80097E9FD /* AddCommentaryViewController.swift in Sources */,
 				A6FC497429CE1F5D0022FB5D /* PublicationService.swift in Sources */,
@@ -668,6 +668,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -682,7 +683,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -728,6 +729,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -736,7 +738,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

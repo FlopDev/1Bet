@@ -10,8 +10,6 @@ import FirebaseFirestore
 import Firebase
 
 
-// MARK: - TODO : Faire les alertes : UIAlert.presentAlert(from: self, title: "ERROR", message: <#T##String#>)
-
 class MainPageViewController: UIViewController {
     
     // MARK: - Properties
@@ -58,12 +56,14 @@ class MainPageViewController: UIViewController {
                 lastItem.getData(maxSize: 10 * 1024 * 1024) { data, error in
                     if let error = error {
                         print("Erreur lors du téléchargement de l'image: \(error.localizedDescription)")
+                        UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve image")
                         return
                     }
                     
                     // Vérification si des données d'image ont été téléchargées
                     guard let imageData = data else {
                         print("Aucune donnée d'image téléchargée.")
+                        UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve image")
                         return
                     }
                     
@@ -77,6 +77,7 @@ class MainPageViewController: UIViewController {
                 }
             } else {
                 print("Aucun élément n'a été téléchargé.")
+                UIAlert.presentAlert(from: self, title: "ERROR", message: "No element download")
             }
         }
     }
@@ -115,6 +116,7 @@ class MainPageViewController: UIViewController {
                         self.trustOnTenOfTipsterTextField.text = "Trust : \(colonne4)"
                     }
                 } else {
+                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")
                     print("Aucune donnée récupérée.")
                 }
             }
@@ -134,6 +136,7 @@ class MainPageViewController: UIViewController {
                 }
                 
             } else {
+                UIAlert.presentAlert(from: self, title: "ERROR", message: "Document does not exist")
                 print("Document does not exist")
             }
         }
@@ -153,6 +156,7 @@ class MainPageViewController: UIViewController {
             // segue To signIn
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
             print("Error signing out: %@", signOutError)
         }
     }

@@ -25,13 +25,11 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var pronosticTextField: UITextField!
     @IBOutlet weak var trustOnTenTextField: UITextField!
     @IBOutlet weak var percentOfBkTextField: UITextField!
-    
     @IBOutlet weak var basketBallImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         imagePicker.delegate = self
-        
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -39,7 +37,6 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     // MARK: - Functions
-    
     @IBAction func publishPronosticButton(_ sender: UIButton) {
         if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Put some text in all the text entry before pressing publish button")
@@ -48,7 +45,7 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
             shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: numberOfPublish, trustOnTen: trustOnTenTextField.text!)
             FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!) { error in
                 guard let error = error else {
-                    print("Erreur lors du téléchargement de l'image : \(error?.localizedDescription)")
+                    print("Erreur lors du téléchargement de l'image :\(String(describing: error?.localizedDescription))")
                     UIAlert.presentAlert(from: self, title: "ERROR", message: "We cannot send the image on our Databse, check your connexion internet or contact the admin")
                     return
                 }
@@ -81,12 +78,8 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil)
     }
     
-    
-    
     // MARK: - Alerts
-    
     func presentAlertAndAddAction(title: String, message: String) {
-        
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         // add an action (button)
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
@@ -94,7 +87,6 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(okAction)
-        
         // show the alert
         self.present(alert, animated: true, completion: nil)
     }
