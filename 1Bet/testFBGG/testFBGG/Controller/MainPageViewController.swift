@@ -49,35 +49,13 @@ class MainPageViewController: UIViewController {
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         // Vérification si lastItem est disponible
-        FirebaseStorageService.shared.getImagesFromFirebaseStorage { lastItem in
-            // Vérification si lastItem est disponible
-            if let lastItem = lastItem {
-                // Téléchargement de l'image correspondant à lastItem
-                lastItem.getData(maxSize: 10 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        print("Erreur lors du téléchargement de l'image: \(error.localizedDescription)")
-                        UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve image")
-                        return
-                    }
-                    
-                    // Vérification si des données d'image ont été téléchargées
-                    guard let imageData = data else {
-                        print("Aucune donnée d'image téléchargée.")
-                        UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve image")
-                        return
-                    }
-                    
-                    // Création d'une UIImage à partir des données téléchargées
-                    if let image = UIImage(data: imageData) {
-                        // Mise à jour de l'UIImageView avec l'image téléchargée
-                        DispatchQueue.main.async {
-                            self.imageOfPronostic.image = image
-                        }
-                    }
+        FirebaseStorageService.shared.downloadPhoto { image in
+            DispatchQueue.main.async {
+                if let image = image {
+                    self.imageOfPronostic.image = image
+                } else {
+                    print("Aucune image disponible.")
                 }
-            } else {
-                print("Aucun élément n'a été téléchargé.")
-                UIAlert.presentAlert(from: self, title: "ERROR", message: "No element download")
             }
         }
     }

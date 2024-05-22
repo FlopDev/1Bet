@@ -62,7 +62,6 @@
 		A6B355D829EE4FAA0040A1BC /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355C629EE4FA90040A1BC /* Roboto-Thin.ttf */; };
 		A6B355D929EE4FAA0040A1BC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355C729EE4FA90040A1BC /* Roboto-Bold.ttf */; };
 		A6B355DA29EE4FAA0040A1BC /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6B355C829EE4FA90040A1BC /* Roboto-Light.ttf */; };
-		A6BA297B293D79E2003BC36F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6BA297A293D79E2003BC36F /* GoogleService-Info.plist */; };
 		A6D667EB293D3DE200C98493 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D667EA293D3DE200C98493 /* AppDelegate.swift */; };
 		A6D667ED293D3DE200C98493 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D667EC293D3DE200C98493 /* SceneDelegate.swift */; };
 		A6D667F2293D3DE200C98493 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6D667F0293D3DE200C98493 /* Main.storyboard */; };
@@ -87,6 +86,7 @@
 		CB033F252BF0E23D00D5B7AF /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */; };
 		CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB033F272BF27FC400D5B7AF /* UIAlert.swift */; };
 		CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */; };
+		CB46FC9E2BFBFD34007B0A28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB46FC9D2BFBFD34007B0A28 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +135,6 @@
 		A6B355C629EE4FA90040A1BC /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		A6B355C729EE4FA90040A1BC /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		A6B355C829EE4FA90040A1BC /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
-		A6BA297A293D79E2003BC36F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A6D667E7293D3DE200C98493 /* testFBGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testFBGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6D667EA293D3DE200C98493 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6D667EC293D3DE200C98493 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		CB033F272BF27FC400D5B7AF /* UIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlert.swift; sourceTree = "<group>"; };
 		CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
+		CB46FC9D2BFBFD34007B0A28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,8 +323,8 @@
 			isa = PBXGroup;
 			children = (
 				A6B355DB29EE50300040A1BC /* Fonts */,
-				A6BA297A293D79E2003BC36F /* GoogleService-Info.plist */,
 				A6D667EA293D3DE200C98493 /* AppDelegate.swift */,
+				CB46FC9D2BFBFD34007B0A28 /* GoogleService-Info.plist */,
 				A6D667EC293D3DE200C98493 /* SceneDelegate.swift */,
 				A6D667FB293D3DE500C98493 /* Info.plist */,
 			);
@@ -531,7 +531,7 @@
 				A6B355CA29EE4FAA0040A1BC /* Roboto-ThinItalic.ttf in Resources */,
 				A6B355B629EE4DD40040A1BC /* Roboto-Regular.ttf in Resources */,
 				A6D667F2293D3DE200C98493 /* Main.storyboard in Resources */,
-				A6BA297B293D79E2003BC36F /* GoogleService-Info.plist in Resources */,
+				CB46FC9E2BFBFD34007B0A28 /* GoogleService-Info.plist in Resources */,
 				A6B355D529EE4FAA0040A1BC /* Roboto-MediumItalic.ttf in Resources */,
 				A6B355CC29EE4FAA0040A1BC /* Roboto-BoldCondensedItalic.ttf in Resources */,
 			);
@@ -768,7 +768,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.FlopDev.testFBGG;
+				PRODUCT_BUNDLE_IDENTIFIER = FlopDev.testFBGG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -796,7 +796,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.FlopDev.testFBGG;
+				PRODUCT_BUNDLE_IDENTIFIER = FlopDev.testFBGG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
