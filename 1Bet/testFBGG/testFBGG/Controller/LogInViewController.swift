@@ -27,6 +27,7 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     
     // MARK: - Outlets
     
+    @IBOutlet var signInButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
@@ -109,7 +110,10 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         logInButton.layer.cornerRadius = 20
         logInButton.backgroundColor?.withAlphaComponent(0.20)
-        
+        signInButton.layer.borderWidth = 1
+        signInButton.layer.cornerRadius = 20
+        signInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        signInButton.backgroundColor?.withAlphaComponent(0.20)
         emailTextField.layer.borderWidth = 1
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         passwordTextField.layer.borderWidth = 1
