@@ -17,6 +17,7 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     let shared = PublicationService()
     var numberOfPublish = 0
     let imagePicker = UIImagePickerController()
+    var publicationID = ""
     
     // MARK: - Outlets
     @IBOutlet weak var addPictureButton: UIButton!
@@ -34,6 +35,17 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
+        
+        PublicationService.shared.getLatestPublicationID { result in
+            switch result {
+            case .success(let documentID):
+                print("ID de la dernière publication : \(documentID)")
+                self.publicationID = documentID
+                // Vous pouvez maintenant utiliser cet ID comme vous le souhaitez
+            case .failure(let error):
+                print("Erreur : \(error.localizedDescription)")
+            }
+        }
     }
     
     // MARK: - Functions
@@ -41,8 +53,8 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Put some text in all the text entry before pressing publish button")
         } else {
-            numberOfPublish += 1
-            shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: numberOfPublish, trustOnTen: trustOnTenTextField.text!)
+            
+            shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: publicationID, trustOnTen: trustOnTenTextField.text!)
             FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!) { error in
                 guard let error = error else {
                     print("Erreur lors du téléchargement de l'image :\(String(describing: error?.localizedDescription))")

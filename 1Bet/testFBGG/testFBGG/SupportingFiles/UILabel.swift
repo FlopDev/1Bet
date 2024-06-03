@@ -6,3 +6,18 @@
 //
 
 import Foundation
+import UIKit
+
+extension UILabel {
+    func setTextWithTypeAnimation(text: String, characterDelay: TimeInterval) {
+        self.text = ""
+        let writingTask = DispatchWorkItem { [weak self] in
+            for (index, character) in text.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
+                    self?.text?.append(character)
+                }
+            }
+        }
+        DispatchQueue.global().async(execute: writingTask)
+    }
+}

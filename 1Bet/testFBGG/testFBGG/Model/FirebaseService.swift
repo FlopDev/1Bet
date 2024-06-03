@@ -14,16 +14,13 @@ import GoogleSignIn
 class FirebaseService {
     
     // MARK: - Preperties
-    
     static let shared = FirebaseService()
     var database = Firestore.firestore()
     let vc = MainPageViewController()
     weak var viewController: UIViewController?
     typealias PublicationCompletion = (String?, String?, Double?, Double?) -> Void
     
-    
     // MARK: - Functions
-    
     func doesEmailExist(email: String, completion: @escaping (Bool) -> Void) {
         // Get a reference to the Firestore database
         //let db = Firestore.firestore()
@@ -73,7 +70,6 @@ class FirebaseService {
     }
     
     func signInEmailButton(email: String, username: String, password: String) {
-        
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             if error != nil {
@@ -96,7 +92,6 @@ class FirebaseService {
     
     
     func logInEmailButton(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Erreur lors de la connexion: \(error.localizedDescription)")
@@ -169,7 +164,6 @@ class FirebaseService {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
-        
         // Start the sign in flow!
         GIDSignIn.sharedInstance.signIn(with: config, presenting: viewController) { [unowned self] user, error in
             
@@ -203,8 +197,6 @@ class FirebaseService {
                 NotificationCenter.default.post(notification)
                 
                 self.saveUserInfo(uid:authResult!.user.uid, name: (authResult?.user.displayName)!, email: authResult?.user.email ?? "nil", isAdmin: false)
-                
-                
             }
         }
     }

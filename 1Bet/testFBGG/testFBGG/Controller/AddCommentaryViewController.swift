@@ -16,6 +16,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     let db = Firestore.firestore()
     var comments: [Comment] = []
     let commentService = CommentService()
+    var publicationID = ""
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -27,10 +28,28 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         
-        commentService.getComments(forPublicationID: 1) { [weak self] comments in
-            DispatchQueue.main.async {
-                self?.comments = comments
-                self?.tableView.reloadData()
+        PublicationService.shared.getLatestPublicationID { result in
+            switch result {
+            case .success(let documentID):
+                print("ID de la dernière publication : \(documentID)")
+                self.publicationID = documentID
+                // Vous pouvez maintenant utiliser cet ID comme vous le souhaitez
+            case .failure(let error):
+                print("Erreur : \(error.localizedDescription)")
+            }
+        }
+            
+        commentService.getComments(forPublicationID: publicationID) { comments in
+            if comments.isEmpty {
+                print("No comments found for publicationID: \(self.publicationID)")
+            } else {
+                for comment in comments {
+                    print("Comment: \(comment.commentText)")
+                    DispatchQueue.main.async {
+                        self.comments = comments
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
         
@@ -43,12 +62,19 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     // MARK: - Functions
     @IBAction func publishButton(_ sender: Any) {
         if commentTextField.text != nil {
-            CommentService.shared.publishAComment(uid: Auth.auth().currentUser?.uid, comment: commentTextField.text!, nameOfWriter: (Auth.auth().currentUser?.displayName)!, publicationID: 1)
+            CommentService.shared.publishAComment(uid: Auth.auth().currentUser?.uid, comment: commentTextField.text!, nameOfWriter: (Auth.auth().currentUser?.displayName)!, publicationID: publicationID)
             
-            commentService.getComments(forPublicationID: 1) { [weak self] comments in
-                DispatchQueue.main.async {
-                    self?.comments = comments
-                    self?.tableView.reloadData()
+            commentService.getComments(forPublicationID: publicationID) { comments in
+                if comments.isEmpty {
+                    print("No comments found for publicationID: \(self.publicationID)")
+                } else {
+                    for comment in comments {
+                        print("Comment: \(comment.commentText)")
+                        DispatchQueue.main.async {
+                            self.comments = comments
+                            self.tableView.reloadData()
+                        }
+                    }
                 }
             }
         } else {
@@ -73,7 +99,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
 // MARK: - Extensions
 
 extension AddCommentaryViewController: UITableViewDataSource {
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

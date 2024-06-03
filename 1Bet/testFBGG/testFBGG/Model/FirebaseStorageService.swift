@@ -20,7 +20,6 @@ class FirebaseStorageService {
     func downloadPhoto(completion: @escaping (UIImage?) -> Void) {
         // Référence au dossier "photos" dans Firebase Storage
         let storageRef = Storage.storage().reference(withPath: "photos")
-        
         // Liste tous les éléments dans le dossier "photos"
         storageRef.listAll { (result, error) in
             // Gère les erreurs de la liste
@@ -125,4 +124,5 @@ class FirebaseStorageService {
 enum FirebaseStorageError: Error {
     case invalidImageData
     case downloadURLNotFound
+    case noDocumentsFound
 }

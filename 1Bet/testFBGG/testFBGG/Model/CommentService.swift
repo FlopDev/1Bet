@@ -17,7 +17,6 @@ class CommentService {
     // MARK: - Preperties
     
     static let shared = CommentService()
-    //private init() { }
     var database = Firestore.firestore()
     var userInfo: User?
     let vc = MainPageViewController()
@@ -26,26 +25,40 @@ class CommentService {
     
     
     // MARK: - Functions
-    func publishAComment(uid: String?, comment:String, nameOfWriter: String, publicationID: Int) {
+    func publishAComment(uid: String?, comment:String, nameOfWriter: String, publicationID: String) {
         let docRef = database.document("comments/\(String(describing: uid))")
         docRef.setData(["nameOfWriter": nameOfWriter, "likes": 0, "comment": comment, "publicationID": publicationID])
-        //comments["nameOfWriter"] = nameOfWriter
-        //comments["comment"] = comment as String
+        print("Le commentaire enregistré porte le publicationID : \(publicationID)")
     }
-    func getComments(forPublicationID publicationID: Int, completion: @escaping ([Comment]) -> Void) {
-        database.collection("comments").whereField("publicationID", isEqualTo: publicationID).getDocuments { querySnapshot, error in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                completion([])
-            } else {
+    func getComments(forPublicationID publicationID: String, completion: @escaping ([Comment]) -> Void) {
+            database.collection("comments").whereField("publicationID", isEqualTo: publicationID).getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                    completion([])
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents found for publicationID: \(publicationID)")
+                    completion([])
+                    return
+                }
+                
+                if documents.isEmpty {
+                    print("No comments found for publicationID: \(publicationID)")
+                } else {
+                    print("Found \(documents.count) documents for publicationID: \(publicationID)")
+                }
+                
                 var comments: [Comment] = []
-                for document in querySnapshot!.documents {
+                for document in documents {
                     let data = document.data()
                     let comment = Comment(data: data)
                     comments.append(comment)
+                    print("Found comment: \(comment.commentText)")
                 }
+                
                 completion(comments)
             }
         }
-    }
 }

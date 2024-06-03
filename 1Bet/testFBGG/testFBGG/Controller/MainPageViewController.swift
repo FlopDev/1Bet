@@ -48,6 +48,9 @@ class MainPageViewController: UIViewController {
         likeButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
+        likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
+        
         // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadPhoto { image in
             DispatchQueue.main.async {

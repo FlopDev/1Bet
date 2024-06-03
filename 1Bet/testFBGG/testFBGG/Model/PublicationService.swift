@@ -20,9 +20,31 @@ class PublicationService {
     
     // MARK: - Functions
     
-    func savePublicationOnDB(date: String, description: String, percentOfBankroll: String, publicationID: Int, trustOnTen: String) {
+    func savePublicationOnDB(date: String, description: String, percentOfBankroll: String, publicationID: String, trustOnTen: String) {
         let docRef = database.collection("publication").document()
         docRef.setData(["date": date, "description": description, "percentOfBankroll": percentOfBankroll, "trustOnTen": trustOnTen])
+    }
+    
+    func getLatestPublicationID(completion: @escaping (Result<String, Error>) -> Void) {
+        let collectionRef = database.collection("publication")
+        
+        // Récupère le dernier document ajouté dans la collection "publication"
+        collectionRef.order(by: "date", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Erreur lors de la récupération des données : \(error.localizedDescription)")
+                completion(.failure(error))
+                return
+            }
+            
+            // Vérifie que le document existe et renvoie son ID
+            if let document = querySnapshot?.documents.first {
+                let documentID = document.documentID
+                completion(.success(documentID))
+            } else {
+                print("Aucune publication trouvée.")
+                completion(.failure(FirebaseStorageError.noDocumentsFound))
+            }
+        }
     }
     
     func getLastPublication(completion: @escaping ([String: Any]?) -> Void) {
