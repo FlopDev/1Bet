@@ -15,6 +15,7 @@ class MainPageViewController: UIViewController {
     // MARK: - Properties
     var userInfo: User?
     var database = Firestore.firestore()
+    let curvedProgressView = ProgressArcView()
     
     // MARK: - Outlets
     
@@ -29,6 +30,9 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var basketBallImage: UIImageView!
+    let progressArcView = ProgressArcView()
+    // var progressArcViewPercentOfBK: ProgressArcView()
+    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
     
     
     override func viewDidLoad() {
@@ -50,6 +54,8 @@ class MainPageViewController: UIViewController {
         
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
+        
+        setupProgressBarUI()
         
         // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadPhoto { image in
@@ -141,6 +147,21 @@ class MainPageViewController: UIViewController {
             print("Error signing out: %@", signOutError)
         }
     }
+    
+    private func setupProgressBarUI() {
+            // Configurez et ajoutez le ProgressArcView à la vue principale
+        view.addSubview(curvedProgressView)
+                curvedProgressView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    curvedProgressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    curvedProgressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                    curvedProgressView.widthAnchor.constraint(equalToConstant: 200),
+                    curvedProgressView.heightAnchor.constraint(equalToConstant: 200)
+                ])
+                
+                // Mettre à jour la progression avec une animation
+                curvedProgressView.animateProgress(to: 0.7, duration: 1.0)
+            }
     
     // MARK: - Navigation
     

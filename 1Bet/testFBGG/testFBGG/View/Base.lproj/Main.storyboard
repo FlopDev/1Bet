@@ -99,14 +99,14 @@
             <objects>
                 <viewController id="dy0-T5-zzv" customClass="SignInOptionsViewController" customModule="testFBGG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ibf-oZ-rFK">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball" translatesAutoresizingMaskIntoConstraints="NO" id="TeK-YS-Utg">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="9If-F8-wvW">
-                                <rect key="frame" x="39" y="91.666666666666686" width="312" height="200"/>
+                                <rect key="frame" x="39" y="83" width="312" height="200"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b2S-NF-lc8">
                                         <rect key="frame" x="0.0" y="0.0" width="312" height="50"/>
@@ -114,7 +114,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mkA-VJ-cu0">
-                                        <rect key="frame" x="0.0" y="74.999999999999986" width="312" height="50"/>
+                                        <rect key="frame" x="0.0" y="75" width="312" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
@@ -129,7 +129,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5FM-jB-Vu3">
-                                <rect key="frame" x="58.666666666666657" y="490.66666666666669" width="273" height="50.666666666666686"/>
+                                <rect key="frame" x="58.666666666666657" y="481.33333333333331" width="273" height="49.999999999999943"/>
                                 <color key="backgroundColor" red="0.91415768860000002" green="0.25924620030000001" blue="0.20990419390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -141,7 +141,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs6-ED-v8e">
-                                <rect key="frame" x="58.666666666666657" y="705" width="273" height="59"/>
+                                <rect key="frame" x="58.666666666666657" y="695.66666666666663" width="273" height="58.333333333333371"/>
                                 <color key="backgroundColor" red="0.30494129660000002" green="0.3686715364" blue="0.3276078999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -153,13 +153,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OneBet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IN-Iu-O4P">
-                                <rect key="frame" x="145.66666666666666" y="40" width="99" height="31.666666666666671"/>
+                                <rect key="frame" x="145.66666666666666" y="40" width="99" height="23"/>
                                 <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="27"/>
                                 <color key="textColor" red="0.20791444179999999" green="0.20001226659999999" blue="0.199973017" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHL-Rk-5PI">
-                                <rect key="frame" x="58.666666666666657" y="331.66666666666669" width="273" height="59"/>
+                                <rect key="frame" x="58.666666666666657" y="323" width="273" height="58.333333333333314"/>
                                 <color key="backgroundColor" red="0.30490875239999998" green="0.36868619920000001" blue="0.3275640011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -737,7 +737,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="xMa-ZP-BCe"/>
         <segue reference="Ej4-FS-TbW"/>
-        <segue reference="lKf-9W-uTX"/>
+        <segue reference="THR-GG-uCK"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="basketball" width="3537" height="4421"/>

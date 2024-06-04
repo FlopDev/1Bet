@@ -90,6 +90,7 @@
 		CB46FCA02C05214F007B0A28 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */; };
 		CB46FCA22C05F1CB007B0A28 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FCA12C05F1CB007B0A28 /* LaunchScreenViewController.swift */; };
 		CB46FCA42C0639B7007B0A28 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FCA32C0639B7007B0A28 /* UILabel.swift */; };
+		CB530FA92C0F3E9C007456C6 /* ProgressArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CB46FCA12C05F1CB007B0A28 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		CB46FCA32C0639B7007B0A28 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressArcView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +336,7 @@
 				A6D667EC293D3DE200C98493 /* SceneDelegate.swift */,
 				A6D667FB293D3DE500C98493 /* Info.plist */,
 				CB46FCA32C0639B7007B0A28 /* UILabel.swift */,
+				CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				A6D66839293D624A00C98493 /* LogInViewController.swift in Sources */,
 				CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */,
 				A619619D297F701B009D6DE7 /* FirebaseService.swift in Sources */,
+				CB530FA92C0F3E9C007456C6 /* ProgressArcView.swift in Sources */,
 				A6D6683D293D628700C98493 /* MainPageViewController.swift in Sources */,
 				A6D667F5293D3DE200C98493 /* testFBGG.xcdatamodeld in Sources */,
 			);
