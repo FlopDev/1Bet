@@ -25,6 +25,8 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     var userInfo: User?
     var service = FirebaseService()
     
+    private var stackView: UIStackView!
+    
     // MARK: - Outlets
     
     @IBOutlet var signInButton: UIButton!
@@ -41,6 +43,9 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         
         setUpButtonsSkin()
         service.viewController = self
+        
+        // Appeler la fonction pour configurer la StackView
+        setupStackView()
         // Do any additional setup after loading the view.
     }
     
@@ -106,6 +111,13 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         createAnAccountButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         createAnAccountButton.layer.cornerRadius = 20
         createAnAccountButton.backgroundColor?.withAlphaComponent(0.20)
+        
+        logInButton.layer.borderWidth = 1
+        logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        logInButton.layer.cornerRadius = 20
+        logInButton.backgroundColor?.withAlphaComponent(0.20)
+        
+        
         signInButton.layer.borderWidth = 1
         signInButton.layer.cornerRadius = 20
         signInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -114,17 +126,74 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         passwordTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
-        
+    
+        signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
+    }
+    
+    private func setupFacebookLoginButton() {
+        // Créer le bouton de connexion Facebook
         let loginButton = FBLoginButton()
         loginButton.delegate = self
-        logInButton.layer.borderWidth = 1
-        logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        logInButton.layer.cornerRadius = 20
-        logInButton.layer.masksToBounds = true
-        logInButton.backgroundColor?.withAlphaComponent(0.20)
+        
+        // Appliquer les coins arrondis correctement
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        loginButton.layer.cornerRadius = 20
         loginButton.titleLabel?.text = "Log in with Facebook"
-        view.addSubview(loginButton)
-        signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
+        loginButton.layer.masksToBounds = true
+        
+        // Désactiver les contraintes automatiques du bouton
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
+        stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
+        
+        
+        for constraint in loginButton.constraints where constraint.firstAttribute == .height {
+            constraint.constant = 50
+        }
+        
+    }
+    
+    
+    private func setupStackView() {
+        // Créer une UIStackView
+        stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        
+        // Ajouter les boutons à la StackView
+        stackView.addArrangedSubview(logInButton)
+        stackView.addArrangedSubview(signInWithGoogleButton)
+        setupFacebookLoginButton()
+        stackView.addArrangedSubview(signInButton)
+        
+        // Désactiver les contraintes automatiques des boutons
+        logInButton.translatesAutoresizingMaskIntoConstraints = false
+        signInWithGoogleButton.translatesAutoresizingMaskIntoConstraints = false
+        signInButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Définir une hauteur fixe pour les boutons
+        NSLayoutConstraint.activate([
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            signInWithGoogleButton.heightAnchor.constraint(equalToConstant: 50),
+            signInButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        // Ajouter la StackView à la vue principale
+        view.addSubview(stackView)
+        
+        // Désactiver les contraintes automatiques de la StackView
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Ajouter des contraintes pour la StackView
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+        ])
     }
     // MARK: - Navigation
     
