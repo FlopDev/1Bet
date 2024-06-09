@@ -120,17 +120,18 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         // Créer le bouton de connexion Facebook
         let loginButton = FBLoginButton()
         loginButton.delegate = self
+        
+        // Appliquer les coins arrondis correctement
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         loginButton.layer.cornerRadius = 20
+        loginButton.layer.masksToBounds = true
         
         // Désactiver les contraintes automatiques du bouton
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
         stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
-        
-        loginButton.layer.borderWidth = 1
-        loginButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        loginButton.layer.cornerRadius = 20
         
         
         for constraint in loginButton.constraints where constraint.firstAttribute == .height {
@@ -174,7 +175,7 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         // Ajouter des contraintes pour la StackView
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 20),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
     }

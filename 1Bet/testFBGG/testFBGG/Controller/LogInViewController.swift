@@ -106,10 +106,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         createAnAccountButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         createAnAccountButton.layer.cornerRadius = 20
         createAnAccountButton.backgroundColor?.withAlphaComponent(0.20)
-        logInButton.layer.borderWidth = 1
-        logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        logInButton.layer.cornerRadius = 20
-        logInButton.backgroundColor?.withAlphaComponent(0.20)
         signInButton.layer.borderWidth = 1
         signInButton.layer.cornerRadius = 20
         signInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -121,10 +117,11 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         
         let loginButton = FBLoginButton()
         loginButton.delegate = self
-        loginButton.frame = CGRect(x: logInButton.frame.origin.x, y: logInButton.frame.origin.y + logInButton.frame.size.height, width: logInButton.bounds.width ,height: logInButton.bounds.height)
-        loginButton.center = view.center
-        //loginButton.bounds = createAnAccountButton.bounds
-        loginButton.layer.cornerRadius = 20
+        logInButton.layer.borderWidth = 1
+        logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        logInButton.layer.cornerRadius = 20
+        logInButton.layer.masksToBounds = true
+        logInButton.backgroundColor?.withAlphaComponent(0.20)
         loginButton.titleLabel?.text = "Log in with Facebook"
         view.addSubview(loginButton)
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
