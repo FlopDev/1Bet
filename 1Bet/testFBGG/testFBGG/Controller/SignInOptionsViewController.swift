@@ -22,6 +22,8 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     var userInfo: User?
     var service = FirebaseService()
     
+    private var stackView: UIStackView!
+    
     // MARK: - Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -36,6 +38,8 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setUpButtonsSkin()
+        // Appeler la fonction pour configurer la StackView
+        setupStackView()
     }
     
     // MARK: - Functions
@@ -110,22 +114,69 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         password.layer.borderWidth = 1
         password.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
-        
+    }
+    
+    private func setupFacebookLoginButton() {
+        // Créer le bouton de connexion Facebook
         let loginButton = FBLoginButton()
         loginButton.delegate = self
-        loginButton.frame = CGRect(x: createAccountButton.frame.origin.x, y: createAccountButton.frame.origin.y + createAccountButton.frame.size.height, width: createAccountButton.bounds.width ,height: createAccountButton.bounds.height)
-        loginButton.center = view.center
         loginButton.layer.cornerRadius = 20
-        loginButton.titleLabel?.text = "Log in with Facebook"
         
+        // Désactiver les contraintes automatiques du bouton
         loginButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginButton)
+        
+        // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
+        stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
+        
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        loginButton.layer.cornerRadius = 20
+        
+        
+        for constraint in loginButton.constraints where constraint.firstAttribute == .height {
+            constraint.constant = 50
+        }
+        
+    }
+    
+    private func setupStackView() {
+        // Créer une UIStackView
+        stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        
+        // Ajouter les boutons à la StackView
+        stackView.addArrangedSubview(createAccountButton)
+        stackView.addArrangedSubview(signInWithGoogleButton)
+        setupFacebookLoginButton()
+        stackView.addArrangedSubview(alreadyAnAccountButton)
+        
+        // Désactiver les contraintes automatiques des boutons
+        createAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        signInWithGoogleButton.translatesAutoresizingMaskIntoConstraints = false
+        alreadyAnAccountButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Définir une hauteur fixe pour les boutons
         NSLayoutConstraint.activate([
-            loginButton.centerXAnchor.constraint(equalTo: signInWithGoogleButton.centerXAnchor),
-            loginButton.bottomAnchor.constraint(equalTo: signInWithGoogleButton.topAnchor, constant: -20)
+            createAccountButton.heightAnchor.constraint(equalToConstant: 50),
+            signInWithGoogleButton.heightAnchor.constraint(equalToConstant: 50),
+            alreadyAnAccountButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
+        // Ajouter la StackView à la vue principale
+        view.addSubview(stackView)
+        
+        // Désactiver les contraintes automatiques de la StackView
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Ajouter des contraintes pour la StackView
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+        ])
     }
     
     // MARK: - Navigation

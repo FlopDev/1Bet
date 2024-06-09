@@ -17,6 +17,11 @@ class MainPageViewController: UIViewController {
     var database = Firestore.firestore()
     let curvedProgressView = ProgressArcView()
     
+    private var startTime: CFTimeInterval = 0
+    private var targetProgress: CGFloat = 0
+    private var duration: TimeInterval = 0
+    private var displayLink: CADisplayLink?
+    
     // MARK: - Outlets
     
     @IBOutlet weak var addPronosticButton: UIButton!
@@ -55,7 +60,7 @@ class MainPageViewController: UIViewController {
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
         
-        setupProgressBarUI()
+        setupProgressBarUI(targetProgressChoosen: 78)
         
         // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadPhoto { image in
@@ -148,20 +153,42 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    private func setupProgressBarUI() {
-            // Configurez et ajoutez le ProgressArcView à la vue principale
+    private func setupProgressBarUI(targetProgressChoosen: CGFloat) {
+        // Configurez et ajoutez le ProgressArcView à la vue principale
         view.addSubview(curvedProgressView)
-                curvedProgressView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    curvedProgressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    curvedProgressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                    curvedProgressView.widthAnchor.constraint(equalToConstant: 200),
-                    curvedProgressView.heightAnchor.constraint(equalToConstant: 200)
-                ])
-                
-                // Mettre à jour la progression avec une animation
-                curvedProgressView.animateProgress(to: 0.7, duration: 1.0)
-            }
+        curvedProgressView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            curvedProgressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            curvedProgressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            curvedProgressView.widthAnchor.constraint(equalToConstant: 200),
+            curvedProgressView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        // Définir les valeurs pour l'animation
+        duration = 1.0
+        targetProgress = targetProgressChoosen / 100
+        startTime = CACurrentMediaTime()
+        
+        // Mettre à jour la progression avec une animation
+        curvedProgressView.animateProgress(to: targetProgress, duration: duration) {
+            self.displayLink?.invalidate()
+            self.displayLink = nil
+        }
+        
+        // Créer un CADisplayLink pour mettre à jour le label pendant l'animation
+        displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
+        displayLink?.add(to: .main, forMode: .default)
+    }
+
+    @objc private func updateProgressLabel() {
+        let elapsedTime = CACurrentMediaTime() - startTime
+        if elapsedTime >= duration {
+            curvedProgressView.setLabelText("\(Int(targetProgress * 100))%")
+        } else {
+            let progress = CGFloat(elapsedTime / duration) * targetProgress
+            curvedProgressView.setLabelText("\(Int(progress * 100))%")
+        }
+    }
     
     // MARK: - Navigation
     
