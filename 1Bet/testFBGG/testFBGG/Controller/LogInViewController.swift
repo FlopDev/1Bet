@@ -24,7 +24,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     
     var userInfo: User?
     var service = FirebaseService()
-    
     private var stackView: UIStackView!
     
     // MARK: - Outlets
@@ -40,10 +39,8 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpButtonsSkin()
         service.viewController = self
-        
         // Appeler la fonction pour configurer la StackView
         setupStackView()
         // Do any additional setup after loading the view.
@@ -55,7 +52,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     @objc(loginButton:didCompleteWithResult:error:) func loginButton(_ loginButton: FBSDKLoginKit.FBLoginButton, didCompleteWith result: FBSDKLoginKit.LoginManagerLoginResult?, error: Error?) {
         
         service.facebookButton()
-        
         let success = Notification.Name(rawValue: "FBAnswerSuccess")
         let fail = Notification.Name(rawValue: "FBAnswerFail")
         NotificationCenter.default.addObserver(self, selector: #selector(successFBLogin), name: success, object: nil)
@@ -89,7 +85,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         if emailTextField.text != "" && passwordTextField.text != nil {
             print("Connexion de \(emailTextField.text ?? "no adress")")
             
-            
             service.logInEmailButton(email: emailTextField.text!, password: passwordTextField.text!) { (success) in
                 DispatchQueue.main.async {
                     if success {
@@ -116,7 +111,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         logInButton.layer.cornerRadius = 20
         logInButton.backgroundColor?.withAlphaComponent(0.20)
-        
         
         signInButton.layer.borderWidth = 1
         signInButton.layer.cornerRadius = 20

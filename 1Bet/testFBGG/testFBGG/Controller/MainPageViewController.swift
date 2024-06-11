@@ -16,18 +16,18 @@ class MainPageViewController: UIViewController {
     var userInfo: User?
     var database = Firestore.firestore()
     let curvedProgressView = ProgressArcView()
-    
+    let progressArcView = ProgressArcView()
+    // var progressArcViewPercentOfBK: ProgressArcView()
+    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
     private var startTime: CFTimeInterval = 0
     private var targetProgress: CGFloat = 0
     private var duration: TimeInterval = 0
     private var displayLink: CADisplayLink?
     
     // MARK: - Outlets
-    
     @IBOutlet weak var addPronosticButton: UIButton!
     @IBOutlet weak var dateOfPronostic: UILabel!
     @IBOutlet weak var imageOfPronostic: UIImageView!
-    
     @IBOutlet weak var pronosticOfTipsterTextField: UILabel!
     @IBOutlet weak var trustOnTenOfTipsterTextField: UILabel!
     @IBOutlet weak var percentOfBkTipsterTextField: UILabel!
@@ -35,9 +35,6 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var basketBallImage: UIImageView!
-    let progressArcView = ProgressArcView()
-    // var progressArcViewPercentOfBK: ProgressArcView()
-    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
     
     
     override func viewDidLoad() {

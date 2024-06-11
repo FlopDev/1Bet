@@ -88,7 +88,6 @@
 		CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */; };
 		CB46FC9E2BFBFD34007B0A28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB46FC9D2BFBFD34007B0A28 /* GoogleService-Info.plist */; };
 		CB46FCA02C05214F007B0A28 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */; };
-		CB46FCA22C05F1CB007B0A28 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FCA12C05F1CB007B0A28 /* LaunchScreenViewController.swift */; };
 		CB46FCA42C0639B7007B0A28 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46FCA32C0639B7007B0A28 /* UILabel.swift */; };
 		CB530FA92C0F3E9C007456C6 /* ProgressArcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */; };
 /* End PBXBuildFile section */
@@ -161,7 +160,6 @@
 		CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIntensityVisualEffectView.swift; sourceTree = "<group>"; };
 		CB46FC9D2BFBFD34007B0A28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		CB46FCA12C05F1CB007B0A28 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		CB46FCA32C0639B7007B0A28 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressArcView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -344,7 +342,6 @@
 		A6D66840293D630C00C98493 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				CB46FCA12C05F1CB007B0A28 /* LaunchScreenViewController.swift */,
 				CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */,
 				A6D66841293D67D600C98493 /* SignInOptionsViewController.swift */,
 				A6D66838293D624A00C98493 /* LogInViewController.swift */,
@@ -570,7 +567,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB46FCA22C05F1CB007B0A28 /* LaunchScreenViewController.swift in Sources */,
 				A6D667EB293D3DE200C98493 /* AppDelegate.swift in Sources */,
 				A6D66842293D67D600C98493 /* SignInOptionsViewController.swift in Sources */,
 				A694CF9929C097260097E9FD /* Comment.swift in Sources */,

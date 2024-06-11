@@ -21,7 +21,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     // MARK: - Properties
     var userInfo: User?
     var service = FirebaseService()
-    
     private var stackView: UIStackView!
     
     // MARK: - Outlets
@@ -133,11 +132,9 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
         stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
         
-        
         for constraint in loginButton.constraints where constraint.firstAttribute == .height {
             constraint.constant = 50
         }
-        
     }
     
     private func setupStackView() {

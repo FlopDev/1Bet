@@ -34,7 +34,6 @@ class WelcomeViewController: UIViewController {
         signInButton.backgroundColor?.withAlphaComponent(0.20)
         welcomeLabel.setTextWithTypeAnimation(text: "Welcome to OneBet\n\nThe app that publishes a safe prediction for you every day", characterDelay: 0.06)
     }
-
     /*
     // MARK: - Navigation
 
@@ -44,5 +43,4 @@ class WelcomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
