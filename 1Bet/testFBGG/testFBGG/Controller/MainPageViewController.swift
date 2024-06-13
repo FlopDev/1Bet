@@ -16,18 +16,27 @@ class MainPageViewController: UIViewController {
     var userInfo: User?
     var database = Firestore.firestore()
     let curvedProgressView = ProgressArcView()
-    let progressArcView = ProgressArcView()
-    // var progressArcViewPercentOfBK: ProgressArcView()
-    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
+    let trustProgressView = ProgressArcView()
+    
+    
+    
     private var startTime: CFTimeInterval = 0
     private var targetProgress: CGFloat = 0
+    private var targetProgressTrustOnTen: CGFloat = 0
     private var duration: TimeInterval = 0
     private var displayLink: CADisplayLink?
     
+    private var bankrollPercentage: CGFloat = 0
+    private var trustPercentage: CGFloat = 0
+    
     // MARK: - Outlets
+    
+    @IBOutlet var underProgressView: UIStackView!
+    @IBOutlet var mainStackView: UIStackView!
     @IBOutlet weak var addPronosticButton: UIButton!
     @IBOutlet weak var dateOfPronostic: UILabel!
     @IBOutlet weak var imageOfPronostic: UIImageView!
+    
     @IBOutlet weak var pronosticOfTipsterTextField: UILabel!
     @IBOutlet weak var trustOnTenOfTipsterTextField: UILabel!
     @IBOutlet weak var percentOfBkTipsterTextField: UILabel!
@@ -35,6 +44,10 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var basketBallImage: UIImageView!
+    let progressArcView = ProgressArcView()
+    let progressArcView2 = ProgressArcView()
+    // var progressArcViewPercentOfBK: ProgressArcView()
+    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
     
     
     override func viewDidLoad() {
@@ -56,8 +69,6 @@ class MainPageViewController: UIViewController {
         
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
-        
-        setupProgressBarUI(targetProgressChoosen: 78)
         
         // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadPhoto { image in
@@ -95,14 +106,18 @@ class MainPageViewController: UIViewController {
                         self.pronosticOfTipsterTextField.setMargins()
                     }
                     
-                    if let colonne3 = data["percentOfBankroll"] as? String {
+                    if let colonne3 = data["percentOfBankroll"] as? String, let percentage = Double(colonne3) {
                         print(colonne3)
                         self.percentOfBkTipsterTextField.text = "% of Bankroll : \(colonne3)"
+                        self.bankrollPercentage = CGFloat(percentage)
+                        self.setupProgressBarUI(progressView: self.curvedProgressView, targetProgressChoosen: self.bankrollPercentage, progressMaxValue: 100)
                     }
                     
-                    if let colonne4 = data["trustOnTen"] as? String {
+                    if let colonne4 = data["trustOnTen"] as? String, let trustValue = Double(colonne4) {
                         print(colonne4)
                         self.trustOnTenOfTipsterTextField.text = "Trust : \(colonne4)"
+                        self.trustPercentage = CGFloat(trustValue)
+                        self.setupProgressBarUI(progressView: self.trustProgressView, targetProgressChoosen: self.trustPercentage, progressMaxValue: 10)
                     }
                 } else {
                     UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")
@@ -150,42 +165,55 @@ class MainPageViewController: UIViewController {
         }
     }
     
-    private func setupProgressBarUI(targetProgressChoosen: CGFloat) {
-        // Configurez et ajoutez le ProgressArcView à la vue principale
-        view.addSubview(curvedProgressView)
-        curvedProgressView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            curvedProgressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            curvedProgressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            curvedProgressView.widthAnchor.constraint(equalToConstant: 200),
-            curvedProgressView.heightAnchor.constraint(equalToConstant: 200)
-        ])
-        
-        // Définir les valeurs pour l'animation
-        duration = 1.0
-        targetProgress = targetProgressChoosen / 100
-        startTime = CACurrentMediaTime()
-        
-        // Mettre à jour la progression avec une animation
-        curvedProgressView.animateProgress(to: targetProgress, duration: duration) {
-            self.displayLink?.invalidate()
-            self.displayLink = nil
+    private func setupProgressBarUI(progressView: ProgressArcView, targetProgressChoosen: CGFloat, progressMaxValue: CGFloat) {
+            // Configurez et ajoutez le ProgressArcView à la vue principale
+            view.addSubview(progressView)
+            progressView.translatesAutoresizingMaskIntoConstraints = false
+            
+            // Setting constraints differently based on the progress view
+            if progressView == curvedProgressView {
+                NSLayoutConstraint.activate([
+                    progressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    progressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                    progressView.widthAnchor.constraint(equalToConstant: 200),
+                    progressView.heightAnchor.constraint(equalToConstant: 200)
+                ])
+            } else if progressView == trustProgressView {
+                NSLayoutConstraint.activate([
+                    progressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    progressView.topAnchor.constraint(equalTo: curvedProgressView.bottomAnchor, constant: 20),
+                    progressView.widthAnchor.constraint(equalToConstant: 200),
+                    progressView.heightAnchor.constraint(equalToConstant: 200)
+                ])
+            }
+            
+            // Définir les valeurs pour l'animation
+            duration = 1.0
+            targetProgress = targetProgressChoosen / progressMaxValue
+            startTime = CACurrentMediaTime()
+            
+            // Mettre à jour la progression avec une animation
+            progressView.animateProgress(to: targetProgress, duration: duration) {
+                self.displayLink?.invalidate()
+                self.displayLink = nil
+            }
+            
+            // Créer un CADisplayLink pour mettre à jour le label pendant l'animation
+            displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
+            displayLink?.add(to: .main, forMode: .default)
         }
-        
-        // Créer un CADisplayLink pour mettre à jour le label pendant l'animation
-        displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
-        displayLink?.add(to: .main, forMode: .default)
-    }
 
-    @objc private func updateProgressLabel() {
-        let elapsedTime = CACurrentMediaTime() - startTime
-        if elapsedTime >= duration {
-            curvedProgressView.setLabelText("\(Int(targetProgress * 100))%")
-        } else {
-            let progress = CGFloat(elapsedTime / duration) * targetProgress
-            curvedProgressView.setLabelText("\(Int(progress * 100))%")
+        @objc private func updateProgressLabel() {
+            let elapsedTime = CACurrentMediaTime() - startTime
+            if elapsedTime >= duration {
+                curvedProgressView.setLabelText("\(Int(bankrollPercentage))%")
+                trustProgressView.setLabelText("\(Int(trustPercentage))")
+            } else {
+                let progress = CGFloat(elapsedTime / duration) * targetProgress
+                curvedProgressView.setLabelText("\(Int(progress * 100))%")
+                trustProgressView.setLabelText("\(Int(progress * 10))")
+            }
         }
-    }
     
     // MARK: - Navigation
     
