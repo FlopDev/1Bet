@@ -40,7 +40,7 @@ class ProgressArcView: UIView {
     private func setupLabel() {
         progressLabel.textAlignment = .center
         progressLabel.textColor = #colorLiteral(red: 0.3060854971, green: 0.3690159321, blue: 0.3294448256, alpha: 1)
-        progressLabel.font = UIFont.systemFont(ofSize: 20)
+        progressLabel.font = UIFont.systemFont(ofSize: 15)
         addSubview(progressLabel)
     }
 

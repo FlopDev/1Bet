@@ -15,17 +15,18 @@ class MainPageViewController: UIViewController {
     // MARK: - Properties
     var userInfo: User?
     var database = Firestore.firestore()
-    let curvedProgressView = ProgressArcView()
+    let percentOfBKProgressView = ProgressArcView()
     let trustProgressView = ProgressArcView()
     
-    
-    
+    let percentOfBKStackView = UIStackView()
+    let trustStackView = UIStackView()
     private var startTime: CFTimeInterval = 0
     private var targetProgress: CGFloat = 0
     private var targetProgressTrustOnTen: CGFloat = 0
     private var duration: TimeInterval = 0
     private var displayLink: CADisplayLink?
-    
+    let progressArcView = ProgressArcView()
+    let progressArcView2 = ProgressArcView()
     private var bankrollPercentage: CGFloat = 0
     private var trustPercentage: CGFloat = 0
     
@@ -43,11 +44,8 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
+    @IBOutlet var likesAndCommentStackView: UIStackView!
     @IBOutlet weak var basketBallImage: UIImageView!
-    let progressArcView = ProgressArcView()
-    let progressArcView2 = ProgressArcView()
-    // var progressArcViewPercentOfBK: ProgressArcView()
-    // var progressArcViewtrustOnTenOfTipster = ProgressArcView()
     
     
     override func viewDidLoad() {
@@ -66,20 +64,27 @@ class MainPageViewController: UIViewController {
         commentButton.layer.borderWidth = 1
         likeButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        dateOfPronostic.layer.borderWidth = 1
+        dateOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        imageOfPronostic.layer.borderWidth = 1
+        imageOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
         
+        setupStackViews()
+        
         // Vérification si lastItem est disponible
-        FirebaseStorageService.shared.downloadPhoto { image in
-            DispatchQueue.main.async {
-                if let image = image {
-                    self.imageOfPronostic.image = image
-                } else {
-                    print("Aucune image disponible.")
+        FirebaseStorageService.shared.downloadLatestPhoto { image in
+                DispatchQueue.main.async {
+                    if let image = image {
+                        self.imageOfPronostic.image = image
+                    } else {
+                        print("Aucune image disponible.")
+                    }
                 }
             }
-        }
     }
     
     // MARK: - Functions
@@ -102,7 +107,7 @@ class MainPageViewController: UIViewController {
                     
                     if let colonne2 = data["description"] as? String {
                         print(colonne2)
-                        self.pronosticOfTipsterTextField.text = "Anaysis : \(colonne2)"
+                        self.pronosticOfTipsterTextField.text = "Analysis : \(colonne2)"
                         self.pronosticOfTipsterTextField.setMargins()
                     }
                     
@@ -110,7 +115,7 @@ class MainPageViewController: UIViewController {
                         print(colonne3)
                         self.percentOfBkTipsterTextField.text = "% of Bankroll : \(colonne3)"
                         self.bankrollPercentage = CGFloat(percentage)
-                        self.setupProgressBarUI(progressView: self.curvedProgressView, targetProgressChoosen: self.bankrollPercentage, progressMaxValue: 100)
+                        self.setupProgressBarUI(progressView: self.percentOfBKProgressView, targetProgressChoosen: self.bankrollPercentage, progressMaxValue: 100)
                     }
                     
                     if let colonne4 = data["trustOnTen"] as? String, let trustValue = Double(colonne4) {
@@ -149,6 +154,15 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func pressLikeButton(_ sender: Any) {
+        if likeButton.image(for: .normal) == UIImage(systemName: "heart") {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            likeButton.titleLabel?.text = "Likes (1)"
+        }
+        if likeButton.image(for: .normal) == UIImage(systemName: "heart.fill") {
+            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            likeButton.titleLabel?.text = "Likes (0)"
+        }
+        
     }
     
     @IBAction func pressCommentaryButton(_ sender: Any) {
@@ -166,54 +180,75 @@ class MainPageViewController: UIViewController {
     }
     
     private func setupProgressBarUI(progressView: ProgressArcView, targetProgressChoosen: CGFloat, progressMaxValue: CGFloat) {
-            // Configurez et ajoutez le ProgressArcView à la vue principale
-            view.addSubview(progressView)
-            progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if progressView == percentOfBKProgressView {
+            NSLayoutConstraint.activate([
+                progressView.widthAnchor.constraint(equalToConstant: 50),
+                progressView.heightAnchor.constraint(equalToConstant: 50)
+            ])
             
-            // Setting constraints differently based on the progress view
-            if progressView == curvedProgressView {
-                NSLayoutConstraint.activate([
-                    progressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    progressView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                    progressView.widthAnchor.constraint(equalToConstant: 200),
-                    progressView.heightAnchor.constraint(equalToConstant: 200)
-                ])
-            } else if progressView == trustProgressView {
-                NSLayoutConstraint.activate([
-                    progressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    progressView.topAnchor.constraint(equalTo: curvedProgressView.bottomAnchor, constant: 20),
-                    progressView.widthAnchor.constraint(equalToConstant: 200),
-                    progressView.heightAnchor.constraint(equalToConstant: 200)
-                ])
-            }
+            let progressStackView = UIStackView(arrangedSubviews: [percentOfBKProgressView, percentOfBkTipsterTextField])
+            progressStackView.axis = .vertical
+            progressStackView.spacing = 0
+            progressStackView.alignment = .center
             
-            // Définir les valeurs pour l'animation
-            duration = 1.0
-            targetProgress = targetProgressChoosen / progressMaxValue
-            startTime = CACurrentMediaTime()
+            underProgressView.addArrangedSubview(progressStackView)
             
-            // Mettre à jour la progression avec une animation
-            progressView.animateProgress(to: targetProgress, duration: duration) {
-                self.displayLink?.invalidate()
-                self.displayLink = nil
-            }
+        } else if progressView == trustProgressView {
+            NSLayoutConstraint.activate([
+                progressView.widthAnchor.constraint(equalToConstant: 50),
+                progressView.heightAnchor.constraint(equalToConstant: 50)
+            ])
             
-            // Créer un CADisplayLink pour mettre à jour le label pendant l'animation
-            displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
-            displayLink?.add(to: .main, forMode: .default)
+            let progressStackView2 = UIStackView(arrangedSubviews: [trustProgressView, trustOnTenOfTipsterTextField])
+            progressStackView2.axis = .vertical
+            progressStackView2.spacing = 0
+            progressStackView2.alignment = .center
+            
+            underProgressView.addArrangedSubview(progressStackView2)
         }
+        
+        underProgressView.spacing = 16
+        //underProgressView.alignment = .center
+        underProgressView.distribution = .fillEqually
+        mainStackView.layer.borderWidth = 1
+        mainStackView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
-        @objc private func updateProgressLabel() {
-            let elapsedTime = CACurrentMediaTime() - startTime
-            if elapsedTime >= duration {
-                curvedProgressView.setLabelText("\(Int(bankrollPercentage))%")
-                trustProgressView.setLabelText("\(Int(trustPercentage))")
-            } else {
-                let progress = CGFloat(elapsedTime / duration) * targetProgress
-                curvedProgressView.setLabelText("\(Int(progress * 100))%")
-                trustProgressView.setLabelText("\(Int(progress * 10))")
-            }
+        duration = 3.0
+        targetProgress = targetProgressChoosen / progressMaxValue
+        startTime = CACurrentMediaTime()
+        
+        progressView.animateProgress(to: targetProgress, duration: duration) {
+            self.displayLink?.invalidate()
+            self.displayLink = nil
         }
+        
+        displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
+        displayLink?.add(to: .main, forMode: .default)
+    }
+    
+    
+    
+    
+    @objc private func updateProgressLabel() {
+        let elapsedTime = CACurrentMediaTime() - startTime
+        if elapsedTime >= duration {
+            percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
+            trustProgressView.setLabelText("\(Int(trustPercentage))")
+        } else {
+            let progress = CGFloat(elapsedTime / duration) * targetProgress
+            percentOfBKProgressView.setLabelText("\(Int(progress * 100))%")
+            trustProgressView.setLabelText("\(Int(progress * 10))")
+        }
+    }
+    
+    private func setupStackViews() {
+        
+        
+        // Créer la stack view horizontale et y ajouter les progress views
+        
+    }
     
     // MARK: - Navigation
     
