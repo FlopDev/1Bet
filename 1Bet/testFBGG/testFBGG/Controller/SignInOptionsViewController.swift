@@ -86,6 +86,13 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         }
     }
     
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        emailTextField.resignFirstResponder()
+        usernameTextField.resignFirstResponder()
+        password.resignFirstResponder()
+        
+    }
+    
     @IBAction func didPressGoogle(_ sender: Any) {
         service.signInByGmail(viewController: self)
         let success = Notification.Name(rawValue: "FBAnswerSuccess")
@@ -185,5 +192,13 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
             let userInfo = sender as? User
             successVC?.userInfo = userInfo
         }
+    }
+}
+
+
+extension SignInOptionsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

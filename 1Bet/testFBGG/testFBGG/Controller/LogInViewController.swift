@@ -189,11 +189,26 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
     }
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        /* Resign the first responder status of the text(s) field(s)
+         Je dois maintenant add un Tap Gesture et le relier à dismissKeyboard*/
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    }
+}
+
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
