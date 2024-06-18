@@ -73,18 +73,16 @@ class MainPageViewController: UIViewController {
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
         
-        setupStackViews()
-        
         // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadLatestPhoto { image in
-                DispatchQueue.main.async {
-                    if let image = image {
-                        self.imageOfPronostic.image = image
-                    } else {
-                        print("Aucune image disponible.")
-                    }
+            DispatchQueue.main.async {
+                if let image = image {
+                    self.imageOfPronostic.image = image
+                } else {
+                    print("Aucune image disponible.")
                 }
             }
+        }
     }
     
     // MARK: - Functions
@@ -125,9 +123,7 @@ class MainPageViewController: UIViewController {
                         self.setupProgressBarUI(progressView: self.trustProgressView, targetProgressChoosen: self.trustPercentage, progressMaxValue: 10)
                     }
                 } else {
-                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")
-                    print("Aucune donnée récupérée.")
-                }
+                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")                }
             }
         }
         
@@ -149,8 +145,6 @@ class MainPageViewController: UIViewController {
                 print("Document does not exist")
             }
         }
-        // doownload the image of the last bet
-        
     }
     
     @IBAction func pressLikeButton(_ sender: Any) {
@@ -174,9 +168,7 @@ class MainPageViewController: UIViewController {
             // segue To signIn
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
-            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
-            print("Error signing out: %@", signOutError)
-        }
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")        }
     }
     
     private func setupProgressBarUI(progressView: ProgressArcView, targetProgressChoosen: CGFloat, progressMaxValue: CGFloat) {
@@ -214,7 +206,7 @@ class MainPageViewController: UIViewController {
         underProgressView.distribution = .fillEqually
         mainStackView.layer.borderWidth = 1
         mainStackView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-
+        
         duration = 3.0
         targetProgress = targetProgressChoosen / progressMaxValue
         startTime = CACurrentMediaTime()
@@ -232,23 +224,17 @@ class MainPageViewController: UIViewController {
     
     
     @objc private func updateProgressLabel() {
-        let elapsedTime = CACurrentMediaTime() - startTime
-        if elapsedTime >= duration {
-            percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
-            trustProgressView.setLabelText("\(Int(trustPercentage))")
-        } else {
-            let progress = CGFloat(elapsedTime / duration) * targetProgress
-            percentOfBKProgressView.setLabelText("\(Int(progress * 100))%")
-            trustProgressView.setLabelText("\(Int(progress * 10))")
+            let elapsedTime = CACurrentMediaTime() - startTime
+            if elapsedTime >= duration {
+                percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
+                trustProgressView.setLabelText("\(Int(trustPercentage))")
+            } else {
+                let progressBK = min(CGFloat(elapsedTime / duration) * (bankrollPercentage / 100.0), 1.0)
+                let progressTrust = min(CGFloat(elapsedTime / duration) * (trustPercentage / 10.0), 1.0)
+                percentOfBKProgressView.setLabelText("\(Int(progressBK * 100))%")
+                trustProgressView.setLabelText("\(Int(progressTrust * 10))")
+            }
         }
-    }
-    
-    private func setupStackViews() {
-        
-        
-        // Créer la stack view horizontale et y ajouter les progress views
-        
-    }
     
     // MARK: - Navigation
     

@@ -82,7 +82,7 @@ class PublicationService {
             let data = document.data()
             
             // Vérification de l'existence du champ "date"
-            guard let date = data["date"] as? String else {
+            guard data["date"] is String else {
                 print("Le champ 'date' est manquant ou n'est pas au format attendu.")
                 completion(nil)
                 return

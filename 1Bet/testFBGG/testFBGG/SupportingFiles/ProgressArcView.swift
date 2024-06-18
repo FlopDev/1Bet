@@ -5,6 +5,8 @@ class ProgressArcView: UIView {
     private let shapeLayer = CAShapeLayer()
     private let progressLayer = CAShapeLayer()
     private let progressLabel = UILabel()
+    
+    var maxProgress: CGFloat = 1.0 // Progrès maximal absolu
 
     var progress: CGFloat = 0 {
         didSet {

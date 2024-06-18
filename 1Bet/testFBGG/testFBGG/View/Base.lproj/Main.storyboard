@@ -92,7 +92,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y26-vD-C3K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-790.76923076923072" y="-154.26540284360189"/>
+            <point key="canvasLocation" x="-858" y="-169"/>
         </scene>
         <!--Sign In Options View Controller-->
         <scene sceneID="24g-Te-NDy">
@@ -352,7 +352,7 @@
         <!--Main Page View Controller-->
         <scene sceneID="FbK-YY-Tcx">
             <objects>
-                <viewController id="rbt-7G-nEI" customClass="MainPageViewController" customModule="testFBGG" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainPageViewController" id="rbt-7G-nEI" customClass="MainPageViewController" customModule="testFBGG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LBt-su-b2M">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -772,9 +772,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="BZI-vw-wP2"/>
-        <segue reference="x9x-eW-Okd"/>
-        <segue reference="iVC-26-Zry"/>
+        <segue reference="xMa-ZP-BCe"/>
+        <segue reference="Ej4-FS-TbW"/>
+        <segue reference="lKf-9W-uTX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="basketball" width="3537" height="4421"/>

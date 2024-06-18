@@ -1,23 +1,26 @@
-//
-//  UILabel.swift
-//  testFBGG
-//
-//  Created by Florian Peyrony on 28/05/2024.
-//
-
 import Foundation
 import UIKit
 
 extension UILabel {
     func setTextWithTypeAnimation(text: String, characterDelay: TimeInterval) {
-        self.text = ""
+        let attributedString = NSMutableAttributedString(string: text, attributes: [
+            .strokeColor: UIColor.black,
+            .strokeWidth: -2.5,
+            .foregroundColor: UIColor.white,
+            .font: UIFont(name: "ArialRoundedMTBold", size: 28)!
+        ])
+        
+        self.attributedText = NSAttributedString(string: "") // Start with an empty string
+        
         let writingTask = DispatchWorkItem { [weak self] in
             for (index, character) in text.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
-                    self?.text?.append(character)
+                    let substring = NSMutableAttributedString(attributedString: attributedString.attributedSubstring(from: NSRange(location: 0, length: index + 1)))
+                    self?.attributedText = substring
                 }
             }
         }
+        
         DispatchQueue.global().async(execute: writingTask)
     }
 }
