@@ -12,28 +12,26 @@ import GoogleSignIn
 import FacebookLogin
 import FacebookCore
 import Firebase
+import FirebaseAppCheck
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
 
+        func application(_ application: UIApplication,
+                         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            FirebaseApp.configure()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-      ApplicationDelegate.shared.application(
-          application,
-          didFinishLaunchingWithOptions: launchOptions
-      )
-        FirebaseApp.configure()
-        
-        // Désactiver App Check pour le mode Debug
-                #if DEBUG
-                let providerFactory = AppCheckDebugProviderFactory()
-                AppCheck.setAppCheckProviderFactory(providerFactory)
-                #endif
+            // Désactiver App Check pour le mode Debug
+            #if DEBUG
+            let providerFactory = AppCheckDebugProviderFactory()
+            AppCheck.setAppCheckProviderFactory(providerFactory)
+            #endif
 
-        
-      return true
-  }
+            return true
+        }
+    
 
     // MARK: UISceneSession Lifecycle
 
