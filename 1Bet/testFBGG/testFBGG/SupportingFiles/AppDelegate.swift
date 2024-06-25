@@ -24,6 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           didFinishLaunchingWithOptions: launchOptions
       )
         FirebaseApp.configure()
+        
+        // Désactiver App Check pour le mode Debug
+                #if DEBUG
+                let providerFactory = AppCheckDebugProviderFactory()
+                AppCheck.setAppCheckProviderFactory(providerFactory)
+                #endif
+
+        
       return true
   }
 

@@ -32,24 +32,23 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
             switch result {
             case .success(let documentID):
                 print("ID de la dernière publication : \(documentID)")
+                
                 self.publicationID = documentID
-                // Vous pouvez maintenant utiliser cet ID comme vous le souhaitez
-            case .failure(let error):
-                print("Erreur : \(error.localizedDescription)")
-            }
-        }
-            
-        commentService.getComments(forPublicationID: publicationID) { comments in
-            if comments.isEmpty {
-                print("No comments found for publicationID: \(self.publicationID)")
-            } else {
-                for comment in comments {
-                    print("Comment: \(comment.commentText)")
-                    DispatchQueue.main.async {
-                        self.comments = comments
-                        self.tableView.reloadData()
+                self.commentService.getComments(forPublicationID: self.publicationID) { comments in
+                    if comments.isEmpty {
+                        print("No comments found for publicationID: \(self.publicationID)")
+                    } else {
+                        for comment in comments {
+                            print("Comment: \(comment.commentText)")
+                            DispatchQueue.main.async {
+                                self.comments = comments
+                                self.tableView.reloadData()
+                            }
+                        }
                     }
                 }
+            case .failure(let error):
+                print("Erreur : \(error.localizedDescription)")
             }
         }
         

@@ -9,15 +9,20 @@ import UIKit
 import FirebaseFirestore
 import Firebase
 
-
 class MainPageViewController: UIViewController {
     
     // MARK: - Properties
+    let shared = PublicationService.shared
     var userInfo: User?
     var database = Firestore.firestore()
     let percentOfBKProgressView = ProgressArcView()
     let trustProgressView = ProgressArcView()
+    var userID: String? {
+        return Auth.auth().currentUser?.uid
+    }
     
+    var publicationID: String = "" // Ajout de la propriété publicationID
+
     let percentOfBKStackView = UIStackView()
     let trustStackView = UIStackView()
     private var startTime: CFTimeInterval = 0
@@ -37,7 +42,6 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var addPronosticButton: UIButton!
     @IBOutlet weak var dateOfPronostic: UILabel!
     @IBOutlet weak var imageOfPronostic: UIImageView!
-    
     @IBOutlet weak var pronosticOfTipsterTextField: UILabel!
     @IBOutlet weak var trustOnTenOfTipsterTextField: UILabel!
     @IBOutlet weak var percentOfBkTipsterTextField: UILabel!
@@ -46,18 +50,16 @@ class MainPageViewController: UIViewController {
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet var likesAndCommentStackView: UIStackView!
     @IBOutlet weak var basketBallImage: UIImageView!
-    
+    @IBOutlet weak var likesCountLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
         
-        // margin of bet pronostic
         pronosticOfTipsterTextField.setMargins()
         pronosticOfTipsterTextField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         likeButton.layer.borderWidth = 1
@@ -66,14 +68,12 @@ class MainPageViewController: UIViewController {
         commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         dateOfPronostic.layer.borderWidth = 1
         dateOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        
         imageOfPronostic.layer.borderWidth = 1
         imageOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
         
-        // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadLatestPhoto { image in
             DispatchQueue.main.async {
                 if let image = image {
@@ -83,92 +83,91 @@ class MainPageViewController: UIViewController {
                 }
             }
         }
+        
+        // Initialise publicationID avec la dernière publication
+        PublicationService.shared.getLatestPublicationID { result in
+            switch result {
+            case .success(let documentID):
+                self.publicationID = documentID
+                self.updateLikeStatus()
+                self.updateLikesCount()
+            case .failure(let error):
+                print("Erreur : \(error.localizedDescription)")
+            }
+        }
     }
     
-    // MARK: - Functions
-    
     override func viewWillAppear(_ animated: Bool) {
-        //to know if the user logged is An Admin
+        super.viewWillAppear(animated)
         
         let db = Firestore.firestore()
         let docRef = db.collection("users").document("\(String(describing: Auth.auth().currentUser?.uid))")
         
         PublicationService.shared.getLastPublication { data in
-            // Manipuler les données récupérées ici dans la file principale
             DispatchQueue.main.async {
                 if let data = data {
-                    // Utilisez les données dans votre ViewController
                     if let colonne1 = data["date"] as? String {
-                        print(colonne1)
                         self.dateOfPronostic.text = "Pronostic of : \(colonne1)"
                     }
                     
                     if let colonne2 = data["description"] as? String {
-                        print(colonne2)
                         self.pronosticOfTipsterTextField.text = "Analysis : \(colonne2)"
                         self.pronosticOfTipsterTextField.setMargins()
                     }
                     
                     if let colonne3 = data["percentOfBankroll"] as? String, let percentage = Double(colonne3) {
-                        print(colonne3)
                         self.percentOfBkTipsterTextField.text = "% of Bankroll : \(colonne3)"
                         self.bankrollPercentage = CGFloat(percentage)
                         self.setupProgressBarUI(progressView: self.percentOfBKProgressView, targetProgressChoosen: self.bankrollPercentage, progressMaxValue: 100)
                     }
                     
                     if let colonne4 = data["trustOnTen"] as? String, let trustValue = Double(colonne4) {
-                        print(colonne4)
                         self.trustOnTenOfTipsterTextField.text = "Trust : \(colonne4)"
                         self.trustPercentage = CGFloat(trustValue)
                         self.setupProgressBarUI(progressView: self.trustProgressView, targetProgressChoosen: self.trustPercentage, progressMaxValue: 10)
                     }
                 } else {
-                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")                }
+                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")
+                }
             }
         }
         
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
-                print(dataDescription)
-                // print("\(dataDescription["isAdmin"])")
                 let data = document.data()
-                let isAdmin = data?["isAdmin"] as! Bool
-                print(isAdmin)
-                if isAdmin == true {
-                    self.addPronosticButton.isHidden = false
-                }
-                
+                let isAdmin = data?["isAdmin"] as? Bool ?? false
+                self.addPronosticButton.isHidden = !isAdmin
             } else {
                 UIAlert.presentAlert(from: self, title: "ERROR", message: "Document does not exist")
-                print("Document does not exist")
             }
         }
     }
     
-    @IBAction func pressLikeButton(_ sender: Any) {
-        if likeButton.image(for: .normal) == UIImage(systemName: "heart") {
-            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            likeButton.titleLabel?.text = "Likes (1)"
+    @IBAction func pressLikeButton(_ sender: UIButton) {
+        guard let userID = userID else { return }
+        shared.toggleLike(publicationID: publicationID, userID: userID) { result in
+            switch result {
+            case .success(let likesCount):
+                self.likeButton.setTitle("\(likesCount) likes", for: .normal)
+                self.updateLikeStatus()
+            case .failure(let error):
+                print("Error toggling like: \(error.localizedDescription)")
+            }
         }
-        if likeButton.image(for: .normal) == UIImage(systemName: "heart.fill") {
-            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            likeButton.titleLabel?.text = "Likes (0)"
-        }
-        
     }
     
     @IBAction func pressCommentaryButton(_ sender: Any) {
+        // Add your comment functionality here
     }
+    
     @IBAction func didPressDisconnect(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            // segue To signIn
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
-            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")        }
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
+        }
     }
     
     private func setupProgressBarUI(progressView: ProgressArcView, targetProgressChoosen: CGFloat, progressMaxValue: CGFloat) {
@@ -202,7 +201,6 @@ class MainPageViewController: UIViewController {
         }
         
         underProgressView.spacing = 16
-        //underProgressView.alignment = .center
         underProgressView.distribution = .fillEqually
         mainStackView.layer.borderWidth = 1
         mainStackView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -220,25 +218,40 @@ class MainPageViewController: UIViewController {
         displayLink?.add(to: .main, forMode: .default)
     }
     
-    
-    
-    
     @objc private func updateProgressLabel() {
-            let elapsedTime = CACurrentMediaTime() - startTime
-            if elapsedTime >= duration {
-                percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
-                trustProgressView.setLabelText("\(Int(trustPercentage))")
-            } else {
-                let progressBK = min(CGFloat(elapsedTime / duration) * (bankrollPercentage / 100.0), 1.0)
-                let progressTrust = min(CGFloat(elapsedTime / duration) * (trustPercentage / 10.0), 1.0)
-                percentOfBKProgressView.setLabelText("\(Int(progressBK * 100))%")
-                trustProgressView.setLabelText("\(Int(progressTrust * 10))")
+        let elapsedTime = CACurrentMediaTime() - startTime
+        if elapsedTime >= duration {
+            percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
+            trustProgressView.setLabelText("\(Int(trustPercentage))")
+        } else {
+            let progressBK = min(CGFloat(elapsedTime / duration) * (bankrollPercentage / 100.0), 1.0)
+            let progressTrust = min(CGFloat(elapsedTime / duration) * (trustPercentage / 10.0), 1.0)
+            percentOfBKProgressView.setLabelText("\(Int(progressBK * 100))%")
+            trustProgressView.setLabelText("\(Int(progressTrust * 10))")
+        }
+    }
+    
+    // MARK: - Update Like Status
+    func updateLikeStatus() {
+        guard let userID = userID else { return }
+        shared.fetchUserLikeStatus(publicationID: publicationID, userID: userID) { hasLiked in
+            let imageName = hasLiked ? "heart.fill" : "heart"
+            self.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
+        }
+    }
+    
+    func updateLikesCount() {
+        shared.fetchLikesCount(publicationID: publicationID) { result in
+            switch result {
+            case .success(let likesCount):
+                self.likeButton.setTitle("\(likesCount) likes", for: .normal)
+            case .failure(let error):
+                print("Error fetching likes count: \(error.localizedDescription)")
             }
         }
+    }
     
     // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
