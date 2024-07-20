@@ -84,9 +84,6 @@ class MainPageViewController: UIViewController {
                 }
             }
         }
-        
-        // Fetch publication details and update UI
-        fetchPublicationDetails()
     }
     
     // MARK: - Functions
@@ -157,15 +154,21 @@ class MainPageViewController: UIViewController {
         }
     }
 
-    func fetchPublicationDetails() {
-        // Assurez-vous que vous avez bien mis à jour votre méthode pour obtenir les détails de la publication
-        // Assurez-vous également que vous avez défini publicationID quelque part
-    }
-
     @IBAction func pressLikeButton(_ sender: UIButton) {
+        
+        PublicationService.shared.getLatestPublicationID { result in
+            switch result {
+            case .success(let documentID):
+                print("ID de la dernière publication : \(documentID)")
+                self.publicationID = documentID
+            case .failure(let error):
+                print("Erreur : \(error.localizedDescription)")
+            }
+        }
+        
         guard let userID = userID else { return }
         guard !publicationID.isEmpty else {
-            print("Publication ID is empty.")
+            print(" pressLikeButton Publication ID is empty.")
             return
         }
 
@@ -198,7 +201,7 @@ class MainPageViewController: UIViewController {
 
     func updateLikesCount() {
         guard !publicationID.isEmpty else {
-            print("Publication ID is empty.")
+            print("updateLikesCount => Publication ID is empty.")
             return
         }
 
@@ -219,7 +222,7 @@ class MainPageViewController: UIViewController {
     func checkIfUserLiked() {
         guard let userID = userID else { return }
         guard !publicationID.isEmpty else {
-            print("Publication ID is empty.")
+            print("checkIfUserLiked => Publication ID is empty.")
             return
         }
 
