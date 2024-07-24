@@ -155,17 +155,23 @@ class MainPageViewController: UIViewController {
     }
 
     @IBAction func pressLikeButton(_ sender: UIButton) {
-        
-        PublicationService.shared.getLatestPublicationID { result in
-            switch result {
-            case .success(let documentID):
-                print("ID de la dernière publication : \(documentID)")
-                self.publicationID = documentID
-            case .failure(let error):
-                print("Erreur : \(error.localizedDescription)")
+        if self.publicationID.isEmpty {
+            PublicationService.shared.getLatestPublicationID { [weak self] result in
+                switch result {
+                case .success(let documentID):
+                    print("ID de la dernière publication : \(documentID)")
+                    self?.publicationID = documentID
+                    self?.toggleLike(onButton: sender)
+                case .failure(let error):
+                    print("Erreur : \(error.localizedDescription)")
+                }
             }
+        } else {
+            self.toggleLike(onButton: sender)
         }
-        
+    }
+    
+    func toggleLike(onButton sender: UIButton) {
         guard let userID = userID else { return }
         guard !publicationID.isEmpty else {
             print(" pressLikeButton Publication ID is empty.")

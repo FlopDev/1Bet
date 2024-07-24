@@ -636,6 +636,7 @@
                     <connections>
                         <outlet property="basketBallImage" destination="B9E-PJ-8Lh" id="3dc-63-51y"/>
                         <outlet property="commentTextField" destination="x0a-H0-AqK" id="UMn-29-iX7"/>
+                        <outlet property="publishButton" destination="pCq-Gr-JQv" id="UWz-IT-TgM"/>
                         <outlet property="tableView" destination="dMm-Uk-yOv" id="tJR-6f-Pdu"/>
                     </connections>
                 </viewController>
