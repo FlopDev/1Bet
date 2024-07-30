@@ -24,7 +24,8 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var addPictureButton: UIButton!
     @IBOutlet weak var dateOfTheBet: UITextField!
     @IBOutlet weak var imageViewOfTheBet: UIImageView!
-    @IBOutlet weak var pronosticTextField: UITextField!
+    
+    @IBOutlet var pronosticTextView: UITextView!
     @IBOutlet weak var trustOnTenTextField: UITextField!
     @IBOutlet weak var percentOfBkTextField: UITextField!
     @IBOutlet weak var basketBallImage: UIImageView!
@@ -52,47 +53,51 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // Add tap gesture recognizers to the text fields
-        addTapGestureToTextField(pronosticTextField)
-        addTapGestureToTextField(trustOnTenTextField)
-        addTapGestureToTextField(percentOfBkTextField)
+        addTapGestureToTextInput(pronosticTextView)
+        addTapGestureToTextInput(trustOnTenTextField)
+        addTapGestureToTextInput(percentOfBkTextField)
     }
     
-    private func addTapGestureToTextField(_ textField: UITextField) {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.textFieldTapped(_:)))
-        textField.addGestureRecognizer(tapGesture)
-        textField.isUserInteractionEnabled = true
+    private func addTapGestureToTextInput(_ view: UIView) {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.textInputTapped(_:)))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
     }
     
-    @objc func textFieldTapped(_ sender: UITapGestureRecognizer) {
+    @objc func textInputTapped(_ sender: UITapGestureRecognizer) {
         if let textField = sender.view as? UITextField {
             textField.becomeFirstResponder()
+        } else if let textView = sender.view as? UITextView {
+            textView.becomeFirstResponder()
         }
     }
+
     
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         let keyboardHeight = keyboardSize.height
-        let activeTextField: UITextField?
-        
-        if pronosticTextField.isFirstResponder {
-            activeTextField = pronosticTextField
+        let activeInputView: UIView?
+
+        if pronosticTextView.isFirstResponder {
+            activeInputView = pronosticTextView
         } else if percentOfBkTextField.isFirstResponder {
-            activeTextField = percentOfBkTextField
+            activeInputView = percentOfBkTextField
         } else if trustOnTenTextField.isFirstResponder {
-            activeTextField = trustOnTenTextField
+            activeInputView = trustOnTenTextField
         } else {
-            activeTextField = nil
+            activeInputView = nil
         }
-        
-        guard let textField = activeTextField else { return }
-        
-        let textFieldBottomY = textField.convert(textField.bounds, to: self.view).maxY
+
+        guard let inputView = activeInputView else { return }
+
+        let inputViewBottomY = inputView.convert(inputView.bounds, to: self.view).maxY
         let visibleAreaHeight = self.view.bounds.height - keyboardHeight
-        
-        if textFieldBottomY > visibleAreaHeight {
-            self.view.frame.origin.y = -(textFieldBottomY - visibleAreaHeight + 10) // Adjust the 10 to your padding preference
+
+        if inputViewBottomY > visibleAreaHeight {
+            self.view.frame.origin.y = -(inputViewBottomY - visibleAreaHeight + 60) // up this number if you want more space
         }
     }
+
     
     @objc func keyboardWillHide(_ notification: Notification) {
         self.view.frame.origin.y = 0
@@ -102,10 +107,10 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Other methods
     @IBAction func publishPronosticButton(_ sender: UIButton) {
-        if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
+        if dateOfTheBet.text == "" || pronosticTextView.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Put some text in all the text entry before pressing publish button")
         } else {
-            shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextField.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: publicationID, trustOnTen: trustOnTenTextField.text!)
+            shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextView.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: publicationID, trustOnTen: trustOnTenTextField.text!)
             FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!)
         }
         presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")

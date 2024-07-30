@@ -79,7 +79,6 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         
         commentTextField.backgroundColor = UIColor(white: 0.1, alpha: 0.9)
         commentTextField.textColor = .white
-        //commentTextField.placeholder = "Add a comment..."
         commentTextField.attributedPlaceholder = NSAttributedString(string: "Add a comment...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         commentTextField.translatesAutoresizingMaskIntoConstraints = false
             

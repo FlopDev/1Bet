@@ -669,20 +669,22 @@
                                 <rect key="frame" x="67" y="153" width="256" height="131.33333333333337"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="89j-nH-iaf">
-                                <rect key="frame" x="67" y="294.33333333333337" width="256" height="370.33333333333337"/>
+                                <rect key="frame" x="67" y="294.33333333333331" width="256" height="350.99999999999994"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Analysis:" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b4O-sh-4CH">
-                                        <rect key="frame" x="0.0" y="0.0" width="256" height="286.33333333333331"/>
-                                        <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gqt-HQ-jB3">
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="267"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Trust: ?/10" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="npi-L6-XQH">
-                                        <rect key="frame" x="0.0" y="294.33333333333331" width="256" height="34"/>
+                                        <rect key="frame" x="0.0" y="275.00000000000006" width="256" height="34"/>
                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="% of Bankroll : ?%" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZyQ-PS-xOc">
-                                        <rect key="frame" x="0.0" y="336.33333333333331" width="256" height="34"/>
+                                        <rect key="frame" x="0.0" y="317.00000000000006" width="256" height="34"/>
                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -714,7 +716,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNR-v5-2AC">
-                                <rect key="frame" x="67" y="689.66666666666663" width="256" height="58.333333333333371"/>
+                                <rect key="frame" x="67" y="665.33333333333337" width="256" height="58.333333333333371"/>
                                 <color key="backgroundColor" red="0.23878550530000001" green="0.27060025929999998" blue="0.26645770670000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -730,7 +732,6 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="b4O-sh-4CH" firstAttribute="height" secondItem="8Cq-sd-M9Q" secondAttribute="height" multiplier="0.343202" id="4Gv-I3-t2W"/>
                             <constraint firstItem="ZNR-v5-2AC" firstAttribute="height" secondItem="8Cq-sd-M9Q" secondAttribute="height" multiplier="0.07" id="54A-Kl-NJS"/>
                             <constraint firstAttribute="bottom" secondItem="8Cq-sd-M9Q" secondAttribute="bottom" id="5PX-Mr-AiS"/>
                             <constraint firstItem="I47-ED-xIU" firstAttribute="top" secondItem="AEw-PC-zRc" secondAttribute="top" constant="40" id="Axu-UH-sTH"/>
@@ -745,11 +746,12 @@
                             <constraint firstItem="URl-kQ-byq" firstAttribute="centerX" secondItem="89j-nH-iaf" secondAttribute="centerX" id="Xur-sw-plB"/>
                             <constraint firstItem="fY4-57-ive" firstAttribute="top" secondItem="PPK-dV-bID" secondAttribute="bottom" id="YW9-HM-15H"/>
                             <constraint firstItem="ZNR-v5-2AC" firstAttribute="centerX" secondItem="SKh-dB-AQD" secondAttribute="centerX" id="Yvh-Vq-UQz"/>
+                            <constraint firstItem="gqt-HQ-jB3" firstAttribute="height" secondItem="8Cq-sd-M9Q" secondAttribute="height" multiplier="0.32" id="acs-xI-bbi"/>
                             <constraint firstItem="URl-kQ-byq" firstAttribute="centerX" secondItem="PPK-dV-bID" secondAttribute="centerX" id="cHB-bV-1Bp"/>
                             <constraint firstItem="89j-nH-iaf" firstAttribute="top" secondItem="fY4-57-ive" secondAttribute="bottom" id="f5o-Aa-3b2"/>
                             <constraint firstItem="I47-ED-xIU" firstAttribute="width" secondItem="SKh-dB-AQD" secondAttribute="width" multiplier="0.326496" id="fRv-Oi-2TZ"/>
+                            <constraint firstItem="ZNR-v5-2AC" firstAttribute="top" secondItem="89j-nH-iaf" secondAttribute="bottom" constant="20" id="hXh-hd-V0a"/>
                             <constraint firstItem="URl-kQ-byq" firstAttribute="top" secondItem="PPK-dV-bID" secondAttribute="bottom" constant="10" id="kNt-tW-rSS"/>
-                            <constraint firstItem="ZNR-v5-2AC" firstAttribute="top" secondItem="89j-nH-iaf" secondAttribute="bottom" constant="25" id="ng7-d8-xBS"/>
                             <constraint firstItem="URl-kQ-byq" firstAttribute="height" secondItem="SKh-dB-AQD" secondAttribute="height" multiplier="0.15756" id="oRv-Vg-EUU"/>
                             <constraint firstItem="89j-nH-iaf" firstAttribute="centerX" secondItem="SKh-dB-AQD" secondAttribute="centerX" id="qF8-Xs-qDC"/>
                             <constraint firstItem="URl-kQ-byq" firstAttribute="leading" secondItem="AEw-PC-zRc" secondAttribute="leading" constant="67" id="quB-kc-PWy"/>
@@ -768,7 +770,7 @@
                         <outlet property="dateOfTheBet" destination="PPK-dV-bID" id="pp4-KK-1cU"/>
                         <outlet property="imageViewOfTheBet" destination="URl-kQ-byq" id="0cS-is-nXm"/>
                         <outlet property="percentOfBkTextField" destination="ZyQ-PS-xOc" id="jmn-5G-3Q6"/>
-                        <outlet property="pronosticTextField" destination="b4O-sh-4CH" id="z2Z-Xx-OLT"/>
+                        <outlet property="pronosticTextView" destination="gqt-HQ-jB3" id="XUX-vT-vXZ"/>
                         <outlet property="trustOnTenTextField" destination="npi-L6-XQH" id="gl9-db-FVM"/>
                     </connections>
                 </viewController>
@@ -793,6 +795,9 @@
         <image name="lebron_dunk" width="2500" height="1667"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="rectangle.and.pencil.and.ellipsis" catalog="system" width="128" height="86"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
