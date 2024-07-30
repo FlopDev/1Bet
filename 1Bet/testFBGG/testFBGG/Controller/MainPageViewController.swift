@@ -52,7 +52,6 @@ class MainPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -74,7 +73,6 @@ class MainPageViewController: UIViewController {
         likeButton.setImage(UIImage(systemName: "star"), for: .normal)
         commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
         
-        // Vérification si lastItem est disponible
         FirebaseStorageService.shared.downloadLatestPhoto { image in
             DispatchQueue.main.async {
                 if let image = image {
@@ -83,7 +81,7 @@ class MainPageViewController: UIViewController {
                     print("Aucune image disponible.")
                 }
             }
-        }
+        }   
     }
     
     // MARK: - Functions
@@ -95,10 +93,8 @@ class MainPageViewController: UIViewController {
         let docRef = db.collection("users").document("\(String(describing: Auth.auth().currentUser?.uid))")
         
         PublicationService.shared.getLastPublication { data in
-            // Manipuler les données récupérées ici dans la file principale
             DispatchQueue.main.async {
                 if let data = data {
-                    // Utilisez les données dans votre ViewController
                     if let colonne1 = data["date"] as? String {
                         print(colonne1)
                         self.dateOfPronostic.text = "Pronostic of : \(colonne1)"
@@ -123,33 +119,35 @@ class MainPageViewController: UIViewController {
                         self.trustPercentage = CGFloat(trustValue)
                         self.setupProgressBarUI(progressView: self.trustProgressView, targetProgressChoosen: self.trustPercentage, progressMaxValue: 10)
                     }
-                    
-                    if let pubID = data["publicationID"] as? String {
-                        self.publicationID = pubID
-                        self.updateLikesCount()
-                        self.checkIfUserLiked()
+                    PublicationService.shared.getLatestPublicationID { result in
+                            switch result {
+                            case .success(let documentID):
+                                print("ID de la dernière publication : \(documentID)")
+                                self.publicationID = documentID
+                                // Appeler d'autres fonctions comme checkIfUserLiked() et updateLikesCount() si nécessaire
+                                self.checkIfUserLiked()
+                                self.updateLikesCount()
+                            case .failure(let error):
+                                print("Erreur : \(error.localizedDescription)")
+                                let alert = UIAlertController(title: "ERROR", message: "Cannot retrieve publication ID", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
                     }
-                } else {
-                    UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot retrieve data")
                 }
             }
-        }
         
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                 print("Document data: \(dataDescription)")
-                print(dataDescription)
-                // print("\(dataDescription["isAdmin"])")
                 let data = document.data()
                 let isAdmin = data?["isAdmin"] as! Bool
                 print(isAdmin)
-                if isAdmin == true {
+                if isAdmin {
                     self.addPronosticButton.isHidden = false
                 }
-            } else {
-                UIAlert.presentAlert(from: self, title: "ERROR", message: "Document does not exist")
-                print("Document does not exist")
             }
         }
     }
@@ -174,7 +172,7 @@ class MainPageViewController: UIViewController {
     func toggleLike(onButton sender: UIButton) {
         guard let userID = userID else { return }
         guard !publicationID.isEmpty else {
-            print(" pressLikeButton Publication ID is empty.")
+            print("Publication ID is empty.")
             return
         }
 
@@ -182,7 +180,7 @@ class MainPageViewController: UIViewController {
 
         likesRef.getDocument { document, error in
             if let document = document, document.exists {
-                // Unlike
+                print("Document exists. Removing like.")
                 likesRef.delete { error in
                     if let error = error {
                         print("Error removing like: \(error)")
@@ -192,7 +190,7 @@ class MainPageViewController: UIViewController {
                     }
                 }
             } else {
-                // Like
+                print("Document does not exist. Adding like.")
                 likesRef.setData([:]) { error in
                     if let error = error {
                         print("Error adding like: \(error)")
@@ -218,6 +216,7 @@ class MainPageViewController: UIViewController {
                 print("Error fetching likes count: \(error.localizedDescription)")
             } else {
                 let likesCount = snapshot?.documents.count ?? 0
+                print("Likes count: \(likesCount)")
                 DispatchQueue.main.async {
                     self.likeButton.setTitle("\(likesCount) likes", for: .normal)
                 }
@@ -236,10 +235,12 @@ class MainPageViewController: UIViewController {
 
         likesRef.getDocument { document, error in
             if let document = document, document.exists {
+                print("User has liked this publication.")
                 DispatchQueue.main.async {
                     self.likeButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 }
             } else {
+                print("User has not liked this publication.")
                 DispatchQueue.main.async {
                     self.likeButton.setImage(UIImage(systemName: "star"), for: .normal)
                 }
@@ -248,14 +249,13 @@ class MainPageViewController: UIViewController {
     }
     
     @IBAction func pressCommentaryButton(_ sender: Any) {
-        // Code for comment button
+        // Implémentation de l'action du bouton de commentaire
     }
 
     @IBAction func didPressDisconnect(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            // segue To signIn
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
@@ -293,7 +293,6 @@ class MainPageViewController: UIViewController {
         }
 
         underProgressView.spacing = 16
-        // underProgressView.alignment = .center
         underProgressView.distribution = .fillEqually
         mainStackView.layer.borderWidth = 1
         mainStackView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -330,3 +329,4 @@ class MainPageViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
 }
+

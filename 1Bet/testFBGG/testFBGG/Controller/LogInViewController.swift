@@ -6,17 +6,17 @@
 //
 
 import UIKit
-import FirebaseCore// there
+import FirebaseCore
 import FirebaseAuth
-import GoogleSignIn// to there
+import GoogleSignIn
 
 import FacebookLogin
 
-import FacebookCore //there
+import FacebookCore
 import FirebaseDatabase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Firebase //to there
+import Firebase
 
 class LogInViewController: UIViewController, LoginButtonDelegate {
     

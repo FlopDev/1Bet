@@ -77,9 +77,10 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         commentIcon.tintColor = .white
         commentIcon.translatesAutoresizingMaskIntoConstraints = false
         
-        commentTextField.backgroundColor = .clear
+        commentTextField.backgroundColor = UIColor(white: 0.1, alpha: 0.9)
         commentTextField.textColor = .white
-        commentTextField.placeholder = "Add a comment..."
+        //commentTextField.placeholder = "Add a comment..."
+        commentTextField.attributedPlaceholder = NSAttributedString(string: "Add a comment...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         commentTextField.translatesAutoresizingMaskIntoConstraints = false
             
         publishButton.backgroundColor = UIColor.green
@@ -113,6 +114,10 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
             publishButton.heightAnchor.constraint(equalToConstant: 40),
             publishButton.widthAnchor.constraint(equalToConstant: 60)
         ])
+    }
+    
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        commentTextField.resignFirstResponder()
     }
 
     // MARK: - Functions
@@ -243,5 +248,13 @@ class CommentCell: UITableViewCell {
     func configure(with comment: UserComment) {
         usernameLabel.text = comment.nameOfWriter
         commentLabel.text = comment.commentText
+    }
+}
+
+
+extension AddCommentaryViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

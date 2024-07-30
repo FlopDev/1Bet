@@ -558,6 +558,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comentary" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x0a-H0-AqK">
                                         <rect key="frame" x="0.0" y="0.0" width="264" height="34"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -610,6 +611,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ryi-xf-2F8"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="SW7-UZ-LZO" firstAttribute="trailing" secondItem="dMm-Uk-yOv" secondAttribute="trailing" id="0dx-tG-g5F"/>
                             <constraint firstItem="PNo-El-zgq" firstAttribute="top" secondItem="dMm-Uk-yOv" secondAttribute="bottom" constant="45" id="2Jc-HS-gEl"/>
@@ -631,6 +633,9 @@
                             <constraint firstItem="B9E-PJ-8Lh" firstAttribute="leading" secondItem="Ryi-xf-2F8" secondAttribute="leading" id="sZR-kF-pb0"/>
                             <constraint firstItem="B9E-PJ-8Lh" firstAttribute="trailing" secondItem="Ryi-xf-2F8" secondAttribute="trailing" id="wTj-wy-zpt"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Eek-Zi-563" appends="YES" id="kRd-6Y-CHZ"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="PAg-Ly-Pja"/>
                     <connections>
@@ -641,6 +646,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouj-8I-x6d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Eek-Zi-563">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="ciR-pI-aZS" id="k7d-KV-4lO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="634" y="1376"/>
         </scene>

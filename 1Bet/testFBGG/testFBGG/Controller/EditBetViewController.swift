@@ -98,6 +98,8 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.view.frame.origin.y = 0
     }
     
+    
+    
     // MARK: - Other methods
     @IBAction func publishPronosticButton(_ sender: UIButton) {
         if dateOfTheBet.text == "" || pronosticTextField.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
