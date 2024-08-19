@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestore
 import FacebookLogin
 import GoogleSignIn
+import FirebaseCore
 
 class FirebaseService {
     
@@ -55,8 +56,7 @@ class FirebaseService {
                 print("ERROR IN CHECKBDDINFO FUNCTION")
                 // Notification in VC to the user
             } else {
-                self.database.collection("users\(Auth.auth().currentUser?.uid ?? nil)").getDocuments() { querySnapshot, error in
-                    print(querySnapshot?.documents ?? nil)
+                self.database.collection("users\(String(describing: Auth.auth().currentUser?.uid ?? nil))").getDocuments() { querySnapshot, error in
                     print("On ne trouve pas le UID pour la fonction checkBDDEmailInfo")
                     if querySnapshot != nil {
                         completion(true)
@@ -71,7 +71,7 @@ class FirebaseService {
     
     func signInEmailButton(email: String, username: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
+            guard self != nil else { return }
             if error != nil {
                 print(error.debugDescription)
                 //self.presentAlert(title: "ERROR", message: "Incorrect email or password")
@@ -202,7 +202,7 @@ class FirebaseService {
     }
     
     func saveUserInfo(uid: String?, name: String, email: String, isAdmin: Bool) {
-        let docRef = database.document("users/\(uid)")
+        let docRef = database.document("users/\(String(describing: uid))")
         docRef.setData(["name": name, "mail": email, "isAdmin": isAdmin])
     }
 }

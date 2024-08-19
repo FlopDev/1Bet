@@ -39,7 +39,7 @@ class WelcomeViewController: UIViewController {
         view.addSubview(connectionLabel)
         setupActivityIndicator()
         // Vérifier si l'utilisateur est déjà connecté
-        if let currentUser = Auth.auth().currentUser {
+        if Auth.auth().currentUser != nil {
             showLoadingIndicator()
             DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
                 self.navigateToMainPage()

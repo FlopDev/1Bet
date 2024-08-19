@@ -13,7 +13,7 @@ extension UILabel {
         self.attributedText = NSAttributedString(string: "") // Start with an empty string
         
         let writingTask = DispatchWorkItem { [weak self] in
-            for (index, character) in text.enumerated() {
+            for (index, _) in text.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
                     let substring = NSMutableAttributedString(attributedString: attributedString.attributedSubstring(from: NSRange(location: 0, length: index + 1)))
                     self?.attributedText = substring

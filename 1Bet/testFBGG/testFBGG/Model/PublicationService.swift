@@ -52,7 +52,7 @@ class PublicationService {
         let collectionRef = database.collection("publication")
         let query = collectionRef.order(by: "date", descending: true).limit(to: 1)
         query.getDocuments { (snapshot, error) in
-            if let error = error {
+            if error != nil {
                 completion(nil)
                 return
             }

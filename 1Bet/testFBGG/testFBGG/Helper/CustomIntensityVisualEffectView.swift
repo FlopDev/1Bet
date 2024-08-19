@@ -23,7 +23,7 @@ class CustomIntensityVisualEffectView: UIVisualEffectView {
 
 extension CustomIntensityVisualEffectView {
     func updateIntensity() {
-        guard let effect = self.effect else { return }
+        guard self.effect != nil else { return }
 
         self.effect = nil
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
