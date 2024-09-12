@@ -9,8 +9,11 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FacebookLogin
+import FirebaseAuth
 import GoogleSignIn
+
 import FirebaseCore
+import AppAuth
 
 class FirebaseService {
     
@@ -158,48 +161,68 @@ class FirebaseService {
             }
         }
     }
-    
-    
+
     func signInByGmail(viewController: UIViewController) {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        // Create Google Sign In configuration object.
-        let config = GIDConfiguration(clientID: clientID)
-        // Start the sign in flow!
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: viewController) { [unowned self] user, error in
-            
+        GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { signInResult, error in
             if let error = error {
-                // ...
+                // Gérer l'erreur
+                let nameOfNotification = Notification.Name(rawValue: "FBAnswerFail")
+                let notification = Notification(name: nameOfNotification)
+                NotificationCenter.default.post(notification)
                 return
             }
-            
-            guard
-                let authentication = user?.authentication,
-                let idToken = authentication.idToken
-            else {
+
+            guard let signInResult = signInResult else {
                 return
             }
-            
-            let credential: AuthCredential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
-            
-            
-            Auth.auth().signIn(with: credential) { authResult, error in
+
+            // Rafraîchir les tokens si nécessaire
+            signInResult.user.refreshTokensIfNeeded { user, error in
                 if let error = error {
+                    // Gérer l'erreur de rafraîchissement du token
                     let nameOfNotification = Notification.Name(rawValue: "FBAnswerFail")
                     let notification = Notification(name: nameOfNotification)
                     NotificationCenter.default.post(notification)
-                    // self.showMessagePrompt(error.localizedDescription)
-                    
+                    return
                 }
-                // User is signed in
-                // ...
-                let nameOfNotification = Notification.Name(rawValue: "FBAnswerSuccess")
-                let notification = Notification(name: nameOfNotification)
-                NotificationCenter.default.post(notification)
-                
-                self.saveUserInfo(uid:authResult!.user.uid, name: (authResult?.user.displayName)!, email: authResult?.user.email ?? "nil", isAdmin: false)
+
+                guard let user = user else {
+                    return
+                }
+
+                guard let idToken = user.idToken?.tokenString else {
+                    // Gérer le cas où idToken est nil
+                    return
+                }
+
+                let accessToken = user.accessToken.tokenString
+
+                // Utiliser l'ID Token et l'Access Token pour s'authentifier auprès de Firebase
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+
+                Auth.auth().signIn(with: credential) { authResult, error in
+                    if let error = error {
+                        // Gérer l'erreur d'authentification Firebase
+                        let nameOfNotification = Notification.Name(rawValue: "FBAnswerFail")
+                        let notification = Notification(name: nameOfNotification)
+                        NotificationCenter.default.post(notification)
+                        return
+                    }
+
+                    // Authentification réussie
+                    let nameOfNotification = Notification.Name(rawValue: "FBAnswerSuccess")
+                    let notification = Notification(name: nameOfNotification)
+                    NotificationCenter.default.post(notification)
+
+                    // Sauvegarder les infos de l'utilisateur
+                    if let authResult = authResult {
+                        self.saveUserInfo(uid: authResult.user.uid, name: authResult.user.displayName ?? "", email: authResult.user.email ?? "nil", isAdmin: false)
+                    }
+                }
             }
         }
     }
+
     
     func saveUserInfo(uid: String?, name: String, email: String, isAdmin: Bool) {
         let docRef = database.document("users/\(String(describing: uid))")

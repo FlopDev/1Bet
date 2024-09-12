@@ -31,7 +31,7 @@ class CommentServiceTests: XCTestCase {
         
         //commentService.database. = mockData
 
-        commentService.getComments(forPublicationID: 1) { mockData in
+        commentService.getComments(forPublicationID: String(1)) { mockData in
             XCTAssertEqual(mockData.count, 4, "There should be 4 comments for publicationID 1")
             XCTAssertEqual(mockData[0].nameOfWriter, "John Doe", "The first comment should be written by John Doe")
             XCTAssertEqual(mockData[1].nameOfWriter, "Jane Smith", "The second comment should be written by Jane Smith")

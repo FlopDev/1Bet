@@ -33,7 +33,7 @@ class PublicationServiceTests: XCTestCase {
         ]
        // publicationService.database. = mockData
 
-        publicationService.savePublicationOnDB(date: "2022-05-02", description: "This is a test publication", percentOfBankroll: "10%", publicationID: publicationID, trustOnTen: "7/10")
+        publicationService.savePublicationOnDB(date: "2022-05-02", description: "This is a test publication", percentOfBankroll: "10%", publicationID: String(publicationID), trustOnTen: "7/10")
 
         // Verify that the publication was added to the mock database
         //let document = mockFirestore.mockData["publications/\(publicationID)"] as? [String: Any]

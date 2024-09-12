@@ -21,23 +21,9 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpButtonsSkin()
-        
-        connectionLabel = UILabel()
-        connectionLabel.textColor = .white
-        connectionLabel.font = UIFont(name: "ArialRoundedMTBold", size: 22)
-        connectionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Ajouter un contour au texte
-        let attributedString = NSAttributedString(string: "Connexion en cours", attributes: [
-            .strokeColor: UIColor.black,
-            .strokeWidth: -2.5
-        ])
-        connectionLabel.attributedText = attributedString
-        
-        
-        view.addSubview(connectionLabel)
+        setUpButtonsAndLabelSkin()
         setupActivityIndicator()
+        
         // Vérifier si l'utilisateur est déjà connecté
         if Auth.auth().currentUser != nil {
             showLoadingIndicator()
@@ -51,7 +37,7 @@ class WelcomeViewController: UIViewController {
         }
     }
     
-    func setUpButtonsSkin() {
+    func setUpButtonsAndLabelSkin() {
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = UIColor.white.cgColor
         logInButton.layer.cornerRadius = 20
@@ -61,6 +47,20 @@ class WelcomeViewController: UIViewController {
         signInButton.layer.cornerRadius = 20
         signInButton.layer.borderColor = UIColor(red: 0.306, green: 0.369, blue: 0.329, alpha: 1).cgColor
         signInButton.backgroundColor = UIColor(white: 1, alpha: 1)
+        
+        connectionLabel = UILabel()
+        connectionLabel.textColor = .white
+        connectionLabel.font = UIFont(name: "ArialRoundedMTBold", size: 22)
+        connectionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Ajouter un contour au texte
+        let attributedString = NSAttributedString(string: "Connexion en cours", attributes: [
+            .strokeColor: UIColor.black,
+            .strokeWidth: -2.5
+        ])
+        connectionLabel.attributedText = attributedString
+        
+        view.addSubview(connectionLabel)
         
         welcomeLabel.setTextWithTypeAnimation(text: "Welcome to OneBet\n\nThe app that publishes a safe prediction for you every day", characterDelay: 0.06)
     }

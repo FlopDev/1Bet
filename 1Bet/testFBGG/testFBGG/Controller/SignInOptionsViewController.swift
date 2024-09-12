@@ -37,7 +37,7 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setUpButtonsSkin()
-        // Appeler la fonction pour configurer la StackView
+        // Configuration de la StackView.
         setupStackView()
     }
     

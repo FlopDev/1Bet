@@ -23,11 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             FirebaseApp.configure()
 
-            // Désactiver App Check pour le mode Debug
-            #if DEBUG
-            let providerFactory = AppCheckDebugProviderFactory()
-            AppCheck.setAppCheckProviderFactory(providerFactory)
-            #endif
+            //// Désactiver App Check pour le mode Debug
+            //#if DEBUG
+            //let providerFactory = AppCheckDebugProviderFactory()
+            //AppCheck.setAppCheckProviderFactory(providerFactory)
+            //#endif
 
             return true
         }
@@ -48,17 +48,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @available(iOS 9.0, *)
-    func application(_ application: UIApplication, open url: URL,
-                     options: [UIApplication.OpenURLOptionsKey: Any])
-      -> Bool {
-          ApplicationDelegate.shared.application(
-              application,
-              open: url,
-              sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-              annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-          )
-      return GIDSignIn.sharedInstance.handle(url)
-          
+    func application(
+      _ app: UIApplication,
+      open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+      var handled: Bool
+
+      handled = GIDSignIn.sharedInstance.handle(url)
+      if handled {
+        return true
+      }
+
+      // Handle other custom URL types.
+
+      // If not handled by this app, return false.
+      return false
     }
     
     
