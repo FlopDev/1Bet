@@ -14,23 +14,20 @@ import FacebookCore
 import Firebase
 import FirebaseAppCheck
 
+import FacebookCore
+
+
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+    class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
 
-        func application(_ application: UIApplication,
-                         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            FirebaseApp.configure()
 
-            //// Désactiver App Check pour le mode Debug
-            //#if DEBUG
-            //let providerFactory = AppCheckDebugProviderFactory()
-            //AppCheck.setAppCheckProviderFactory(providerFactory)
-            //#endif
-
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        FirebaseApp.configure()
             return true
-        }
+    }
     
 
     // MARK: UISceneSession Lifecycle
