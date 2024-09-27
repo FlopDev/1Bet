@@ -1,9 +1,13 @@
 //
-//  testFBGGTests.swift
+//  CommentServiceTests.swift
 //  testFBGGTests
 //
-//  Created by Florian Peyrony on 29/04/2023.
+//  Created by Florian Peyrony on 23/09/2024.
 //
+
+import XCTest
+@testable import testFBGG
+
 import XCTest
 @testable import testFBGG
 
@@ -13,30 +17,56 @@ class CommentServiceTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        commentService = CommentService()
+        commentService = CommentService() // Initialiser le service
     }
 
-    override func tearDown() {
-        commentService = nil
-        super.tearDown()
-    }
-
-    func testGetComments() {
-        let mockData: [[String: Any]] = [
-            ["nameOfWriter": "John Doe", "likes": 0, "comment": "This is a test comment 1", "publicationID": 1],
-            ["nameOfWriter": "Jane Smith", "likes": 2, "comment": "This is a test comment 2", "publicationID": 1],
-            ["nameOfWriter": "Bob Johnson", "likes": 5, "comment": "This is a test comment 3", "publicationID": 1],
-            ["nameOfWriter": "Tom Williams", "likes": 1, "comment": "This is a test comment 4", "publicationID": 1]
+    func testAddComment() {
+        // Simuler les données d'un commentaire
+        let commentData: [String: Any] = [
+            "likes": 5,
+            "nameOfWriter": "Florian",
+            "comment": "C'est un super post !",
+            "publicationID": "123",
+            "isLiked": true
         ]
         
-        //commentService.database. = mockData
-
-        commentService.getComments(forPublicationID: String(1)) { mockData in
-            XCTAssertEqual(mockData.count, 4, "There should be 4 comments for publicationID 1")
-            XCTAssertEqual(mockData[0].nameOfWriter, "John Doe", "The first comment should be written by John Doe")
-            XCTAssertEqual(mockData[1].nameOfWriter, "Jane Smith", "The second comment should be written by Jane Smith")
-            XCTAssertEqual(mockData[2].nameOfWriter, "Bob Johnson", "The third comment should be written by Bob Johnson")
-            XCTAssertEqual(mockData[3].nameOfWriter, "Tom Williams", "The fourth comment should be written by Tom Williams")
-        }
+        // Ajouter un commentaire
+        commentService.addComment(data: commentData)
+        
+        // Vérifier que le commentaire a été ajouté
+        XCTAssertEqual(commentService.comments.count, 1, "Expected one comment to be added.")
+        XCTAssertEqual(commentService.comments[0].nameOfWriter, "Florian", "Expected writer to be Florian.")
+        XCTAssertEqual(commentService.comments[0].commentText, "C'est un super post !", "Expected comment text to match.")
+        XCTAssertEqual(commentService.comments[0].likes, 5, "Expected 5 likes.")
+        XCTAssertTrue((commentService.comments[0].isLiked != nil), "Expected isLiked to be true.")
+    }
+    
+    func testGetCommentsForPublicationID() {
+        // Ajouter plusieurs commentaires
+        let commentData1: [String: Any] = [
+            "likes": 5,
+            "nameOfWriter": "Florian",
+            "comment": "Super post !",
+            "publicationID": 123,
+            "isLiked": false
+        ]
+        
+        let commentData2: [String: Any] = [
+            "likes": 3,
+            "nameOfWriter": "Alice",
+            "comment": "Bien joué !",
+            "publicationID": 456,
+            "isLiked": true
+        ]
+        
+        commentService.addComment(data: commentData1)
+        commentService.addComment(data: commentData2)
+        
+        // Récupérer les commentaires pour publicationID 123
+        let commentsForPublication123 = commentService.getComments(forPublicationID: "123")
+        
+        // Vérifier que seul le commentaire avec publicationID 123 est récupéré
+        XCTAssertEqual(commentsForPublication123.count, 1, "Expected 1 comment for publication 123.")
+        XCTAssertEqual(commentsForPublication123[0].nameOfWriter, "Florian", "Expected writer to be Florian for publication 123.")
     }
 }

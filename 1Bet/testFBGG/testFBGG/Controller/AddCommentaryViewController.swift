@@ -5,6 +5,13 @@
 //  Created by Florian Peyrony on 14/03/2023.
 //
 
+//
+//  AddCommentaryViewController.swift
+//  testFBGG
+//
+//  Created by Florian Peyrony on 14/03/2023.
+//
+
 import UIKit
 import FirebaseFirestore
 import Firebase
@@ -41,7 +48,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
                 print("ID de la dernière publication : \(documentID)")
                 
                 self.publicationID = documentID
-                self.commentService.getComments(forPublicationID: self.publicationID) { comments in
+                self.commentService.getCommentsFromFirestore(forPublicationID: self.publicationID) { comments in
                     if comments.isEmpty {
                         print("No comments found for publicationID: \(self.publicationID)")
                     } else {
@@ -124,7 +131,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         if let text = commentTextField.text, !text.isEmpty {
             CommentService.shared.publishAComment(uid: Auth.auth().currentUser?.uid, comment: text, nameOfWriter: (Auth.auth().currentUser?.displayName)!, publicationID: publicationID)
             
-            commentService.getComments(forPublicationID: publicationID) { comments in
+            commentService.getCommentsFromFirestore(forPublicationID: publicationID) { comments in
                 if comments.isEmpty {
                     print("No comments found for publicationID: \(self.publicationID)")
                 } else {

@@ -19,7 +19,7 @@ struct Comment {
         self.nameOfWriter = data["nameOfWriter"] as? String ?? ""
         self.publicationID = data["publicationID"] as? Int ?? 0
         self.commentText = data["comment"] as? String ?? ""
-        self.isLiked = false
+        self.isLiked = data["isLiked"] as? Bool ?? false
     }
 }
 

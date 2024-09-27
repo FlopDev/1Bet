@@ -2,7 +2,7 @@
 //  PublicationServiceTests.swift
 //  testFBGGTests
 //
-//  Created by Florian Peyrony on 02/05/2023.
+//  Created by Florian Peyrony on 24/09/2024.
 //
 
 import XCTest
@@ -17,30 +17,17 @@ class PublicationServiceTests: XCTestCase {
         publicationService = PublicationService()
     }
 
-    override func tearDown() {
-        publicationService = nil
-        super.tearDown()
-    }
+    func testFormatDateString() {
+        // Test 1 : Date correcte "dd/MM/yyyy"
+        let formattedDate = publicationService.formatDateString("25/09/2024")
+        XCTAssertEqual(formattedDate, "2024-09-25", "The formatted date should be in 'yyyy-MM-dd' format.")
 
-    func testSavePublicationOnDB() {
-        let publicationID = 1
-        let mockData: [String: Any] = [
-            "date": "2022-05-02",
-            "description": "This is a test publication",
-            "percentOfBankroll": "10%",
-            "publicationID": publicationID,
-            "trustOnTen": "7/10"
-        ]
-       // publicationService.database. = mockData
+        // Test 2 : Date incorrecte (la méthode doit retourner la même chaîne)
+        let invalidDate = publicationService.formatDateString("invalid-date")
+        XCTAssertEqual(invalidDate, "invalid-date", "The method should return the original string if the format is incorrect.")
 
-        publicationService.savePublicationOnDB(date: "2022-05-02", description: "This is a test publication", percentOfBankroll: "10%", publicationID: String(publicationID), trustOnTen: "7/10")
-
-        // Verify that the publication was added to the mock database
-        //let document = mockFirestore.mockData["publications/\(publicationID)"] as? [String: Any]
-        //XCTAssertNotNil(document, "Document should not be nil")
-        //XCTAssertEqual(document!["date"] as! String, "2022-05-02", "The publication date should be 2022-05-02")
-        //XCTAssertEqual(document!["description"] as! String, "This is a test publication", "The publication description should be 'This is a test publication'")
-        //XCTAssertEqual(document!["percentOfBankroll"] as! String, "10%", "The publication percentOfBankroll should be '10%'")
-        //XCTAssertEqual(document!["trustOnTen"] as! String, "7/10", "The publication trustOnTen should be '7/10'")
+        // Test 3 : Autre format valide mais non reconnu
+        let anotherFormatDate = publicationService.formatDateString("2024/09/25")
+        XCTAssertEqual(anotherFormatDate, "2024/09/25", "The method should return the original string if the format doesn't match 'dd/MM/yyyy'.")
     }
 }
