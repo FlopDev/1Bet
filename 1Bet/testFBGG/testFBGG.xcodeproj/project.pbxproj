@@ -81,6 +81,7 @@
 		CB5A97AB2C87785C00D6C1E8 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AA2C87785C00D6C1E8 /* FirebaseRemoteConfig */; };
 		CB5A97AD2C87785C00D6C1E8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AC2C87785C00D6C1E8 /* FirebaseStorage */; };
 		CB5A97AF2C87785C00D6C1E8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AE2C87785C00D6C1E8 /* FirebaseStorageCombine-Community */; };
+		CB602EF42CAB205800E3120C /* MockFirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */; };
 		CB7631F32CA1D84400CEFD61 /* testFBGGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */; };
 		CB7631FB2CA1DD8900CEFD61 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */; };
 		CB7631FD2CA1F90E00CEFD61 /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631FC2CA1F90E00CEFD61 /* CommentTests.swift */; };
@@ -146,6 +147,7 @@
 		CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CB46FCA32C0639B7007B0A28 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressArcView.swift; sourceTree = "<group>"; };
+		CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirebaseStorageService.swift; sourceTree = "<group>"; };
 		CB7631F02CA1D84400CEFD61 /* testFBGGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testFBGGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testFBGGTests.swift; sourceTree = "<group>"; };
 		CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */,
 				CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */,
 				CB7631FC2CA1F90E00CEFD61 /* CommentTests.swift */,
+				CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */,
 				CB7632002CA1FE2800CEFD61 /* CommentServiceTests.swift */,
 				CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */,
 				CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */,
@@ -532,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB602EF42CAB205800E3120C /* MockFirebaseStorageService.swift in Sources */,
 				CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */,
 				CB7631FB2CA1DD8900CEFD61 /* UserTests.swift in Sources */,
 				CB7631FD2CA1F90E00CEFD61 /* CommentTests.swift in Sources */,

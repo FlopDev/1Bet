@@ -8,8 +8,7 @@
 import XCTest
 @testable import testFBGG
 
-import XCTest
-@testable import testFBGG
+
 
 class CommentServiceTests: XCTestCase {
 

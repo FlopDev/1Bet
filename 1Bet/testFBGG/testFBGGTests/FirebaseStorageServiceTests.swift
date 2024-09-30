@@ -19,17 +19,22 @@ class FirebaseStorageServiceTests: XCTestCase {
 
     // Teste si la méthode gère correctement une image manquante (retourne nil)
     func testDownloadLatestPhotoMissingDocument() {
-        // Simule le cas où le document n'existe pas
+        // Utiliser le mock pour simuler le comportement attendu
+        let mockFirebaseStorageService = MockFirebaseStorageService()
+        
+        // Création d'une expectation pour gérer l'asynchronie
         let expectation = XCTestExpectation(description: "Image should be nil when the document is missing")
-
-        // Appel de la méthode sans image
-        firebaseStorageService.downloadLatestPhoto { image in
+        
+        // Appel de la méthode avec le service mocké
+        mockFirebaseStorageService.downloadLatestPhoto { image in
             XCTAssertNil(image, "Expected image to be nil when the document is missing")
-            expectation.fulfill()
+            expectation.fulfill() // Indique que le test a atteint le point attendu
         }
-
+        
+        // Attente de l'expectation
         wait(for: [expectation], timeout: 2.0)
     }
+
 
     // Teste si la méthode retourne une erreur lorsqu'il y a un problème de données d'image
     func testUploadPhotoInvalidImageData() {

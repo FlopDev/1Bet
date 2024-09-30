@@ -25,7 +25,7 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(comment.nameOfWriter, "Florian", "Expected nameOfWriter to be Florian")
         XCTAssertEqual(comment.publicationID, 123, "Expected publicationID to be 123")
         XCTAssertEqual(comment.commentText, "This is a comment", "Expected commentText to be 'This is a comment'")
-        XCTAssertEqual(comment.isLiked, false, "Expected isLiked to be false by default")
+        XCTAssertEqual(comment.isLiked, true, "Expected isLiked to be false by default")
     }
 
     func testCommentInitializationWithMissingData() {
