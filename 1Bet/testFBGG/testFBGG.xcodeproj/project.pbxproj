@@ -87,7 +87,7 @@
 		CB7632012CA1FE2800CEFD61 /* CommentServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632002CA1FE2800CEFD61 /* CommentServiceTests.swift */; };
 		CB7632052CA28D4000CEFD61 /* PublicationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */; };
 		CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */; };
-		CB8562262CB437FB00714BBC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8562252CB437FB00714BBC /* GoogleService-Info.plist */; };
+		CB8CD4112CB45E9F008ACA60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8562252CB437FB00714BBC /* GoogleService-Info.plist */; };
 		CBF1C61A2C922B3800EA6758 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF1C6192C922B3800EA6758 /* Package.swift */; };
 /* End PBXBuildFile section */
 
@@ -358,6 +358,7 @@
 				A6D667E3293D3DE200C98493 /* Sources */,
 				A6D667E4293D3DE200C98493 /* Frameworks */,
 				A6D667E5293D3DE200C98493 /* Resources */,
+				CB8CD4102CB457B9008ACA60 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -469,7 +470,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6B355D729EE4FAA0040A1BC /* Roboto-Medium.ttf in Resources */,
-				CB8562262CB437FB00714BBC /* GoogleService-Info.plist in Resources */,
 				A6B355D429EE4FAA0040A1BC /* Roboto-Condensed.ttf in Resources */,
 				A6B355D129EE4FAA0040A1BC /* NOTICE.txt in Resources */,
 				A6B355DA29EE4FAA0040A1BC /* Roboto-Light.ttf in Resources */,
@@ -488,6 +488,7 @@
 				A6B355CA29EE4FAA0040A1BC /* Roboto-ThinItalic.ttf in Resources */,
 				A6B355B629EE4DD40040A1BC /* Roboto-Regular.ttf in Resources */,
 				A6D667F2293D3DE200C98493 /* Main.storyboard in Resources */,
+				CB8CD4112CB45E9F008ACA60 /* GoogleService-Info.plist in Resources */,
 				A6B355D529EE4FAA0040A1BC /* Roboto-MediumItalic.ttf in Resources */,
 				A6B355CC29EE4FAA0040A1BC /* Roboto-BoldCondensedItalic.ttf in Resources */,
 			);
@@ -501,6 +502,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CB8CD4102CB457B9008ACA60 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A6D667E3293D3DE200C98493 /* Sources */ = {
@@ -700,7 +726,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 357SCH38Y3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = testFBGG/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -714,7 +742,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = FlopDev.testFBGG;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlopDev.testFBGG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -729,7 +757,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 357SCH38Y3;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = testFBGG/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -743,7 +773,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = FlopDev.testFBGG;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlopDev.testFBGG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

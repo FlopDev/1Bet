@@ -28,6 +28,7 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     
     // MARK: - Outlets
     
+    @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var signInButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -122,6 +123,14 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         passwordTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
     
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
+        
+        let attributedString = NSAttributedString(string: "Forgot password ?", attributes: [
+            .strokeColor: UIColor.black,
+            .strokeWidth: -0.7,
+            .foregroundColor: UIColor.white
+        ])
+
+        forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
     }
     
     private func setupFacebookLoginButton() {
@@ -139,7 +148,6 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         // Désactiver les contraintes automatiques du bouton
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
         stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
         
         
@@ -185,7 +193,7 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         // Ajouter des contraintes pour la StackView
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            stackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 90),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
     }

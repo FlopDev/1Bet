@@ -68,6 +68,8 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     
     @IBAction func didPressCreateAnAccount(_ sender: Any) {
         
+        fatalError("Bug")
+        
         if usernameTextField.text != "" && password.text != "" && emailTextField.text != "" {
             print("Inscription de \(usernameTextField.text ?? "no name")")
             service.doesEmailExist(email: emailTextField.text!) { [self] (exists) in

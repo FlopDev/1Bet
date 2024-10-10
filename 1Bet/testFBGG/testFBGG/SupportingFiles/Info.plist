@@ -11,14 +11,14 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.FlopDev.testFBGG</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.637216754767-rdtuv8fmivru2gr3ng1sntg76o17j1aa</string>
 			</array>
-			<key>CFBundleURLName</key>
-			<string>FlopDev.testFBGG</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
@@ -27,6 +27,8 @@
 	<string>f5a118d00d27548697340788cd53487c</string>
 	<key>FacebookDisplayName</key>
 	<string>TESTFBGG</string>
+	<key>GIDClientID</key>
+	<string>637216754767-rdtuv8fmivru2gr3ng1sntg76o17j1aa.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -59,7 +61,5 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>GIDClientID</key>
-	<string>637216754767-rdtuv8fmivru2gr3ng1sntg76o17j1aa.apps.googleusercontent.com</string>
 </dict>
 </plist>
