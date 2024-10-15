@@ -34,7 +34,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A6D667FF293D3DE600C98493"
+               BlueprintIdentifier = "CB7631EF2CA1D84400CEFD61"
                BuildableName = "testFBGGTests.xctest"
                BlueprintName = "testFBGGTests"
                ReferencedContainer = "container:testFBGG.xcodeproj">
@@ -54,7 +54,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"

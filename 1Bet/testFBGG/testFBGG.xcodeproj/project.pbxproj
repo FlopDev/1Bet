@@ -80,6 +80,7 @@
 		CB5A97AB2C87785C00D6C1E8 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AA2C87785C00D6C1E8 /* FirebaseRemoteConfig */; };
 		CB5A97AD2C87785C00D6C1E8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AC2C87785C00D6C1E8 /* FirebaseStorage */; };
 		CB5A97AF2C87785C00D6C1E8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = CB5A97AE2C87785C00D6C1E8 /* FirebaseStorageCombine-Community */; };
+		CB601B562CBC0F66009B71C4 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB601B552CBC0F66009B71C4 /* ResetPasswordViewController.swift */; };
 		CB602EF42CAB205800E3120C /* MockFirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */; };
 		CB7631F32CA1D84400CEFD61 /* testFBGGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */; };
 		CB7631FB2CA1DD8900CEFD61 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */; };
@@ -146,6 +147,7 @@
 		CB46FC9F2C05214E007B0A28 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		CB46FCA32C0639B7007B0A28 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressArcView.swift; sourceTree = "<group>"; };
+		CB601B552CBC0F66009B71C4 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirebaseStorageService.swift; sourceTree = "<group>"; };
 		CB7631F02CA1D84400CEFD61 /* testFBGGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testFBGGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testFBGGTests.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				A6D6683C293D628700C98493 /* MainPageViewController.swift */,
 				A694CF9629C08BB80097E9FD /* AddCommentaryViewController.swift */,
 				A694CF9429C05F860097E9FD /* EditBetViewController.swift */,
+				CB601B552CBC0F66009B71C4 /* ResetPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -524,7 +527,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -536,6 +539,7 @@
 				A6D667EB293D3DE200C98493 /* AppDelegate.swift in Sources */,
 				A6D66842293D67D600C98493 /* SignInOptionsViewController.swift in Sources */,
 				A694CF9929C097260097E9FD /* Comment.swift in Sources */,
+				CB601B562CBC0F66009B71C4 /* ResetPasswordViewController.swift in Sources */,
 				CBF1C61A2C922B3800EA6758 /* Package.swift in Sources */,
 				CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */,
 				A687378D2976485E00A12CB6 /* CommentService.swift in Sources */,
@@ -635,7 +639,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import Firebase
+import FirebaseCore
 import AVFoundation
 import Photos
 
@@ -112,6 +113,7 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         } else {
             shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextView.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: publicationID, trustOnTen: trustOnTenTextField.text!)
             FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!)
+            
         }
         presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")
     }

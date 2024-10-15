@@ -101,6 +101,9 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Missing Email or password")
         }
     }
+    @IBAction func forgetPasswordButton(_ sender: Any) {
+     print("Call forget password logic here")
+    }
     
     func setUpButtonsSkin() {
         createAnAccountButton.layer.borderWidth = 1

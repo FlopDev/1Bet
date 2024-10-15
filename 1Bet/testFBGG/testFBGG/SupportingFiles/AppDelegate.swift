@@ -12,6 +12,7 @@ import GoogleSignIn
 import FacebookLogin
 import FacebookCore
 import Firebase
+import FirebaseAnalytics
 import FirebaseAppCheck
 
 import FacebookCore
@@ -26,6 +27,14 @@ import FacebookCore
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        Performance.sharedInstance().isInstrumentationEnabled = true
+        Performance.sharedInstance().isDataCollectionEnabled = true
+        
+        Crashlytics.crashlytics().log("App started and Firebase configured")
+        Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
+        Analytics.setAnalyticsCollectionEnabled(true)
+
         
             return true
     }

@@ -302,6 +302,10 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Forgot Password"/>
+                                <connections>
+                                    <action selector="forgetPasswordButton:" destination="cDf-Cc-F4E" eventType="touchUpInside" id="5Ip-qd-d93"/>
+                                    <segue destination="O0N-E1-IvU" kind="show" id="4Zz-L0-6or"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="y9d-XQ-DQg"/>
@@ -359,6 +363,73 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1147.6923076923076" y="-169.19431279620852"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="hoz-uI-eBv">
+            <objects>
+                <viewController id="O0N-E1-IvU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2o0-mD-MIG">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.85000002384185791" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball" translatesAutoresizingMaskIntoConstraints="NO" id="yWo-oW-KSJ">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgotten Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-hz-1UB">
+                                <rect key="frame" x="81.666666666666686" y="60.000000000000007" width="227" height="20.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nek-oL-uWH">
+                                <rect key="frame" x="117" y="396.66666666666669" width="156" height="50.666666666666686"/>
+                                <color key="backgroundColor" red="0.30608549709999999" green="0.3690159321" blue="0.32944482559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Send an email"/>
+                                <connections>
+                                    <action selector="didTapValidateButton:" destination="RNF-ez-80l" eventType="touchUpInside" id="J3m-tH-Yoh"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add your email here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VJ2-5t-WuN">
+                                <rect key="frame" x="116.66666666666667" y="303" width="156.66666666666663" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="addEmailTextfield:" destination="RNF-ez-80l" eventType="editingDidEnd" id="ZmL-AH-ff4"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rbU-M7-UkI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="centerY" secondItem="yWo-oW-KSJ" secondAttribute="centerY" id="37O-NB-2fI"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="width" multiplier="0.4" id="8EC-Yy-xNT"/>
+                            <constraint firstItem="mxV-hz-1UB" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="width" multiplier="0.582051" id="ALt-0Y-jf5"/>
+                            <constraint firstItem="mxV-hz-1UB" firstAttribute="top" secondItem="rbU-M7-UkI" secondAttribute="top" constant="60" id="Cj8-FO-sjF"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="centerX" secondItem="2o0-mD-MIG" secondAttribute="centerX" id="H4D-cL-AcR"/>
+                            <constraint firstItem="yWo-oW-KSJ" firstAttribute="trailing" secondItem="rbU-M7-UkI" secondAttribute="trailing" id="Jbi-ZS-ZP1"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="height" secondItem="yWo-oW-KSJ" secondAttribute="height" multiplier="0.06" id="Jwv-P3-2ao"/>
+                            <constraint firstItem="mxV-hz-1UB" firstAttribute="centerX" secondItem="2o0-mD-MIG" secondAttribute="centerX" id="XBy-Us-jT7"/>
+                            <constraint firstItem="mxV-hz-1UB" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="height" multiplier="227:844" id="eWK-lF-2hZ"/>
+                            <constraint firstAttribute="bottom" secondItem="yWo-oW-KSJ" secondAttribute="bottom" id="j5D-g0-Prq"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="centerY" secondItem="2o0-mD-MIG" secondAttribute="centerY" id="l83-c7-TAI"/>
+                            <constraint firstItem="yWo-oW-KSJ" firstAttribute="top" secondItem="2o0-mD-MIG" secondAttribute="top" id="lJP-LL-aEx"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="top" secondItem="VJ2-5t-WuN" secondAttribute="bottom" constant="59.666666666666629" id="oLP-kT-FU0"/>
+                            <constraint firstItem="nek-oL-uWH" firstAttribute="centerX" secondItem="VJ2-5t-WuN" secondAttribute="centerX" id="oob-dc-aHL"/>
+                            <constraint firstItem="yWo-oW-KSJ" firstAttribute="leading" secondItem="rbU-M7-UkI" secondAttribute="leading" id="qHa-PZ-dmQ"/>
+                        </constraints>
+                        <connections>
+                            <outlet property="forgottenPasswordLabel" destination="mxV-hz-1UB" id="jQb-k5-Afu"/>
+                            <outlet property="sendAnEmailButton" destination="nek-oL-uWH" id="t7s-M8-6OK"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="iTU-Br-ZlF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VHq-Q6-UhV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="RNF-ez-80l" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2321.5384615384614" y="-169.19431279620852"/>
         </scene>
         <!--Main Page View Controller-->
         <scene sceneID="FbK-YY-Tcx">
@@ -580,7 +651,7 @@
                                         <color key="tintColor" red="0.30494129660000002" green="0.3686715364" blue="0.3276078999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Publish"/>
                                         <connections>
-                                            <action selector="publishButton:" destination="ciR-pI-aZS" eventType="touchUpInside" id="227-yJ-fAa"/>
+                                            <action selector="publishButtonTapped:" destination="ciR-pI-aZS" eventType="touchUpInside" id="x6i-me-29f"/>
                                         </connections>
                                     </button>
                                 </subviews>
