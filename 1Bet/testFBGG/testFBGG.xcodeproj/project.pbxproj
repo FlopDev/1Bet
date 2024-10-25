@@ -307,8 +307,6 @@
 				A6D667EC293D3DE200C98493 /* SceneDelegate.swift */,
 				CB8562252CB437FB00714BBC /* GoogleService-Info.plist */,
 				A6D667FB293D3DE500C98493 /* Info.plist */,
-				CB46FCA32C0639B7007B0A28 /* UILabel.swift */,
-				CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -333,6 +331,8 @@
 				A663B06F29F6982A00574DE6 /* LabelMargin.swift */,
 				CB033F272BF27FC400D5B7AF /* UIAlert.swift */,
 				CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */,
+				CB46FCA32C0639B7007B0A28 /* UILabel.swift */,
+				CB530FA82C0F3E9C007456C6 /* ProgressArcView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";

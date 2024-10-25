@@ -25,9 +25,12 @@ class FirebaseService {
     typealias PublicationCompletion = (String?, String?, Double?, Double?) -> Void
     
     // MARK: - Functions
+    /// Checks if an email already exists in the Firestore `users` collection.
+    ///
+    /// - Parameters:
+    ///   - email: The email to check.
+    ///   - completion: A completion handler returning `true` if the email exists, `false` otherwise.
     func doesEmailExist(email: String, completion: @escaping (Bool) -> Void) {
-        // Get a reference to the Firestore database
-        //let db = Firestore.firestore()
         // Get a reference to the "users" collection
         let usersRef = database.collection("users")
         // Query the "users" collection for the provided email
@@ -52,6 +55,9 @@ class FirebaseService {
         }
     }
     
+    /// Checks if the user's information exists in Firestore. If not, saves new user info.
+    ///
+    /// - Parameter completion: A completion handler returning `true` if user info exists, `false` otherwise.
     func checkBDDInfo(completion: @escaping (Bool) -> Void) {
         self.database.collection("users").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -72,6 +78,12 @@ class FirebaseService {
         }
     }
     
+    /// Signs in a user with email and password.
+    ///
+    /// - Parameters:
+    ///   - email: The user's email.
+    ///   - username: The user's username.
+    ///   - password: The user's password.
     func signInEmailButton(email: String, username: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard self != nil else { return }
@@ -93,7 +105,12 @@ class FirebaseService {
         }
     }
     
-    
+    /// Logs in a user with email and password.
+        ///
+        /// - Parameters:
+        ///   - email: The user's email.
+        ///   - password: The user's password.
+        ///   - completion: A completion handler returning `true` on success, `false` on failure.
     func logInEmailButton(email: String, password: String, completion: @escaping (Bool) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -106,7 +123,7 @@ class FirebaseService {
         }
     }
     
-    
+    /// Authenticates a user with Facebook.
     func facebookButton() {
         checkBDDInfo() { result in
             if result {
@@ -161,7 +178,9 @@ class FirebaseService {
             }
         }
     }
-
+    /// Signs in a user with Google.
+        ///
+        /// - Parameter viewController: The view controller that presents the sign-in.
     func signInByGmail(viewController: UIViewController) {
         GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { signInResult, error in
             if let error = error {
@@ -223,7 +242,13 @@ class FirebaseService {
         }
     }
 
-    
+    /// Saves user information in Firestore.
+        ///
+        /// - Parameters:
+        ///   - uid: The unique identifier for the user.
+        ///   - name: The user's name.
+        ///   - email: The user's email.
+        ///   - isAdmin: A boolean indicating if the user has admin privileges.
     func saveUserInfo(uid: String?, name: String, email: String, isAdmin: Bool) {
         let docRef = database.document("users/\(String(describing: uid))")
         docRef.setData(["name": name, "mail": email, "isAdmin": isAdmin])

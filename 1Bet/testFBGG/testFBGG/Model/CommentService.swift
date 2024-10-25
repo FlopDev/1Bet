@@ -11,33 +11,48 @@ import FirebaseFirestore
 import FacebookLogin
 import GoogleSignIn
 
-
 class CommentService {
     
     // MARK: - Properties
     
+    /// Singleton instance of `CommentService` to access shared methods and properties.
     static let shared = CommentService()
+    
+    /// Reference to the Firestore database.
     var database = Firestore.firestore()
+    
+    /// Holds user information for the current session.
     var userInfo: User?
+    
+    /// Reference to the main page view controller (if needed).
     let vc = MainPageViewController()
     
-    // Stocker les commentaires localement (pour tester la logique métier)
+    /// Local storage for comments, used for business logic testing or local caching.
     var comments: [Comment] = []
     
     // MARK: - Functions
 
-    // Ajouter un commentaire localement (logique métier)
+    /// Adds a new comment to the local `comments` array for local-only storage or testing purposes.
+    ///
+    /// - Parameter data: A dictionary containing the data needed to initialize a `Comment`.
     func addComment(data: [String: Any]) {
         let newComment = Comment(data: data)
         comments.append(newComment)
     }
     
-    // Récupérer les commentaires associés à un publicationID
+    /// Retrieves comments from the local `comments` array that match a given publication ID.
+    ///
+    /// - Parameter publicationID: The ID of the publication to filter comments for.
+    /// - Returns: An array of `Comment` objects that belong to the specified publication.
     func getComments(forPublicationID publicationID: String) -> [Comment] {
-            return comments.filter { "\($0.publicationID)" == publicationID }
-        }
+        return comments.filter { "\($0.publicationID)" == publicationID }
+    }
 
-    // Récupération des commentaires depuis Firestore (logique Firestore)
+    /// Retrieves comments from Firestore that are associated with a specified publication ID.
+    ///
+    /// - Parameters:
+    ///   - publicationID: The ID of the publication to fetch comments for.
+    ///   - completion: A closure called with an array of `Comment` objects fetched from Firestore.
     func getCommentsFromFirestore(forPublicationID publicationID: String, completion: @escaping ([Comment]) -> Void) {
         database.collection("comments").whereField("publicationID", isEqualTo: publicationID).getDocuments { querySnapshot, error in
             if let error = error {
@@ -46,6 +61,7 @@ class CommentService {
                 return
             }
             
+            // Unwrap query results and handle cases with no documents found
             guard let documents = querySnapshot?.documents else {
                 print("No documents found for publicationID: \(publicationID)")
                 completion([])
@@ -58,6 +74,7 @@ class CommentService {
                 print("Found \(documents.count) documents for publicationID: \(publicationID)")
             }
             
+            // Map Firestore document data into `Comment` objects
             var comments: [Comment] = []
             for document in documents {
                 let data = document.data()
@@ -66,13 +83,31 @@ class CommentService {
                 print("Found comment: \(comment.commentText)")
             }
             
+            // Pass the array of comments back via the completion handler
             completion(comments)
         }
     }
     
+    /// Publishes a new comment to Firestore under the `comments` collection.
+    ///
+    /// - Parameters:
+    ///   - uid: The unique identifier of the user posting the comment.
+    ///   - comment: The text content of the comment.
+    ///   - nameOfWriter: The name of the user writing the comment.
+    ///   - publicationID: The ID of the publication the comment is associated with.
     func publishAComment(uid: String?, comment: String, nameOfWriter: String, publicationID: String) {
         let docRef = database.document("comments/\(String(describing: uid))")
-        docRef.setData(["nameOfWriter": nameOfWriter, "likes": 0, "comment": comment, "publicationID": publicationID])
-        print("Le commentaire enregistré porte le publicationID : \(publicationID)")
+        docRef.setData([
+            "nameOfWriter": nameOfWriter,
+            "likes": 0,
+            "comment": comment,
+            "publicationID": publicationID
+        ]) { error in
+            if let error = error {
+                print("Failed to publish comment: \(error)")
+            } else {
+                print("Comment published with publicationID: \(publicationID)")
+            }
+        }
     }
 }
