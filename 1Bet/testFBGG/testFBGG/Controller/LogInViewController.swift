@@ -124,16 +124,16 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         passwordTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
+        
+        
     
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
         
-        let attributedString = NSAttributedString(string: "Forgot password ?", attributes: [
-            .strokeColor: UIColor.black,
-            .strokeWidth: -0.7,
-            .foregroundColor: UIColor.white
-        ])
-
-        forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
+        forgotPasswordButton.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+        forgotPasswordButton.titleLabel?.layer.shadowRadius = 3.0
+        forgotPasswordButton.titleLabel?.layer.shadowOpacity = 1.0
+        forgotPasswordButton.titleLabel?.layer.shadowOffset = CGSize(width: 2, height: 2)
+        forgotPasswordButton.titleLabel?.layer.masksToBounds = false
     }
     
     private func setupFacebookLoginButton() {

@@ -301,7 +301,7 @@
                                 <rect key="frame" x="108" y="256.66666666666669" width="174" height="34.333333333333314"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Forgot Password"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Forgot Password ?"/>
                                 <connections>
                                     <action selector="forgetPasswordButton:" destination="cDf-Cc-F4E" eventType="touchUpInside" id="5Ip-qd-d93"/>
                                     <segue destination="O0N-E1-IvU" kind="show" id="4Zz-L0-6or"/>
@@ -364,70 +364,78 @@
             </objects>
             <point key="canvasLocation" x="1147.6923076923076" y="-169.19431279620852"/>
         </scene>
-        <!--View Controller-->
+        <!--Reset Password View Controller-->
         <scene sceneID="hoz-uI-eBv">
             <objects>
-                <viewController id="O0N-E1-IvU" sceneMemberID="viewController">
+                <viewController id="O0N-E1-IvU" customClass="ResetPasswordViewController" customModule="testFBGG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2o0-mD-MIG">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.85000002384185791" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball" translatesAutoresizingMaskIntoConstraints="NO" id="yWo-oW-KSJ">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgotten Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxV-hz-1UB">
-                                <rect key="frame" x="81.666666666666686" y="60.000000000000007" width="227" height="20.333333333333336"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nek-oL-uWH">
-                                <rect key="frame" x="117" y="396.66666666666669" width="156" height="50.666666666666686"/>
+                                <rect key="frame" x="117" y="392" width="156" height="50"/>
                                 <color key="backgroundColor" red="0.30608549709999999" green="0.3690159321" blue="0.32944482559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Send an email"/>
                                 <connections>
                                     <action selector="didTapValidateButton:" destination="RNF-ez-80l" eventType="touchUpInside" id="J3m-tH-Yoh"/>
+                                    <action selector="didTapValidateButton:" destination="O0N-E1-IvU" eventType="touchUpInside" id="n9B-8u-atP"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add your email here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VJ2-5t-WuN">
-                                <rect key="frame" x="116.66666666666667" y="303" width="156.66666666666663" height="34"/>
+                                <rect key="frame" x="116.66666666666667" y="298.33333333333331" width="156.66666666666663" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                 <connections>
                                     <action selector="addEmailTextfield:" destination="RNF-ez-80l" eventType="editingDidEnd" id="ZmL-AH-ff4"/>
                                 </connections>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OneBet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kc-Gq-viC">
+                                <rect key="frame" x="145.66666666666666" y="40" width="99" height="31.333333333333329"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="27"/>
+                                <color key="textColor" red="0.20791444179999999" green="0.20001226659999999" blue="0.199973017" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rbU-M7-UkI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="centerY" secondItem="yWo-oW-KSJ" secondAttribute="centerY" id="37O-NB-2fI"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="width" multiplier="0.4" id="8EC-Yy-xNT"/>
-                            <constraint firstItem="mxV-hz-1UB" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="width" multiplier="0.582051" id="ALt-0Y-jf5"/>
-                            <constraint firstItem="mxV-hz-1UB" firstAttribute="top" secondItem="rbU-M7-UkI" secondAttribute="top" constant="60" id="Cj8-FO-sjF"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="centerX" secondItem="2o0-mD-MIG" secondAttribute="centerX" id="H4D-cL-AcR"/>
                             <constraint firstItem="yWo-oW-KSJ" firstAttribute="trailing" secondItem="rbU-M7-UkI" secondAttribute="trailing" id="Jbi-ZS-ZP1"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="height" secondItem="yWo-oW-KSJ" secondAttribute="height" multiplier="0.06" id="Jwv-P3-2ao"/>
-                            <constraint firstItem="mxV-hz-1UB" firstAttribute="centerX" secondItem="2o0-mD-MIG" secondAttribute="centerX" id="XBy-Us-jT7"/>
-                            <constraint firstItem="mxV-hz-1UB" firstAttribute="width" secondItem="yWo-oW-KSJ" secondAttribute="height" multiplier="227:844" id="eWK-lF-2hZ"/>
+                            <constraint firstItem="7kc-Gq-viC" firstAttribute="centerX" secondItem="2o0-mD-MIG" secondAttribute="centerX" id="bb8-3a-1fd"/>
                             <constraint firstAttribute="bottom" secondItem="yWo-oW-KSJ" secondAttribute="bottom" id="j5D-g0-Prq"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="centerY" secondItem="2o0-mD-MIG" secondAttribute="centerY" id="l83-c7-TAI"/>
                             <constraint firstItem="yWo-oW-KSJ" firstAttribute="top" secondItem="2o0-mD-MIG" secondAttribute="top" id="lJP-LL-aEx"/>
+                            <constraint firstItem="7kc-Gq-viC" firstAttribute="top" secondItem="rbU-M7-UkI" secondAttribute="top" constant="40" id="m8X-Tj-rP0"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="top" secondItem="VJ2-5t-WuN" secondAttribute="bottom" constant="59.666666666666629" id="oLP-kT-FU0"/>
                             <constraint firstItem="nek-oL-uWH" firstAttribute="centerX" secondItem="VJ2-5t-WuN" secondAttribute="centerX" id="oob-dc-aHL"/>
                             <constraint firstItem="yWo-oW-KSJ" firstAttribute="leading" secondItem="rbU-M7-UkI" secondAttribute="leading" id="qHa-PZ-dmQ"/>
                         </constraints>
                         <connections>
-                            <outlet property="forgottenPasswordLabel" destination="mxV-hz-1UB" id="jQb-k5-Afu"/>
-                            <outlet property="sendAnEmailButton" destination="nek-oL-uWH" id="t7s-M8-6OK"/>
+                            <outletCollection property="gestureRecognizers" destination="Itv-7L-3EU" appends="YES" id="i6h-ns-Fuq"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="iTU-Br-ZlF"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="VJ2-5t-WuN" id="fB4-Rc-gYj"/>
+                        <outlet property="sendAnEmailButton" destination="nek-oL-uWH" id="bxM-MQ-hUO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VHq-Q6-UhV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="RNF-ez-80l" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="Itv-7L-3EU">
+                    <connections>
+                        <action selector="dismissKeyboad:" destination="O0N-E1-IvU" id="C1N-ED-KRb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2321.5384615384614" y="-169.19431279620852"/>
         </scene>

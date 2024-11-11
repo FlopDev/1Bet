@@ -72,7 +72,27 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            // Déplace la vue vers le haut de la hauteur du clavier
+            view.frame.origin.y = -keyboardFrame.height
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+            // Remet la vue à sa position d'origine
+            view.frame.origin.y = 0
+        }
+    
+    // delete observer for memory
+    deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
 
     // MARK: - Setup Comment Input View
     func setupCommentInputView() {

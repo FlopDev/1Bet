@@ -53,7 +53,7 @@ class WelcomeViewController: UIViewController {
         connectionLabel.font = UIFont(name: "ArialRoundedMTBold", size: 22)
         connectionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        // Ajouter un contour au texte
+        // Add an outline to the text
         let attributedString = NSAttributedString(string: "Connexion en cours", attributes: [
             .strokeColor: UIColor.black,
             .strokeWidth: -2.5
@@ -68,7 +68,7 @@ class WelcomeViewController: UIViewController {
     func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = #colorLiteral(red: 0.3060854971, green: 0.3690159321, blue: 0.3294448256, alpha: 1)
-        activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) // Augmenter la taille de l'activity indicator
+        activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) // up the size of the activity indicator
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
         

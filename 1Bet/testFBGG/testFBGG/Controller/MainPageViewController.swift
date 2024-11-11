@@ -57,8 +57,6 @@ class MainPageViewController: UIViewController {
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
         
-        // Margin of bet pronostic
-        pronosticOfTipsterTextField.setMargins()
         pronosticOfTipsterTextField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         likeButton.layer.borderWidth = 1
         commentButton.layer.borderWidth = 1
@@ -103,7 +101,6 @@ class MainPageViewController: UIViewController {
                     if let colonne2 = data["description"] as? String {
                         print(colonne2)
                         self.pronosticOfTipsterTextField.text = "Analysis : \(colonne2)"
-                        self.pronosticOfTipsterTextField.setMargins()
                     }
                     
                     if let colonne3 = data["percentOfBankroll"] as? String, let percentage = Double(colonne3) {

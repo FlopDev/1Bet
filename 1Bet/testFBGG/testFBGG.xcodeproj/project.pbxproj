@@ -10,7 +10,6 @@
 		A619619D297F701B009D6DE7 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A619619C297F701B009D6DE7 /* FirebaseService.swift */; };
 		A64884F32A20D2BB0059ECB1 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A64884F22A20D2B90059ECB1 /* CoreTelephony.framework */; };
 		A656D6BD2A1C6D63000F7040 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A656D6BC2A1C6D63000F7040 /* User.swift */; };
-		A663B07029F6982A00574DE6 /* LabelMargin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A663B06F29F6982A00574DE6 /* LabelMargin.swift */; };
 		A687378D2976485E00A12CB6 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A687378C2976485E00A12CB6 /* CommentService.swift */; };
 		A694CF9529C05F860097E9FD /* EditBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694CF9429C05F860097E9FD /* EditBetViewController.swift */; };
 		A694CF9729C08BB80097E9FD /* AddCommentaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A694CF9629C08BB80097E9FD /* AddCommentaryViewController.swift */; };
@@ -89,7 +88,6 @@
 		CB7632052CA28D4000CEFD61 /* PublicationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */; };
 		CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */; };
 		CB8CD4112CB45E9F008ACA60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8562252CB437FB00714BBC /* GoogleService-Info.plist */; };
-		CBF1C61A2C922B3800EA6758 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF1C6192C922B3800EA6758 /* Package.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,7 +104,6 @@
 		A619619C297F701B009D6DE7 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		A64884F22A20D2B90059ECB1 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A656D6BC2A1C6D63000F7040 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		A663B06F29F6982A00574DE6 /* LabelMargin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelMargin.swift; sourceTree = "<group>"; };
 		A687378C2976485E00A12CB6 /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		A694CF9429C05F860097E9FD /* EditBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBetViewController.swift; sourceTree = "<group>"; };
 		A694CF9629C08BB80097E9FD /* AddCommentaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentaryViewController.swift; sourceTree = "<group>"; };
@@ -157,7 +154,6 @@
 		CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationServiceTests.swift; sourceTree = "<group>"; };
 		CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageServiceTests.swift; sourceTree = "<group>"; };
 		CB8562252CB437FB00714BBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CBF1C6192C922B3800EA6758 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +255,6 @@
 		A6D667DE293D3DE200C98493 = {
 			isa = PBXGroup;
 			children = (
-				CBF1C6192C922B3800EA6758 /* Package.swift */,
 				A6D667E9293D3DE200C98493 /* testFBGG */,
 				CB7631F12CA1D84400CEFD61 /* testFBGGTests */,
 				A6D667E8293D3DE200C98493 /* Products */,
@@ -328,7 +323,6 @@
 		CB033F262BF27F8700D5B7AF /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				A663B06F29F6982A00574DE6 /* LabelMargin.swift */,
 				CB033F272BF27FC400D5B7AF /* UIAlert.swift */,
 				CB46FC992BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift */,
 				CB46FCA32C0639B7007B0A28 /* UILabel.swift */,
@@ -540,7 +534,6 @@
 				A6D66842293D67D600C98493 /* SignInOptionsViewController.swift in Sources */,
 				A694CF9929C097260097E9FD /* Comment.swift in Sources */,
 				CB601B562CBC0F66009B71C4 /* ResetPasswordViewController.swift in Sources */,
-				CBF1C61A2C922B3800EA6758 /* Package.swift in Sources */,
 				CB46FC9A2BF6A944007B0A28 /* CustomIntensityVisualEffectView.swift in Sources */,
 				A687378D2976485E00A12CB6 /* CommentService.swift in Sources */,
 				A694CF9729C08BB80097E9FD /* AddCommentaryViewController.swift in Sources */,
@@ -551,7 +544,6 @@
 				CB46FCA02C05214F007B0A28 /* WelcomeViewController.swift in Sources */,
 				CB033F252BF0E23D00D5B7AF /* FirebaseStorageService.swift in Sources */,
 				A694CF9529C05F860097E9FD /* EditBetViewController.swift in Sources */,
-				A663B07029F6982A00574DE6 /* LabelMargin.swift in Sources */,
 				A6D66839293D624A00C98493 /* LogInViewController.swift in Sources */,
 				CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */,
 				A619619D297F701B009D6DE7 /* FirebaseService.swift in Sources */,
@@ -738,8 +730,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -769,8 +761,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class ResetPasswordViewController: UIViewController {
-    @IBOutlet var forgottenPasswordLabel: UILabel!
+
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var sendAnEmailButton: UIButton!
     
@@ -28,8 +28,6 @@ class ResetPasswordViewController: UIViewController {
         
         emailTextField.layer.borderWidth = 1
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
-        forgottenPasswordLabel.layer.borderWidth = 1
-        forgottenPasswordLabel.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
     }
 
     @IBAction func didTapValidateButton(_ sender: Any) {
@@ -60,5 +58,9 @@ class ResetPasswordViewController: UIViewController {
                 UIAlert.presentAlert(from: self, title: "Error", message: "No account found with this email address.")
             }
         }
+    }
+    
+    @IBAction func dismissKeyboad(_ sender: UITapGestureRecognizer) {
+        emailTextField.resignFirstResponder()
     }
 }
