@@ -68,8 +68,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
     
     @IBAction func didPressCreateAnAccount(_ sender: Any) {
         
-        fatalError("Bug")
-        
         if usernameTextField.text != "" && password.text != "" && emailTextField.text != "" {
             print("Inscription de \(usernameTextField.text ?? "no name")")
             service.doesEmailExist(email: emailTextField.text!) { [self] (exists) in
@@ -138,7 +136,6 @@ class SignInOptionsViewController: UIViewController, LoginButtonDelegate {
         // Désactiver les contraintes automatiques du bouton
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Ajouter le bouton de connexion Facebook à la StackView avant le bouton "Already an account?"
         stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
         
         for constraint in loginButton.constraints where constraint.firstAttribute == .height {

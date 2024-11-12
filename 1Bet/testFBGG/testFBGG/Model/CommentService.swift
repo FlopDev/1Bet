@@ -110,4 +110,39 @@ class CommentService {
             }
         }
     }
+    
+    /// Fetches the total likes count for a specific publication.
+    ///
+    /// - Parameters:
+    ///   - publicationID: The ID of the publication.
+    ///   - completion: Completion handler returning the likes count or an error if fetching fails.
+    func fetchLikesCount(publicationID: String, completion: @escaping (Result<Int, Error>) -> Void) {
+        let docRef = database.collection("publication").document(publicationID)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                let likesCount = data?["likesCount"] as? Int ?? 0
+                completion(.success(likesCount))
+            } else {
+                completion(.failure(error!))
+            }
+        }
+    }
+    
+    /// Checks if the current user has liked a specific publication.
+    ///
+    /// - Parameters:
+    ///   - publicationID: The ID of the publication.
+    ///   - userID: The ID of the user.
+    ///   - completion: Completion handler returning `true` if the user has liked the publication, `false` otherwise.
+    func fetchUserLikeStatus(publicationID: String, userID: String, completion: @escaping (Bool) -> Void) {
+        let docRef = database.collection("publication").document(publicationID).collection("likes").document(userID)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
 }

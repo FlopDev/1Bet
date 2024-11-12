@@ -88,6 +88,7 @@
 		CB7632052CA28D4000CEFD61 /* PublicationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */; };
 		CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */; };
 		CB8CD4112CB45E9F008ACA60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8562252CB437FB00714BBC /* GoogleService-Info.plist */; };
+		CBD170D62CE2A1A7007B18E3 /* LikeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD170D52CE2A19A007B18E3 /* LikeService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,7 @@
 		CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationServiceTests.swift; sourceTree = "<group>"; };
 		CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageServiceTests.swift; sourceTree = "<group>"; };
 		CB8562252CB437FB00714BBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CBD170D52CE2A19A007B18E3 /* LikeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 				A656D6BC2A1C6D63000F7040 /* User.swift */,
 				A694CF9829C097260097E9FD /* Comment.swift */,
 				A687378C2976485E00A12CB6 /* CommentService.swift */,
+				CBD170D52CE2A19A007B18E3 /* LikeService.swift */,
 				A6FC497329CE1F5C0022FB5D /* PublicationService.swift */,
 				A619619C297F701B009D6DE7 /* FirebaseService.swift */,
 				CB033F242BF0E23D00D5B7AF /* FirebaseStorageService.swift */,
@@ -546,6 +549,7 @@
 				A694CF9529C05F860097E9FD /* EditBetViewController.swift in Sources */,
 				A6D66839293D624A00C98493 /* LogInViewController.swift in Sources */,
 				CB033F282BF27FC400D5B7AF /* UIAlert.swift in Sources */,
+				CBD170D62CE2A1A7007B18E3 /* LikeService.swift in Sources */,
 				A619619D297F701B009D6DE7 /* FirebaseService.swift in Sources */,
 				CB530FA92C0F3E9C007456C6 /* ProgressArcView.swift in Sources */,
 				A6D6683D293D628700C98493 /* MainPageViewController.swift in Sources */,

@@ -104,7 +104,7 @@ class ProgressArcView: UIView {
     /// Updates the progress arc's stroke based on the current progress value.
     ///
     /// - Parameter progress: The current progress as a value between 0 and 1.
-    private func setProgress(_ progress: CGFloat) {
+    func setProgress(_ progress: CGFloat) {
         progressLayer.strokeEnd = progress
     }
     

@@ -28,11 +28,9 @@ class MainPageViewController: UIViewController {
     private var targetProgressTrustOnTen: CGFloat = 0
     private var duration: TimeInterval = 0
     private var displayLink: CADisplayLink?
-    let progressArcView = ProgressArcView()
-    let progressArcView2 = ProgressArcView()
     private var bankrollPercentage: CGFloat = 0
     private var trustPercentage: CGFloat = 0
-    var publicationID: String = "" // Assurez-vous que cet ID est bien défini quelque part dans votre code
+    var publicationID: String = ""
 
     // MARK: - Outlets
     @IBOutlet var underProgressView: UIStackView!
@@ -121,7 +119,6 @@ class MainPageViewController: UIViewController {
                             case .success(let documentID):
                                 print("ID de la dernière publication : \(documentID)")
                                 self.publicationID = documentID
-                                // Appeler d'autres fonctions comme checkIfUserLiked() et updateLikesCount() si nécessaire
                                 self.checkIfUserLiked()
                                 self.updateLikesCount()
                             case .failure(let error):
@@ -150,103 +147,46 @@ class MainPageViewController: UIViewController {
     }
 
     @IBAction func pressLikeButton(_ sender: UIButton) {
-        if self.publicationID.isEmpty {
-            PublicationService.shared.getLatestPublicationID { [weak self] result in
-                switch result {
-                case .success(let documentID):
-                    print("ID de la dernière publication : \(documentID)")
-                    self?.publicationID = documentID
-                    self?.toggleLike(onButton: sender)
-                case .failure(let error):
-                    print("Erreur : \(error.localizedDescription)")
-                }
-            }
-        } else {
-            self.toggleLike(onButton: sender)
-        }
-    }
-    
-    func toggleLike(onButton sender: UIButton) {
-        guard let userID = userID else { return }
-        guard !publicationID.isEmpty else {
-            print("Publication ID is empty.")
-            return
-        }
-
-        let likesRef = database.collection("publication").document(publicationID).collection("likes").document(userID)
-
-        likesRef.getDocument { document, error in
-            if let document = document, document.exists {
-                print("Document exists. Removing like.")
-                likesRef.delete { error in
-                    if let error = error {
-                        print("Error removing like: \(error)")
-                    } else {
-                        sender.setImage(UIImage(systemName: "star"), for: .normal)
-                        self.updateLikesCount()
-                    }
-                }
+        guard let userID = userID, !publicationID.isEmpty else { return }
+        
+        LikeService.shared.toggleLike(for: publicationID, userID: userID) { [weak self] isLiked, error in
+            if let error = error {
+                print("Erreur lors de l'action de like : \(error.localizedDescription)")
             } else {
-                print("Document does not exist. Adding like.")
-                likesRef.setData([:]) { error in
-                    if let error = error {
-                        print("Error adding like: \(error)")
-                    } else {
-                        sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
-                        self.updateLikesCount()
-                    }
+                let imageName = isLiked ? "star.fill" : "star"
+                DispatchQueue.main.async {
+                    sender.setImage(UIImage(systemName: imageName), for: .normal)
+                    self?.updateLikesCount()
                 }
             }
         }
     }
 
     func updateLikesCount() {
-        guard !publicationID.isEmpty else {
-            print("updateLikesCount => Publication ID is empty.")
-            return
-        }
-
-        let likesRef = database.collection("publication").document(publicationID).collection("likes")
-
-        likesRef.getDocuments { snapshot, error in
+        LikeService.shared.updateLikesCount(for: publicationID) { [weak self] likesCount, error in
             if let error = error {
-                print("Error fetching likes count: \(error.localizedDescription)")
+                print("Erreur lors de la mise à jour du nombre de likes : \(error.localizedDescription)")
             } else {
-                let likesCount = snapshot?.documents.count ?? 0
-                print("Likes count: \(likesCount)")
                 DispatchQueue.main.async {
-                    self.likeButton.setTitle("\(likesCount) likes", for: .normal)
+                    self?.likeButton.setTitle("\(likesCount) likes", for: .normal)
                 }
             }
         }
     }
 
     func checkIfUserLiked() {
-        guard let userID = userID else { return }
-        guard !publicationID.isEmpty else {
-            print("checkIfUserLiked => Publication ID is empty.")
-            return
-        }
-
-        let likesRef = database.collection("publication").document(publicationID).collection("likes").document(userID)
-
-        likesRef.getDocument { document, error in
-            if let document = document, document.exists {
-                print("User has liked this publication.")
-                DispatchQueue.main.async {
-                    self.likeButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-                }
-            } else {
-                print("User has not liked this publication.")
-                DispatchQueue.main.async {
-                    self.likeButton.setImage(UIImage(systemName: "star"), for: .normal)
-                }
+        guard let userID = userID, !publicationID.isEmpty else { return }
+        
+        LikeService.shared.checkIfUserLiked(publicationID: publicationID, userID: userID) { [weak self] isLiked in
+            DispatchQueue.main.async {
+                let imageName = isLiked ? "star.fill" : "star"
+                self?.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
             }
         }
     }
+
     
     @IBAction func pressCommentaryButton(_ sender: Any) {
-        // Implémentation de l'action du bouton de commentaire
     }
 
     @IBAction func didPressDisconnect(_ sender: Any) {
