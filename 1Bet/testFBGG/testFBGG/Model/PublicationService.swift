@@ -57,6 +57,17 @@ class PublicationService {
         return date
     }
     
+    
+    func reversFormatDateString(_ date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let dateObject = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            return dateFormatter.string(from: dateObject)
+        }
+        return date
+    }
+    
     /// Fetches the ID of the latest publication, based on the most recent date.
     ///
     /// - Parameter completion: Completion handler returning the latest publication ID or an error.

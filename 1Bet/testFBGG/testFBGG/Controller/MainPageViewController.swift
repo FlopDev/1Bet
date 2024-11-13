@@ -9,6 +9,7 @@ import UIKit
 import FirebaseFirestore
 import Firebase
 
+
 class MainPageViewController: UIViewController {
 
     // MARK: - Properties
@@ -91,7 +92,8 @@ class MainPageViewController: UIViewController {
                 if let data = data {
                     if let colonne1 = data["date"] as? String {
                         print(colonne1)
-                        self.dateOfPronostic.text = "Pronostic of : \(colonne1)"
+                        let formattedDate = PublicationService.shared.reversFormatDateString(colonne1)
+                        self.dateOfPronostic.text = "Pronostic of : \(formattedDate)"
                     }
                     
                     if let colonne2 = data["description"] as? String {

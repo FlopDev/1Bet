@@ -19,7 +19,7 @@ import FacebookCore
 
 
 @main
-    class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
 
@@ -34,12 +34,24 @@ import FacebookCore
         Crashlytics.crashlytics().log("App started and Firebase configured")
         Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
         Analytics.setAnalyticsCollectionEnabled(true)
+        
+        UNUserNotificationCenter.current().delegate = self
+               UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                   if granted {
+                       print("Permission granted for notifications")
+                   } else if let error = error {
+                       print("Error: \(error.localizedDescription)")
+                   }
+               }
 
         
             return true
     }
     
-
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            // Show notification even if the app is open
+            completionHandler([.banner, .sound])
+        }
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

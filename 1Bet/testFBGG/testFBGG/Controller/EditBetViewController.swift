@@ -12,6 +12,7 @@ import Firebase
 import FirebaseCore
 import AVFoundation
 import Photos
+import UserNotifications
 
 class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -114,6 +115,8 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         } else {
             shared.savePublicationOnDB(date: dateOfTheBet.text!, description: pronosticTextView.text!, percentOfBankroll: percentOfBkTextField.text!, publicationID: publicationID, trustOnTen: trustOnTenTextField.text!)
             FirebaseStorageService.shared.uploadPhoto(image: imageViewOfTheBet.image!)
+            sendNotification()
+
             
         }
         presentAlertAndAddAction(title: "Bet saved", message: "Your bet has been successfully saved, and will be published on OneBet soon")
@@ -167,6 +170,25 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
+
+// MARK: - Notification
+
+func sendNotification() {
+    let content = UNMutableNotificationContent()
+    content.title = "New Pronostic Available!"
+    content.body = "Check out the latest pronostic now."
+    content.sound = .default
+
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error adding notification request: \(error)")
+        }
+    }
+}
+
 
 extension EditBetViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

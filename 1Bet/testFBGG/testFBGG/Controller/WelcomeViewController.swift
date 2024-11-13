@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 //
 //  WelcomeViewController.swift
@@ -19,7 +20,7 @@ import UIKit
 import Firebase
 
 /// Controller for the welcome screen of the application, managing user login and navigation.
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, UNUserNotificationCenterDelegate {
     
     // MARK: - Outlets
     @IBOutlet var welcomeLabel: UILabel!   // Label displaying a welcome message with animated text.
@@ -131,5 +132,15 @@ class WelcomeViewController: UIViewController {
         } else {
             print("Error: Could not instantiate MainPageViewController")
         }
+    }
+
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if let error = error {
+                print("Error requesting notification permission: \(error)")
+            }
+            print("Notification permission granted: \(granted)")
+        }
+        UNUserNotificationCenter.current().delegate = self
     }
 }
