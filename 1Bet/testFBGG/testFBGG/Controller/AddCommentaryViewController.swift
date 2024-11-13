@@ -17,7 +17,7 @@ import FirebaseFirestore
 import Firebase
 
 class AddCommentaryViewController: UIViewController, UITableViewDelegate {
-
+    
     // MARK: - Properties
     static var cellIdentifier = "CommentCell"
     let db = Firestore.firestore()
@@ -30,43 +30,27 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var basketBallImage: UIImageView!
     @IBOutlet weak var publishButton: UIButton! // Assuming you have a publish button outlet
-
+    
     let commentContainerView = UIView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CommentCell.self, forCellReuseIdentifier: AddCommentaryViewController.cellIdentifier)
         tableView.backgroundColor = .clear
-
-        setupCommentInputView()
         
-        PublicationService.shared.getLatestPublicationID { result in
-            switch result {
-            case .success(let documentID):
-                print("ID de la dernière publication : \(documentID)")
-                
-                self.publicationID = documentID
-                self.commentService.getCommentsFromFirestore(forPublicationID: self.publicationID) { comments in
-                    if comments.isEmpty {
-                        print("No comments found for publicationID: \(self.publicationID)")
-                    } else {
-                        self.comments = comments.map { comment in
-                            UserComment(
-                                nameOfWriter: comment.nameOfWriter,
-                                commentText: comment.commentText
-                            )
-                        }
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
+        setupCommentInputView()
+        // Récupère l'ID de la dernière publication, puis charge les commentaires
+            PublicationService.shared.getLatestPublicationID { [weak self] result in
+                switch result {
+                case .success(let documentID):
+                    self?.publicationID = documentID
+                    self?.fetchComments() // Appelle fetchComments après avoir initialisé publicationID
+                case .failure(let error):
+                    print("Erreur : \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                print("Erreur : \(error.localizedDescription)")
             }
-        }
         
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
@@ -85,15 +69,15 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     }
     
     @objc func keyboardWillHide(notification: Notification) {
-            // Remet la vue à sa position d'origine
-            view.frame.origin.y = 0
-        }
+        // Remet la vue à sa position d'origine
+        view.frame.origin.y = 0
+    }
     
     // delete observer for memory
     deinit {
-            NotificationCenter.default.removeObserver(self)
-        }
-
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Setup Comment Input View
     func setupCommentInputView() {
         commentContainerView.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
@@ -108,7 +92,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         commentTextField.textColor = .white
         commentTextField.attributedPlaceholder = NSAttributedString(string: "Add a comment...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         commentTextField.translatesAutoresizingMaskIntoConstraints = false
-            
+        
         publishButton.backgroundColor = UIColor.green
         publishButton.layer.cornerRadius = 10
         publishButton.setTitleColor(.white, for: .normal)
@@ -145,31 +129,35 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         commentTextField.resignFirstResponder()
     }
-
+    
     // MARK: - Functions
-    @IBAction func publishButtonTapped(_ sender: Any) {
-        if let text = commentTextField.text, !text.isEmpty {
-            CommentService.shared.publishAComment(uid: Auth.auth().currentUser?.uid, comment: text, nameOfWriter: (Auth.auth().currentUser?.displayName)!, publicationID: publicationID)
+    @IBAction func publishButtonTapped(_ sender: UIButton) {
+            guard let text = commentTextField.text, !text.isEmpty else {
+                presentAlert(title: "Error", message: "Please enter a comment.")
+                return
+            }
             
-            commentService.getCommentsFromFirestore(forPublicationID: publicationID) { comments in
-                if comments.isEmpty {
-                    print("No comments found for publicationID: \(self.publicationID)")
-                } else {
-                    self.comments = comments.map { comment in
-                        UserComment(
-                            nameOfWriter: comment.nameOfWriter,
-                            commentText: comment.commentText
-                        )
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+            CommentService.shared.publishComment(
+                uid: Auth.auth().currentUser?.uid,
+                commentText: text,
+                nameOfWriter: Auth.auth().currentUser?.displayName ?? "Anonymous",
+                publicationID: publicationID
+            )
+            
+            fetchComments()
+        }
+    
+    
+    func fetchComments() {
+            CommentService.shared.getCommentsFromPublication(forPublicationID: publicationID) { [weak self] commentsData in
+                self?.comments = commentsData.map { data in
+                    UserComment(nameOfWriter: data["nameOfWriter"] as? String ?? "", commentText: data["commentText"] as? String ?? "")
+                }
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
                 }
             }
-        } else {
-            presentAlert(title: "ERROR", message: "Please, add a comment before pressing the publish button")
         }
-    }
     
     // MARK: - Alerts
     func presentAlert(title: String, message: String) {
@@ -178,6 +166,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 }
+
 
 // MARK: - Extensions
 

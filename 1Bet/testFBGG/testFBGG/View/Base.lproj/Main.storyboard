@@ -557,7 +557,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="rectangle.and.pencil.and.ellipsis" catalog="system"/>
                                 <connections>
-                                    <segue destination="gO4-XM-zeX" kind="show" id="8cV-pj-e7W"/>
+                                    <segue destination="gO4-XM-zeX" kind="presentation" modalPresentationStyle="fullScreen" id="8cV-pj-e7W"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -754,32 +754,32 @@
             <objects>
                 <viewController id="gO4-XM-zeX" customClass="EditBetViewController" customModule="testFBGG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKh-dB-AQD">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="basketball" translatesAutoresizingMaskIntoConstraints="NO" id="8Cq-sd-M9Q">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                             </imageView>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="URl-kQ-byq">
-                                <rect key="frame" x="67" y="153" width="256" height="131.33333333333337"/>
+                                <rect key="frame" x="67" y="153" width="256" height="133"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="89j-nH-iaf">
-                                <rect key="frame" x="67" y="294.33333333333331" width="256" height="350.99999999999994"/>
+                                <rect key="frame" x="67" y="296" width="256" height="354"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gqt-HQ-jB3">
-                                        <rect key="frame" x="0.0" y="0.0" width="256" height="267"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="270"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Trust: ?/10" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="npi-L6-XQH">
-                                        <rect key="frame" x="0.0" y="275.00000000000006" width="256" height="34"/>
+                                        <rect key="frame" x="0.0" y="278" width="256" height="34"/>
                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="% of Bankroll : ?%" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZyQ-PS-xOc">
-                                        <rect key="frame" x="0.0" y="317.00000000000006" width="256" height="34"/>
+                                        <rect key="frame" x="0.0" y="320" width="256" height="34"/>
                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -800,7 +800,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fY4-57-ive">
-                                <rect key="frame" x="67" y="143" width="256" height="151.33333333333337"/>
+                                <rect key="frame" x="67" y="143" width="256" height="153"/>
                                 <color key="tintColor" red="0.89849567409999997" green="0.85103493929999996" blue="0.84679979090000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system" title="Add Picture">
@@ -811,7 +811,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNR-v5-2AC">
-                                <rect key="frame" x="67" y="665.33333333333337" width="256" height="58.333333333333371"/>
+                                <rect key="frame" x="67" y="670" width="256" height="59"/>
                                 <color key="backgroundColor" red="0.23878550530000001" green="0.27060025929999998" blue="0.26645770670000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -876,7 +876,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1600" y="564"/>
+            <point key="canvasLocation" x="1600" y="563.74407582938386"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

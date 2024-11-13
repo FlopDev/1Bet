@@ -80,13 +80,11 @@ class MainPageViewController: UIViewController {
         }   
     }
     
-    // MARK: - Functions
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document("\(String(describing: Auth.auth().currentUser?.uid))")
+        
+        let docRef = database.collection("users").document("\(String(describing: Auth.auth().currentUser?.uid))")
         
         PublicationService.shared.getLastPublication { data in
             DispatchQueue.main.async {
@@ -145,7 +143,9 @@ class MainPageViewController: UIViewController {
             }
         }
     }
-
+    
+    // MARK: - Actions
+    
     @IBAction func pressLikeButton(_ sender: UIButton) {
         guard let userID = userID, !publicationID.isEmpty else { return }
         
@@ -162,6 +162,22 @@ class MainPageViewController: UIViewController {
         }
     }
 
+    
+    @IBAction func pressCommentaryButton(_ sender: Any) {
+    }
+
+    @IBAction func didPressDisconnect(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.performSegue(withIdentifier: "logOut", sender: self)
+        } catch let signOutError as NSError {
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
+        }
+    }
+    
+    // MARK: - Functions
+    
     func updateLikesCount() {
         LikeService.shared.updateLikesCount(for: publicationID) { [weak self] likesCount, error in
             if let error = error {
@@ -182,20 +198,6 @@ class MainPageViewController: UIViewController {
                 let imageName = isLiked ? "star.fill" : "star"
                 self?.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
             }
-        }
-    }
-
-    
-    @IBAction func pressCommentaryButton(_ sender: Any) {
-    }
-
-    @IBAction func didPressDisconnect(_ sender: Any) {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            self.performSegue(withIdentifier: "logOut", sender: self)
-        } catch let signOutError as NSError {
-            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
         }
     }
 

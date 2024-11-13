@@ -107,6 +107,7 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     
     // MARK: - Other methods
+    
     @IBAction func publishPronosticButton(_ sender: UIButton) {
         if dateOfTheBet.text == "" || pronosticTextView.text == "" || trustOnTenTextField.text == "" || percentOfBkTextField.text == "" || imageViewOfTheBet.image == nil {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Put some text in all the text entry before pressing publish button")
@@ -143,7 +144,18 @@ class EditBetViewController: UIViewController, UIImagePickerControllerDelegate, 
     func presentAlertAndAddAction(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { action in
-            self.dismiss(animated: true, completion: nil)
+            // Charger le storyboard (ici, "Main" est le nom du storyboard principal)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                // Instancier une nouvelle instance de MainPageViewController
+                if let mainPageVC = storyboard.instantiateViewController(withIdentifier: "MainPageViewController") as? MainPageViewController {
+                    
+                    // Définir la présentation en plein écran si vous le souhaitez
+                    mainPageVC.modalPresentationStyle = .fullScreen
+                    
+                    // Présenter la nouvelle instance de MainPageViewController
+                    self.present(mainPageVC, animated: true, completion: nil)
+                }
         }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
