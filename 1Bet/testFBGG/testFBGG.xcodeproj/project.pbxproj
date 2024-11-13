@@ -84,7 +84,6 @@
 		CB7631F32CA1D84400CEFD61 /* testFBGGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */; };
 		CB7631FB2CA1DD8900CEFD61 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */; };
 		CB7631FD2CA1F90E00CEFD61 /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7631FC2CA1F90E00CEFD61 /* CommentTests.swift */; };
-		CB7632012CA1FE2800CEFD61 /* CommentServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632002CA1FE2800CEFD61 /* CommentServiceTests.swift */; };
 		CB7632052CA28D4000CEFD61 /* PublicationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */; };
 		CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */; };
 		CB8CD4112CB45E9F008ACA60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CB8562252CB437FB00714BBC /* GoogleService-Info.plist */; };
@@ -151,7 +150,6 @@
 		CB7631F22CA1D84400CEFD61 /* testFBGGTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testFBGGTests.swift; sourceTree = "<group>"; };
 		CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		CB7631FC2CA1F90E00CEFD61 /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
-		CB7632002CA1FE2800CEFD61 /* CommentServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentServiceTests.swift; sourceTree = "<group>"; };
 		CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationServiceTests.swift; sourceTree = "<group>"; };
 		CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageServiceTests.swift; sourceTree = "<group>"; };
 		CB8562252CB437FB00714BBC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -341,7 +339,6 @@
 				CB7631FA2CA1DD8900CEFD61 /* UserTests.swift */,
 				CB7631FC2CA1F90E00CEFD61 /* CommentTests.swift */,
 				CB602EF32CAB205800E3120C /* MockFirebaseStorageService.swift */,
-				CB7632002CA1FE2800CEFD61 /* CommentServiceTests.swift */,
 				CB7632042CA28D4000CEFD61 /* PublicationServiceTests.swift */,
 				CB7632082CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift */,
 			);
@@ -565,7 +562,6 @@
 				CB7632092CA2966E00CEFD61 /* FirebaseStorageServiceTests.swift in Sources */,
 				CB7631FB2CA1DD8900CEFD61 /* UserTests.swift in Sources */,
 				CB7631FD2CA1F90E00CEFD61 /* CommentTests.swift in Sources */,
-				CB7632012CA1FE2800CEFD61 /* CommentServiceTests.swift in Sources */,
 				CB7632052CA28D4000CEFD61 /* PublicationServiceTests.swift in Sources */,
 				CB7631F32CA1D84400CEFD61 /* testFBGGTests.swift in Sources */,
 			);
