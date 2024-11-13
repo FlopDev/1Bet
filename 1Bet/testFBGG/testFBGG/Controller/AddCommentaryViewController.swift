@@ -5,13 +5,6 @@
 //  Created by Florian Peyrony on 14/03/2023.
 //
 
-//
-//  AddCommentaryViewController.swift
-//  testFBGG
-//
-//  Created by Florian Peyrony on 14/03/2023.
-//
-
 import UIKit
 import FirebaseFirestore
 import Firebase
@@ -19,67 +12,88 @@ import Firebase
 class AddCommentaryViewController: UIViewController, UITableViewDelegate {
     
     // MARK: - Properties
-    static var cellIdentifier = "CommentCell"
-    let db = Firestore.firestore()
-    var comments: [UserComment] = []
-    let commentService = CommentService()
+    static let cellIdentifier = "CommentCell"
+    private let db = Firestore.firestore()
+    private var comments: [UserComment] = []
+    private let commentService = CommentService()
     var publicationID = ""
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var commentTextField: UITextField!
     @IBOutlet weak var basketBallImage: UIImageView!
-    @IBOutlet weak var publishButton: UIButton! // Assuming you have a publish button outlet
+    @IBOutlet weak var publishButton: UIButton!
     
-    let commentContainerView = UIView()
+    private let commentContainerView = UIView()
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+        setupCommentInputView()
+        configureBlurEffect()
+        
+        loadLatestPublicationID()
+        setupKeyboardObservers()
+    }
+
+    // MARK: - Setup Methods
+    
+    /// Configures the table view for comments with cell registration and styling.
+    private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(CommentCell.self, forCellReuseIdentifier: AddCommentaryViewController.cellIdentifier)
+        tableView.register(CommentCell.self, forCellReuseIdentifier: Self.cellIdentifier)
         tableView.backgroundColor = .clear
-        
-        setupCommentInputView()
-        // Récupère l'ID de la dernière publication, puis charge les commentaires
-            PublicationService.shared.getLatestPublicationID { [weak self] result in
-                switch result {
-                case .success(let documentID):
-                    self?.publicationID = documentID
-                    self?.fetchComments() // Appelle fetchComments après avoir initialisé publicationID
-                case .failure(let error):
-                    print("Erreur : \(error.localizedDescription)")
-                }
-            }
-        
+    }
+    
+    /// Adds a blur effect to the background image.
+    private func configureBlurEffect() {
         let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
         customBlurEffect.frame = basketBallImage.bounds
         customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         basketBallImage.addSubview(customBlurEffect)
-        
+    }
+    
+    /// Loads the latest publication ID and fetches its comments.
+    private func loadLatestPublicationID() {
+        PublicationService.shared.getLatestPublicationID { [weak self] result in
+            switch result {
+            case .success(let documentID):
+                self?.publicationID = documentID
+                self?.fetchComments()
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    /// Observes keyboard notifications to adjust the view when the keyboard appears or disappears.
+    private func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc func keyboardWillShow(notification: Notification) {
+    // MARK: - Keyboard Management
+    
+    @objc private func keyboardWillShow(notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            // Déplace la vue vers le haut de la hauteur du clavier
             view.frame.origin.y = -keyboardFrame.height
         }
     }
     
-    @objc func keyboardWillHide(notification: Notification) {
-        // Remet la vue à sa position d'origine
+    @objc private func keyboardWillHide(notification: Notification) {
         view.frame.origin.y = 0
     }
     
-    // delete observer for memory
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // MARK: - Setup Comment Input View
-    func setupCommentInputView() {
+    // MARK: - Comment Input View Setup
+    
+    /// Configures the comment input area with a text field, icon, and publish button.
+    private func setupCommentInputView() {
         commentContainerView.backgroundColor = UIColor(white: 0.1, alpha: 0.8)
         commentContainerView.layer.cornerRadius = 20
         commentContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,10 +102,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         commentIcon.tintColor = .white
         commentIcon.translatesAutoresizingMaskIntoConstraints = false
         
-        commentTextField.backgroundColor = UIColor(white: 0.1, alpha: 0.9)
-        commentTextField.textColor = .white
-        commentTextField.attributedPlaceholder = NSAttributedString(string: "Add a comment...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
-        commentTextField.translatesAutoresizingMaskIntoConstraints = false
+        setupCommentTextField()  // Configures the appearance of the comment text field
         
         publishButton.backgroundColor = UIColor.green
         publishButton.layer.cornerRadius = 10
@@ -103,7 +114,7 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         commentContainerView.addSubview(commentTextField)
         commentContainerView.addSubview(publishButton)
         
-        // Contraintes Auto Layout
+        // Auto Layout constraints
         NSLayoutConstraint.activate([
             commentContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             commentContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -126,47 +137,65 @@ class AddCommentaryViewController: UIViewController, UITableViewDelegate {
         ])
     }
     
+    /// Configures the comment text field's appearance.
+    private func setupCommentTextField() {
+        commentTextField.backgroundColor = UIColor(white: 0.1, alpha: 0.9)
+        commentTextField.textColor = .white
+        commentTextField.attributedPlaceholder = NSAttributedString(
+            string: "Add a comment...",
+            attributes: [NSAttributedString.Key.foregroundColor : UIColor.white]
+        )
+        commentTextField.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    // MARK: - Actions
+    
+    /// Dismisses the keyboard when the view is tapped.
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         commentTextField.resignFirstResponder()
     }
     
-    // MARK: - Functions
+    /// Publishes a new comment when the publish button is tapped.
     @IBAction func publishButtonTapped(_ sender: UIButton) {
-            guard let text = commentTextField.text, !text.isEmpty else {
-                presentAlert(title: "Error", message: "Please enter a comment.")
-                return
-            }
-            
-            CommentService.shared.publishComment(
-                uid: Auth.auth().currentUser?.uid,
-                commentText: text,
-                nameOfWriter: Auth.auth().currentUser?.displayName ?? "Anonymous",
-                publicationID: publicationID
-            )
-            
-            fetchComments()
+        guard let text = commentTextField.text, !text.isEmpty else {
+            presentAlert(title: "Error", message: "Please enter a comment.")
+            return
         }
+        
+        // Publish the comment with the current user information and publication ID
+        CommentService.shared.publishComment(
+            uid: Auth.auth().currentUser?.uid,
+            commentText: text,
+            nameOfWriter: Auth.auth().currentUser?.displayName ?? "Anonymous",
+            publicationID: publicationID
+        )
+        
+        fetchComments()
+        commentTextField.text = ""
+        commentTextField.resignFirstResponder()
+    }
     
-    
-    func fetchComments() {
-            CommentService.shared.getCommentsFromPublication(forPublicationID: publicationID) { [weak self] commentsData in
-                self?.comments = commentsData.map { data in
-                    UserComment(nameOfWriter: data["nameOfWriter"] as? String ?? "", commentText: data["commentText"] as? String ?? "")
-                }
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
+    /// Fetches comments for the current publication and reloads the table view.
+    private func fetchComments() {
+        CommentService.shared.getCommentsFromPublication(forPublicationID: publicationID) { [weak self] commentsData in
+            self?.comments = commentsData.map { data in
+                UserComment(nameOfWriter: data["nameOfWriter"] as? String ?? "", commentText: data["commentText"] as? String ?? "")
+            }
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
             }
         }
+    }
     
     // MARK: - Alerts
-    func presentAlert(title: String, message: String) {
+    
+    /// Presents an alert with a title and message.
+    private func presentAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
-
 
 // MARK: - Extensions
 
@@ -181,9 +210,8 @@ extension AddCommentaryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AddCommentaryViewController.cellIdentifier, for: indexPath) as! CommentCell
-        let comment = comments[indexPath.row]
-        cell.configure(with: comment)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellIdentifier, for: indexPath) as! CommentCell
+        cell.configure(with: comments[indexPath.row])
         return cell
     }
 }
@@ -202,14 +230,26 @@ class CommentCell: UITableViewCell {
     let usernameLabel = UILabel()
     let commentLabel = UILabel()
     let avatarImageView = UIImageView()
-    let containerView = UIView()
+    private let containerView = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         backgroundColor = .clear
         selectionStyle = .none
-        
+        setupCellView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with comment: UserComment) {
+        usernameLabel.text = comment.nameOfWriter
+        commentLabel.text = comment.commentText
+    }
+    
+    /// Configures the cell's layout and appearance for displaying a comment.
+    private func setupCellView() {
         containerView.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
         containerView.layer.cornerRadius = 10
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -234,7 +274,7 @@ class CommentCell: UITableViewCell {
         containerView.addSubview(usernameLabel)
         containerView.addSubview(commentLabel)
         
-        // Contraintes Auto Layout
+        // Auto Layout constraints
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
@@ -255,17 +295,9 @@ class CommentCell: UITableViewCell {
             commentLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
         ])
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(with comment: UserComment) {
-        usernameLabel.text = comment.nameOfWriter
-        commentLabel.text = comment.commentText
-    }
 }
 
+// MARK: - UITextFieldDelegate Extension
 
 extension AddCommentaryViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

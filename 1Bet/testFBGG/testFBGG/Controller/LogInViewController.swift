@@ -9,21 +9,25 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
-
 import FacebookLogin
-
 import FacebookCore
 import FirebaseDatabase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Firebase
 
+/// Controller for handling login options, including email/password, Google, and Facebook.
 class LogInViewController: UIViewController, LoginButtonDelegate {
     
     // MARK: - Properties
     
+    /// Holds user information after successful login.
     var userInfo: User?
+    
+    /// Instance of FirebaseService to handle Firebase-related login functionalities.
     var service = FirebaseService()
+    
+    /// Stack view to arrange login buttons in the UI.
     private var stackView: UIStackView!
     
     // MARK: - Outlets
@@ -37,21 +41,20 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
     @IBOutlet weak var basketBallImage: UIImageView!
     @IBOutlet weak var signInWithGoogleButton: UIButton!
     
+    // MARK: - Lifecycle
     
+    /// Called after the view is loaded, setting up button styles and layout for the stack view.
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpButtonsSkin()
         service.viewController = self
-        // Appeler la fonction pour configurer la StackView
         setupStackView()
-        // Do any additional setup after loading the view.
     }
-    
     
     // MARK: - Buttons
     
+    /// Handles Facebook login completion, observing for login success or failure notifications.
     @objc(loginButton:didCompleteWithResult:error:) func loginButton(_ loginButton: FBSDKLoginKit.FBLoginButton, didCompleteWith result: FBSDKLoginKit.LoginManagerLoginResult?, error: Error?) {
-        
         service.facebookButton()
         let success = Notification.Name(rawValue: "FBAnswerSuccess")
         let fail = Notification.Name(rawValue: "FBAnswerFail")
@@ -59,141 +62,121 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(failFBLogin), name: fail, object: nil)
     }
     
+    /// Logs out the user from Facebook.
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
+        print("User logged out from Facebook")
+    }
     
     // MARK: - Functions
     
-    
+    /// Initiates Google sign-in when the Google button is pressed.
     @IBAction func didPressGoogleButton(_ sender: Any) {
         service.signInByGmail(viewController: self)
     }
     
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
-        print("We want now fb disconnect account")
-    }
-    
-    
+    /// Called upon successful Facebook login, segueing to the main view controller.
     @objc func successFBLogin() {
-        print("Inscription de \(emailTextField.text ?? "no name")")
+        print("Sign in successful for \(emailTextField.text ?? "unknown email")")
         self.performSegue(withIdentifier: "segueToMain", sender: userInfo)
     }
     
+    /// Called upon Facebook login failure, presenting an alert to the user.
     @objc func failFBLogin() {
-        print("Error : Missing Username, password or adress")
+        print("Facebook login error")
         UIAlert.presentAlert(from: self, title: "ERROR", message: "Connection from Facebook rejected")
     }
     
+    /// Attempts to log in with email and password, presenting an alert on failure.
     @IBAction func logInButton(_ sender: Any) {
         if emailTextField.text != "" && passwordTextField.text != nil {
-            print("Connexion de \(emailTextField.text ?? "no adress")")
-            
+            print("Logging in with email \(emailTextField.text ?? "unknown")")
             service.logInEmailButton(email: emailTextField.text!, password: passwordTextField.text!) { (success) in
                 DispatchQueue.main.async {
                     if success {
-                        // Effectuer la redirection ici
                         self.performSegue(withIdentifier: "segueToMain", sender: self.userInfo)
                     } else {
                         UIAlert.presentAlert(from: self, title: "ERROR", message: "Invalid password or Email")
                     }
                 }
             }
-            
         } else {
             UIAlert.presentAlert(from: self, title: "ERROR", message: "Missing Email or password")
         }
     }
+    
+    /// Placeholder function for handling forgotten passwords.
     @IBAction func forgetPasswordButton(_ sender: Any) {
-     print("Call forget password logic here")
+        print("Trigger forgot password functionality here")
     }
     
+    /// Styles buttons with borders, rounded corners, and background colors.
     func setUpButtonsSkin() {
         createAnAccountButton.layer.borderWidth = 1
         createAnAccountButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         createAnAccountButton.layer.cornerRadius = 20
-        createAnAccountButton.backgroundColor?.withAlphaComponent(0.20)
-        
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         logInButton.layer.cornerRadius = 20
-        logInButton.backgroundColor?.withAlphaComponent(0.20)
-        
         signInButton.layer.borderWidth = 1
         signInButton.layer.cornerRadius = 20
         signInButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        signInButton.backgroundColor?.withAlphaComponent(0.20)
         emailTextField.layer.borderWidth = 1
         emailTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         passwordTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = #colorLiteral(red: 0.3289624751, green: 0.3536478281, blue: 0.357570827, alpha: 1)
         
-        
-    
         signInWithGoogleButton.titleLabel?.font = UIFont(name: "Roboto-Regular", size: 18)!
         
         forgotPasswordButton.titleLabel?.layer.shadowColor = UIColor.black.cgColor
         forgotPasswordButton.titleLabel?.layer.shadowRadius = 3.0
         forgotPasswordButton.titleLabel?.layer.shadowOpacity = 1.0
         forgotPasswordButton.titleLabel?.layer.shadowOffset = CGSize(width: 2, height: 2)
-        forgotPasswordButton.titleLabel?.layer.masksToBounds = false
     }
     
+    /// Configures and styles the Facebook login button, adding it to the stack view.
     private func setupFacebookLoginButton() {
-        // Créer le bouton de connexion Facebook
         let loginButton = FBLoginButton()
         loginButton.delegate = self
-        
-        // Appliquer les coins arrondis correctement
         loginButton.layer.borderWidth = 1
         loginButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         loginButton.layer.cornerRadius = 20
         loginButton.titleLabel?.text = "Log in with Facebook"
         loginButton.layer.masksToBounds = true
-        
-        // Désactiver les contraintes automatiques du bouton
         loginButton.translatesAutoresizingMaskIntoConstraints = false
-        
         stackView.insertArrangedSubview(loginButton, at: stackView.arrangedSubviews.count - 1)
-        
         
         for constraint in loginButton.constraints where constraint.firstAttribute == .height {
             constraint.constant = 50
         }
-        
     }
     
-    
+    /// Configures the stack view layout, adding login buttons and defining constraints.
     private func setupStackView() {
-        // Créer une UIStackView
         stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.spacing = 10
         
-        // Ajouter les boutons à la StackView
         stackView.addArrangedSubview(logInButton)
         stackView.addArrangedSubview(signInWithGoogleButton)
         setupFacebookLoginButton()
         stackView.addArrangedSubview(signInButton)
         
-        // Désactiver les contraintes automatiques des boutons
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         signInWithGoogleButton.translatesAutoresizingMaskIntoConstraints = false
         signInButton.translatesAutoresizingMaskIntoConstraints = false
         
-        // Définir une hauteur fixe pour les boutons
         NSLayoutConstraint.activate([
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             signInWithGoogleButton.heightAnchor.constraint(equalToConstant: 50),
             signInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        // Ajouter la StackView à la vue principale
         view.addSubview(stackView)
         
-        // Désactiver les contraintes automatiques de la StackView
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Ajouter des contraintes pour la StackView
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 90),
@@ -201,23 +184,23 @@ class LogInViewController: UIViewController, LoginButtonDelegate {
         ])
     }
     
+    /// Hides the keyboard when the user taps outside the text fields.
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        /* Resign the first responder status of the text(s) field(s)
-         Je dois maintenant add un Tap Gesture et le relier à dismissKeyboard*/
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
     }
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    /// Prepares for navigation to another view controller, if required by a segue.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Implement navigation preparation here if needed.
     }
 }
 
 extension LogInViewController: UITextFieldDelegate {
+    
+    /// Dismisses the keyboard when the return key is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

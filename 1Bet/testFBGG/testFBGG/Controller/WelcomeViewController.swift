@@ -7,17 +7,6 @@
 
 import UIKit
 import Firebase
-import UserNotifications
-
-//
-//  WelcomeViewController.swift
-//  testFBGG
-//
-//  Created by Florian Peyrony on 27/05/2024.
-//
-
-import UIKit
-import Firebase
 
 /// Controller for the welcome screen of the application, managing user login and navigation.
 class WelcomeViewController: UIViewController, UNUserNotificationCenterDelegate {
@@ -132,15 +121,5 @@ class WelcomeViewController: UIViewController, UNUserNotificationCenterDelegate 
         } else {
             print("Error: Could not instantiate MainPageViewController")
         }
-    }
-
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            if let error = error {
-                print("Error requesting notification permission: \(error)")
-            }
-            print("Notification permission granted: \(granted)")
-        }
-        UNUserNotificationCenter.current().delegate = self
     }
 }
