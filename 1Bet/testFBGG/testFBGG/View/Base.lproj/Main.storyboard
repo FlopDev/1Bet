@@ -807,7 +807,7 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="didPressAddPictureButton:" destination="gO4-XM-zeX" eventType="touchUpInside" id="CKN-qU-WhW"/>
+                                    <action selector="didPressAddPictureButton:" destination="gO4-XM-zeX" eventType="touchUpInside" id="HuZ-hQ-J3x"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNR-v5-2AC">
@@ -819,7 +819,7 @@
                                     <fontDescription key="titleFontDescription" name="Optima-Regular" family="Optima" pointSize="19"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="publishPronosticButton:" destination="gO4-XM-zeX" eventType="touchUpInside" id="cJH-7B-zwY"/>
+                                    <action selector="publishPronosticButtonTapped:" destination="gO4-XM-zeX" eventType="touchUpInside" id="HDD-yu-n4N"/>
                                 </connections>
                             </button>
                         </subviews>

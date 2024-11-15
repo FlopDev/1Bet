@@ -53,6 +53,7 @@ class ProgressArcView: UIView {
         // Configure the static background arc (shapeLayer)
         shapeLayer.lineWidth = 10
         shapeLayer.fillColor = UIColor.clear.cgColor
+        
         shapeLayer.strokeColor = UIColor.lightGray.cgColor
         layer.addSublayer(shapeLayer)
         

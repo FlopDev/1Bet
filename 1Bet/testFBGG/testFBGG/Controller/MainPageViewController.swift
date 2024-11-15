@@ -17,21 +17,20 @@ class MainPageViewController: UIViewController {
     var database = Firestore.firestore()
     let percentOfBKProgressView = ProgressArcView()
     let trustProgressView = ProgressArcView()
-    
     var userID: String? {
         return Auth.auth().currentUser?.uid
     }
-    
-        let percentOfBKStackView = UIStackView()
-        let trustStackView = UIStackView()
-        private var startTime: CFTimeInterval = 0
-        private var targetProgress: CGFloat = 0
-        private var targetProgressTrustOnTen: CGFloat = 0
-        private var duration: TimeInterval = 0
-        private var displayLink: CADisplayLink?
-        private var bankrollPercentage: CGFloat = 0
-        private var trustPercentage: CGFloat = 0
-        var publicationID: String = ""
+
+    let percentOfBKStackView = UIStackView()
+    let trustStackView = UIStackView()
+    private var startTime: CFTimeInterval = 0
+    private var targetProgress: CGFloat = 0
+    private var targetProgressTrustOnTen: CGFloat = 0
+    private var duration: TimeInterval = 0
+    private var displayLink: CADisplayLink?
+    private var bankrollPercentage: CGFloat = 0
+    private var trustPercentage: CGFloat = 0
+    var publicationID: String = ""
 
     // MARK: - Outlets
     @IBOutlet var underProgressView: UIStackView!
@@ -48,134 +47,90 @@ class MainPageViewController: UIViewController {
     @IBOutlet var likesAndCommentStackView: UIStackView!
     @IBOutlet weak var basketBallImage: UIImageView!
 
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUIElements()
-        loadLatestImage()
+        setUpUI()
+        
+        downloadLatestImage()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadUserData()
-        loadPublicationData()
+        
+        loadPublicationAndTchekIfUserAdmin()
     }
     
-    // MARK: - UI Setup
-
-    /// Sets up UI styles for buttons, labels, and background blur effect
-    private func setupUIElements() {
-        // Apply blur effect to basketball image
-        let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
-        customBlurEffect.frame = basketBallImage.bounds
-        customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        basketBallImage.addSubview(customBlurEffect)
+    func loadPublicationAndTchekIfUserAdmin() {
+        let docRef = database.collection("users").document("\(String(describing: Auth.auth().currentUser?.uid))")
         
-        // Style text fields and buttons
-        pronosticOfTipsterTextField.textColor = .white
-        setupButtonBorders(button: likeButton, borderColor: .white, imageName: "star")
-        setupButtonBorders(button: commentButton, borderColor: .white, imageName: "bubble.right")
-        setupLabelBorders(label: dateOfPronostic, borderColor: .white)
-        setupLabelBorders(label: imageOfPronostic, borderColor: .white)
-    }
-
-    /// Sets up border style and image for UIButton
-    private func setupButtonBorders(button: UIButton, borderColor: UIColor, imageName: String) {
-        button.layer.borderWidth = 1
-        button.layer.borderColor = borderColor.cgColor
-        button.setImage(UIImage(systemName: imageName), for: .normal)
-    }
-
-    /// Sets up border style for UILabel
-    private func setupLabelBorders(label: UIView, borderColor: UIColor) {
-        label.layer.borderWidth = 1
-        label.layer.borderColor = borderColor.cgColor
-    }
-    
-    // MARK: - Data Loading
-
-    /// Downloads and sets the latest image from Firebase storage
-    private func loadLatestImage() {
-        FirebaseStorageService.shared.downloadLatestPhoto { [weak self] image in
+        PublicationService.shared.getLastPublication { data in
             DispatchQueue.main.async {
-                self?.imageOfPronostic.image = image ?? UIImage(systemName: "photo")
-            }
-        }
-    }
-
-    /// Loads and configures user data from Firestore
-    private func loadUserData() {
-        let docRef = database.collection("users").document("\(userID ?? "")")
-        
-        docRef.getDocument { [weak self] (document, error) in
-            guard let self = self, let document = document, document.exists else { return }
-            if let isAdmin = document.data()?["isAdmin"] as? Bool {
-                self.addPronosticButton.isHidden = !isAdmin
-            }
-        }
-    }
-
-    /// Loads the last publication data and updates the UI accordingly
-    private func loadPublicationData() {
-        PublicationService.shared.getLastPublication { [weak self] data in
-            DispatchQueue.main.async {
-                guard let self = self, let data = data else { return }
-                self.updatePublicationUI(with: data)
-                
-                PublicationService.shared.getLatestPublicationID { result in
-                    switch result {
-                    case .success(let documentID):
-                        self.publicationID = documentID
-                        self.checkIfUserLiked()
-                        self.updateLikesCount()
-                    case .failure(let error):
-                        self.showAlert(title: "ERROR", message: "Cannot retrieve publication ID: \(error.localizedDescription)")
+                if let data = data {
+                    if let colonne1 = data["date"] as? String {
+                        print(colonne1)
+                        let formattedDate = PublicationService.shared.reversFormatDateString(colonne1)
+                        self.dateOfPronostic.text = "Pronostic of : \(formattedDate)"
+                    }
+                    
+                    if let colonne2 = data["description"] as? String {
+                        print(colonne2)
+                        self.pronosticOfTipsterTextField.text = "Analysis : \(colonne2)"
+                    }
+                    
+                    if let colonne3 = data["percentOfBankroll"] as? String, let percentage = Double(colonne3) {
+                        print(colonne3)
+                        self.percentOfBkTipsterTextField.text = "% of Bankroll : \(colonne3)"
+                        self.bankrollPercentage = CGFloat(percentage)
+                        self.setupProgressBarUI(progressView: self.percentOfBKProgressView, targetProgressChoosen: self.bankrollPercentage, progressMaxValue: 100)
+                    }
+                    
+                    if let colonne4 = data["trustOnTen"] as? String, let trustValue = Double(colonne4) {
+                        print(colonne4)
+                        self.trustOnTenOfTipsterTextField.text = "Trust : \(colonne4)"
+                        self.trustPercentage = CGFloat(trustValue)
+                        self.setupProgressBarUI(progressView: self.trustProgressView, targetProgressChoosen: self.trustPercentage, progressMaxValue: 10)
+                    }
+                    PublicationService.shared.getLatestPublicationID { result in
+                            switch result {
+                            case .success(let documentID):
+                                print("ID de la dernière publication : \(documentID)")
+                                self.publicationID = documentID
+                                self.checkIfUserLiked()
+                                self.updateLikesCount()
+                            case .failure(let error):
+                                print("Erreur : \(error.localizedDescription)")
+                                let alert = UIAlertController(title: "ERROR", message: "Cannot retrieve publication ID", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    /// Updates the UI based on the last publication data
-    private func updatePublicationUI(with data: [String: Any]) {
-        if let dateStr = data["date"] as? String {
-            dateOfPronostic.text = "Pronostic of : \(PublicationService.shared.reversFormatDateString(dateStr))"
-        }
-        
-        if let description = data["description"] as? String {
-            pronosticOfTipsterTextField.text = "Analysis : \(description)"
-        }
-        
-        if let percentStr = data["percentOfBankroll"] as? String, let percentage = Double(percentStr) {
-            percentOfBkTipsterTextField.text = "% of Bankroll : \(percentStr)"
-            bankrollPercentage = CGFloat(percentage)
-            setupProgressBarUI(progressView: percentOfBKProgressView, targetProgressChoosen: bankrollPercentage, progressMaxValue: 100)
-        }
-        
-        if let trustStr = data["trustOnTen"] as? String, let trustValue = Double(trustStr) {
-            trustOnTenOfTipsterTextField.text = "Trust : \(trustStr)"
-            trustPercentage = CGFloat(trustValue)
-            setupProgressBarUI(progressView: trustProgressView, targetProgressChoosen: trustPercentage, progressMaxValue: 10)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+                let data = document.data()
+                let isAdmin = data?["isAdmin"] as! Bool
+                print(isAdmin)
+                if isAdmin {
+                    self.addPronosticButton.isHidden = false
+                }
+            }
         }
     }
     
     // MARK: - Actions
     
-    @IBAction func pressCommentaryButton(_ sender: Any) {
-        // Action to handle commentary button tap
-        print("Commentary button pressed")
-    }
-
-    
-    /// Toggles like status for the current publication
     @IBAction func pressLikeButton(_ sender: UIButton) {
         guard let userID = userID, !publicationID.isEmpty else { return }
         
         LikeService.shared.toggleLike(for: publicationID, userID: userID) { [weak self] isLiked, error in
             if let error = error {
-                print("Error toggling like: \(error.localizedDescription)")
+                print("Erreur lors de l'action de like : \(error.localizedDescription)")
             } else {
                 let imageName = isLiked ? "star.fill" : "star"
                 DispatchQueue.main.async {
@@ -185,24 +140,60 @@ class MainPageViewController: UIViewController {
             }
         }
     }
+
     
-    /// Disconnects the user and performs logout segue
+    @IBAction func pressCommentaryButton(_ sender: Any) {
+    }
+
     @IBAction func didPressDisconnect(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
         do {
-            try Auth.auth().signOut()
+            try firebaseAuth.signOut()
             self.performSegue(withIdentifier: "logOut", sender: self)
         } catch let signOutError as NSError {
-            showAlert(title: "ERROR", message: "Cannot sign out: \(signOutError.localizedDescription)")
+            UIAlert.presentAlert(from: self, title: "ERROR", message: "Cannot sign out")
         }
     }
     
-    // MARK: - Helper Methods
+    // MARK: - Functions
     
-    /// Updates the likes count for the current publication
-    private func updateLikesCount() {
+    func setUpUI() {
+        let customBlurEffect = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .regular), intensity: 0.00001)
+        customBlurEffect.frame = basketBallImage.bounds
+        customBlurEffect.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        basketBallImage.addSubview(customBlurEffect)
+        
+        pronosticOfTipsterTextField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        likeButton.layer.borderWidth = 1
+        commentButton.layer.borderWidth = 1
+        likeButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        commentButton.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        dateOfPronostic.layer.borderWidth = 1
+        dateOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        imageOfPronostic.layer.borderWidth = 1
+        imageOfPronostic.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        likeButton.setImage(UIImage(systemName: "star"), for: .normal)
+        commentButton.setImage(UIImage(systemName: "bubble.right"), for: .normal)
+    }
+    
+    func downloadLatestImage() {
+        FirebaseStorageService.shared.downloadLatestPhoto { image in
+            DispatchQueue.main.async {
+                if let image = image {
+                    self.imageOfPronostic.image = image
+                } else {
+                    print("Aucune image disponible.")
+                }
+            }
+        }
+    }
+    
+    func updateLikesCount() {
         LikeService.shared.updateLikesCount(for: publicationID) { [weak self] likesCount, error in
             if let error = error {
-                print("Error updating likes count: \(error.localizedDescription)")
+                print("Erreur lors de la mise à jour du nombre de likes : \(error.localizedDescription)")
             } else {
                 DispatchQueue.main.async {
                     self?.likeButton.setTitle("\(likesCount) likes", for: .normal)
@@ -211,8 +202,7 @@ class MainPageViewController: UIViewController {
         }
     }
 
-    /// Checks if the current user has liked the publication and updates the button image
-    private func checkIfUserLiked() {
+    func checkIfUserLiked() {
         guard let userID = userID, !publicationID.isEmpty else { return }
         
         LikeService.shared.checkIfUserLiked(publicationID: publicationID, userID: userID) { [weak self] isLiked in
@@ -222,78 +212,71 @@ class MainPageViewController: UIViewController {
             }
         }
     }
-    
+
     private func setupProgressBarUI(progressView: ProgressArcView, targetProgressChoosen: CGFloat, progressMaxValue: CGFloat) {
-            progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.translatesAutoresizingMaskIntoConstraints = false
 
-            if progressView == percentOfBKProgressView {
-                NSLayoutConstraint.activate([
-                    progressView.widthAnchor.constraint(equalToConstant: 50),
-                    progressView.heightAnchor.constraint(equalToConstant: 50)
-                ])
+        if progressView == percentOfBKProgressView {
+            NSLayoutConstraint.activate([
+                progressView.widthAnchor.constraint(equalToConstant: 50),
+                progressView.heightAnchor.constraint(equalToConstant: 50)
+            ])
 
-                let progressStackView = UIStackView(arrangedSubviews: [percentOfBKProgressView, percentOfBkTipsterTextField])
-                progressStackView.axis = .vertical
-                progressStackView.spacing = 0
-                progressStackView.alignment = .center
+            let progressStackView = UIStackView(arrangedSubviews: [percentOfBKProgressView, percentOfBkTipsterTextField])
+            progressStackView.axis = .vertical
+            progressStackView.spacing = 0
+            progressStackView.alignment = .center
 
-                underProgressView.addArrangedSubview(progressStackView)
+            underProgressView.addArrangedSubview(progressStackView)
 
-            } else if progressView == trustProgressView {
-                NSLayoutConstraint.activate([
-                    progressView.widthAnchor.constraint(equalToConstant: 50),
-                    progressView.heightAnchor.constraint(equalToConstant: 50)
-                ])
+        } else if progressView == trustProgressView {
+            NSLayoutConstraint.activate([
+                progressView.widthAnchor.constraint(equalToConstant: 50),
+                progressView.heightAnchor.constraint(equalToConstant: 50)
+            ])
 
-                let progressStackView2 = UIStackView(arrangedSubviews: [trustProgressView, trustOnTenOfTipsterTextField])
-                progressStackView2.axis = .vertical
-                progressStackView2.spacing = 0
-                progressStackView2.alignment = .center
+            let progressStackView2 = UIStackView(arrangedSubviews: [trustProgressView, trustOnTenOfTipsterTextField])
+            progressStackView2.axis = .vertical
+            progressStackView2.spacing = 0
+            progressStackView2.alignment = .center
 
-                underProgressView.addArrangedSubview(progressStackView2)
-            }
-
-            underProgressView.spacing = 16
-            underProgressView.distribution = .fillEqually
-            mainStackView.layer.borderWidth = 1
-            mainStackView.layer.borderColor = UIColor.white.cgColor
-
-
-            duration = 3.0
-            targetProgress = targetProgressChoosen / progressMaxValue
-            startTime = CACurrentMediaTime()
-
-            progressView.animateProgress(to: targetProgress, duration: duration) {
-                self.displayLink?.invalidate()
-                self.displayLink = nil
-            }
-
-            displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
-            displayLink?.add(to: .main, forMode: .default)
+            underProgressView.addArrangedSubview(progressStackView2)
         }
 
-        @objc private func updateProgressLabel() {
-            let elapsedTime = CACurrentMediaTime() - startTime
-            if elapsedTime >= duration {
-                percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
-                trustProgressView.setLabelText("\(Int(trustPercentage))")
-            } else {
-                let progressBK = min(CGFloat(elapsedTime / duration) * (bankrollPercentage / 100.0), 1.0)
-                let progressTrust = min(CGFloat(elapsedTime / duration) * (trustPercentage / 10.0), 1.0)
-                percentOfBKProgressView.setLabelText("\(Int(progressBK * 100))%")
-                trustProgressView.setLabelText("\(Int(progressTrust * 10))")
-            }
+        underProgressView.spacing = 16
+        underProgressView.distribution = .fillEqually
+        mainStackView.layer.borderWidth = 1
+        mainStackView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+
+        duration = 3.0
+        targetProgress = targetProgressChoosen / progressMaxValue
+        startTime = CACurrentMediaTime()
+
+        progressView.animateProgress(to: targetProgress, duration: duration) {
+            self.displayLink?.invalidate()
+            self.displayLink = nil
         }
-    
-    /// Shows an alert with the given title and message
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alert, animated: true)
+
+        displayLink = CADisplayLink(target: self, selector: #selector(updateProgressLabel))
+        displayLink?.add(to: .main, forMode: .default)
+    }
+
+    @objc private func updateProgressLabel() {
+        let elapsedTime = CACurrentMediaTime() - startTime
+        if elapsedTime >= duration {
+            percentOfBKProgressView.setLabelText("\(Int(bankrollPercentage))%")
+            trustProgressView.setLabelText("\(Int(trustPercentage))")
+        } else {
+            let progressBK = min(CGFloat(elapsedTime / duration) * (bankrollPercentage / 100.0), 1.0)
+            let progressTrust = min(CGFloat(elapsedTime / duration) * (trustPercentage / 10.0), 1.0)
+            percentOfBKProgressView.setLabelText("\(Int(progressBK * 100))%")
+            trustProgressView.setLabelText("\(Int(progressTrust * 10))")
+        }
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Pass data to the new view controller if needed
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
 }
